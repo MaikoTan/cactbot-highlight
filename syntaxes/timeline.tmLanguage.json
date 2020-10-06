@@ -100,7 +100,7 @@
 			]
 		},
 		"window": {
-			"match": "(?<=\\s)(window)\\s(\\d+(,\\s*\\d+)?)(?=\\s|$)",
+			"match": "(?<=\\s)(window)\\s(\\d+(\\.\\d+)?(,\\s*\\d+(\\.\\d+)?)?)(?=\\s|$)",
 			"captures": {
 				"1": {
 					"name": "keyword.control.window"
@@ -111,7 +111,7 @@
 			}
 		},
 		"jump": {
-			"match": "(?<=\\s)(jump)\\s(\\d+)(?=\\s|$)",
+			"match": "(?<=\\s)(jump)\\s(\\d+(\\.\\d+)?)(?=\\s|$)",
 			"captures": {
 				"1": {
 					"name": "keyword.control.jump"
