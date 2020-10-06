@@ -1,0 +1,151 @@
+{
+  "trigger init": {
+    "description": "cactbot raidboss trigger init",
+    "prefix": "init",
+    "body": [
+      "'use strict';",
+      "",
+      "[{",
+      "\tzoneId: $1,",
+      "\ttimelineFile: '$TM_FILENAME_BASE.txt',",
+      "\ttriggers: [",
+      "\t],",
+      "\ttimelineReplace: [",
+      "\t],",
+      "}]",
+      ""
+    ]
+  },
+  "trigger object": {
+    "description": "cactbot raidboss trigger object",
+    "prefix": "trigger",
+    "body": [
+      "{",
+      "\tid: '$1',",
+      "\t$0",
+      "},"
+    ]
+  },
+  "trigger NetRegex ability": {
+    "description": "cactbot raidboss trigger NetRegex ability",
+    "prefix": ["netregex", "ability"],
+    "body": "NetRegexes.ability({ id: '$1', source: '$3', capture: ${2|false,true|} })"
+  },
+  "trigger NetRegex ability in all language": {
+    "description": "cactbot raidboss trigger NetRegex ability in all language",
+    "prefix": ["netregex", "ability"],
+    "body": [
+      "netRegex: NetRegexes.ability({ id: '$1', source: '$3', capture: ${2|false,true|} }),",
+      "netRegexDe: NetRegexes.ability({ id: '$1', source: '$4', capture: ${2|false,true|} }),",
+      "netRegexFr: NetRegexes.ability({ id: '$1', source: '$5', capture: ${2|false,true|} }),",
+      "netRegexJa: NetRegexes.ability({ id: '$1', source: '$6', capture: ${2|false,true|} }),",
+      "netRegexCn: NetRegexes.ability({ id: '$1', source: '$7', capture: ${2|false,true|} }),",
+      "netRegexKo: NetRegexes.ability({ id: '$1', source: '$8', capture: ${2|false,true|} }),",
+    ]
+  },
+  "trigger alarm text": {
+    "description": "cactbot raidboss trigger alarm text",
+    "prefix": "alarm",
+    "body": [
+      "alarmText: {",
+      "\ten: '$1',",
+      "\tde: '$1',",
+      "\tfr: '$1',",
+      "\tja: '$1',",
+      "\tcn: '$1',",
+      "\tko: '$1',",
+      "},"
+    ]
+  },
+  "trigger alert text": {
+    "description": "cactbot raidboss trigger alert text",
+    "prefix": "alert",
+    "body": [
+      "alertText: {",
+      "\ten: '$1',",
+      "\tde: '$1',",
+      "\tfr: '$1',",
+      "\tja: '$1',",
+      "\tcn: '$1',",
+      "\tko: '$1',",
+      "},"
+    ]
+  },
+  "trigger info text": {
+    "description": "cactbot raidboss trigger info text",
+    "prefix": "info",
+    "body": [
+      "infoText: {",
+      "\ten: '$1',",
+      "\tde: '$1',",
+      "\tfr: '$1',",
+      "\tja: '$1',",
+      "\tcn: '$1',",
+      "\tko: '$1',",
+      "},"
+    ]
+  },
+  "trigger alarm text with function": {
+    "description": "cactbot raidboss trigger alarm text with function",
+    "prefix": "alarmfunc",
+    "body": [
+      "alarmText: function(data, matches) {",
+      "\treturn {",
+      "\t\ten: '$1',",
+      "\t\tde: '$1',",
+      "\t\tfr: '$1',",
+      "\t\tja: '$1',",
+      "\t\tcn: '$1',",
+      "\t\tko: '$1',",
+      "\t};",
+      "},"
+    ]
+  },
+  "trigger alert text with function": {
+    "description": "cactbot raidboss trigger alert text with function",
+    "prefix": "alertfunc",
+    "body": [
+      "alertText: function(data, matches) {",
+      "\treturn {",
+      "\t\ten: '$1',",
+      "\t\tde: '$1',",
+      "\t\tfr: '$1',",
+      "\t\tja: '$1',",
+      "\t\tcn: '$1',",
+      "\t\tko: '$1',",
+      "\t};",
+      "},"
+    ]
+  },
+  "trigger info text with function": {
+    "description": "cactbot raidboss trigger info text with function",
+    "prefix": "infofunc",
+    "body": [
+      "infoText: function(data, matches) {",
+      "\treturn {",
+      "\t\ten: '$1',",
+      "\t\tde: '$1',",
+      "\t\tfr: '$1',",
+      "\t\tja: '$1',",
+      "\t\tcn: '$1',",
+      "\t\tko: '$1',",
+      "\t};",
+      "},"
+    ]
+  },
+  "trigger replace locales": {
+    "description": "cactbot raidboss trigger replace locales",
+    "prefix": "locale",
+    "body": [
+      "{",
+      "\t'locale': '${1|de,fr,ja,cn,ko|}',",
+      "\t'missingTranslations': true,",
+      "\t'replaceSync': {",
+      "\t\t$0",
+      "\t},",
+      "\t'replaceText': {",
+      "\t},",
+      "},"
+    ]
+  }
+}

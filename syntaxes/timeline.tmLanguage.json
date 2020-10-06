@@ -1,0 +1,137 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "cactbot-timeline",
+	"patterns": [
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#line"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.timeline",
+				"match": "\\b(hideall)\\b"
+			}]
+		},
+		"comment": {
+			"begin": "(^\\s+)?(?<=^|\\s)(?=#)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.whitespace.comment.leading.timeline"
+				}
+			},
+			"end": "(?!\\G)",
+			"patterns": [
+				{
+					"begin": "#",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.timeline"
+						}
+					},
+					"end": "$",
+					"name": "comment.line.number-sign.timeline"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.timeline",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.timeline",
+					"match": "\\\\."
+				}
+			]
+		},
+		"line": {
+			"patterns": [
+				{
+					"include": "#sync"
+				},
+				{
+					"include": "#window"
+				},
+				{
+					"include": "#jump"
+				},
+				{
+					"include": "#duration"
+				},
+				{
+					"include": "#time"
+				},
+				{
+					"include": "#strings"
+				}
+			]
+		},
+		"sync": {
+			"match": "(?<=\\s)(sync)\\s/(.*)/(?=\\s|$)",
+			"captures": {
+				"1": {
+					"name": "keyword.control.sync"
+				},
+				"2": {
+					"name": "constant.regexp"
+				}
+			}
+		},
+		"time": {
+			"patterns": [
+				{
+					"match": "(?<=\\n|^)(\\d+(\\.\\d+)?)(?=\\s)",
+					"captures": {
+						"1": {
+							"name": "constant.numeric"
+						}
+					}
+				}
+			]
+		},
+		"window": {
+			"match": "(?<=\\s)(window)\\s(\\d+(,\\s*\\d+)?)(?=\\s|$)",
+			"captures": {
+				"1": {
+					"name": "keyword.control.window"
+				},
+				"2": {
+					"name": "constant.numeric"
+				}
+			}
+		},
+		"jump": {
+			"match": "(?<=\\s)(jump)\\s(\\d+)(?=\\s|$)",
+			"captures": {
+				"1": {
+					"name": "keyword.control.jump"
+				},
+				"2": {
+					"name": "constant.numeric"
+				}
+			}
+		},
+		"duration": {
+			"match": "(?<=\\s)(duration)\\s(\\d+(\\.\\d+)?)(?=\\s|$)",
+			"captures": {
+				"1": {
+					"name": "keyword.control.duration"
+				},
+				"2": {
+					"name": "constant.numeric"
+				}
+			}
+		}
+	},
+	"scopeName": "source.cactbot.timeline"
+}
