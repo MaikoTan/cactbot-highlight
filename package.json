@@ -2,7 +2,7 @@
     "name": "cactbot-highlight",
     "displayName": "cactbot-highlight",
     "description": "cactbot timeline highlighting",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "vscode",
     "author": {
         "name": "Maiko Tan",
