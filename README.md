@@ -20,7 +20,7 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ### Install from VSIX
 
-- Download the latest release `cactbot-highlight-x.x.x.vsix` from [Release](https://github.com/MaikoTan/cactbot-highlight/release)
+- Download the latest release `cactbot-highlight-x.x.x.vsix` from [Release](https://github.com/MaikoTan/cactbot-highlight/releases)
 
 - Launch VSCode and switch to `Extensions` tab
 
