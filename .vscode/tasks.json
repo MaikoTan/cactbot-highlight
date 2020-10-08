@@ -7,6 +7,19 @@
 			"problemMatcher": [],
 			"label": "npm: convert",
 			"detail": "npx js-yaml syntaxes/timeline.tmLanguage.yaml > syntaxes/timeline.tmLanguage.json"
+		},
+		{
+			"type": "npm",
+			"script": "watch",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true,
+			"presentation": {
+				"reveal": "never"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		}
 	]
 }
