@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "syntaxes/tmLanguage.schema.json": "*.tmLanguage.yaml"
+    },
+    "yaml.schemaStore.enable": true
+}
