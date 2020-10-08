@@ -3,3 +3,4 @@
 .gitignore
 test/**
 images/**
+syntaxes/*.yaml
