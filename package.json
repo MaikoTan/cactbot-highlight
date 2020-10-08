@@ -14,6 +14,9 @@
         "url": "https://github.com/MaikoTan/cactbot-highlight.git"
     },
     "license": "MIT",
+    "scripts": {
+        "convert": "js-yaml syntaxes/timeline.tmLanguage.yaml > syntaxes/timeline.tmLanguage.json"
+    },
     "engines": {
         "vscode": "^1.49.0"
     },
@@ -22,21 +25,31 @@
         "Snippets"
     ],
     "contributes": {
-        "languages": [{
-            "id": "cactbot-timeline",
-            "extensions": ["txt"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "cactbot-timeline",
-            "scopeName": "source.cactbot.timeline",
-            "path": "./syntaxes/timeline.tmLanguage.json"
-        }],
+        "languages": [
+            {
+                "id": "cactbot-timeline",
+                "extensions": [
+                    "txt"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "cactbot-timeline",
+                "scopeName": "source.cactbot.timeline",
+                "path": "./syntaxes/timeline.tmLanguage.json"
+            }
+        ],
         "snippets": [
             {
                 "language": "javascript",
                 "path": "./snippets/trigger.js.code-snippets"
             }
         ]
+    },
+    "devDependencies": {
+        "js-yaml": "^3.14.0",
+        "vsce": "^1.81.1"
     }
 }

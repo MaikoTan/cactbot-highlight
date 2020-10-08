@@ -28,19 +28,25 @@
   },
   "trigger NetRegex ability": {
     "description": "cactbot raidboss trigger NetRegex ability",
-    "prefix": ["netregex", "ability"],
+    "prefix": [
+      "netregex",
+      "ability"
+    ],
     "body": "NetRegexes.ability({ id: '$1', source: '$3', capture: ${2|false,true|} })"
   },
   "trigger NetRegex ability in all language": {
     "description": "cactbot raidboss trigger NetRegex ability in all language",
-    "prefix": ["netregex", "ability"],
+    "prefix": [
+      "netregex",
+      "ability"
+    ],
     "body": [
       "netRegex: NetRegexes.ability({ id: '$1', source: '$3', capture: ${2|false,true|} }),",
       "netRegexDe: NetRegexes.ability({ id: '$1', source: '$4', capture: ${2|false,true|} }),",
       "netRegexFr: NetRegexes.ability({ id: '$1', source: '$5', capture: ${2|false,true|} }),",
       "netRegexJa: NetRegexes.ability({ id: '$1', source: '$6', capture: ${2|false,true|} }),",
       "netRegexCn: NetRegexes.ability({ id: '$1', source: '$7', capture: ${2|false,true|} }),",
-      "netRegexKo: NetRegexes.ability({ id: '$1', source: '$8', capture: ${2|false,true|} }),",
+      "netRegexKo: NetRegexes.ability({ id: '$1', source: '$8', capture: ${2|false,true|} }),"
     ]
   },
   "trigger alarm text": {

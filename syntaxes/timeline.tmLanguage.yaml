@@ -1,0 +1,141 @@
+---
+"$schema": https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json
+
+name: cactbot-timeline
+
+patterns:
+- include: "#comment"
+- include: "#keywords"
+# match any double-quoted strings
+- include: "#strings"
+# match one line in timeline file
+- include: "#line"
+
+
+repository:
+
+  keywords:
+    patterns:
+    - name: keyword.control.timeline
+      match: >
+        (?x)
+        \b
+        (
+          hideall
+        )
+        \b
+
+  comment:
+    begin: >
+      (?x)
+      (^\s+)?
+      (?<=^|\s)
+      (?=\#)            # must following '#' (in 'x' mode '#' should be escaped)
+    beginCaptures:
+      '1':
+        name: punctuation.whitespace.comment.leading.timeline
+    end: '(?!\G)'
+    patterns:
+    - begin: '#'
+      beginCaptures:
+        '0':
+          name: punctuation.definition.comment.timeline
+      end: "$"
+      name: comment.line.number-sign.timeline
+
+  strings:
+    name: string.quoted.double.timeline
+    begin: '"'
+    end: '"'
+    patterns:
+    - name: constant.character.escape.timeline
+      match: '\\.'
+
+  line:
+    patterns:
+    # 0.0 "--Reset--" sync / 21:........:40000010:/ window 10000 jump 0 duration 5
+    #  ^       ^                     ^                       ^        ^          ^
+    # #time #strings           #sync / regex             #window   #jump     #duration
+    - include: "#time"
+    - include: "#strings"
+    - include: "#sync"
+    - include: "#window"
+    - include: "#jump"
+    - include: "#duration"
+
+  sync:
+    begin: >
+      (?x)
+      (?<=\s)
+      (sync)\s+     # 'sync' and following one or more whitespaces
+    end: >
+      (?x)
+      (?<=/)
+      (?=\s|$)     # must following whitespace or eof
+    beginCaptures:
+      '1':
+        name: keyword.control.sync
+  
+    patterns:
+    - name: constant.regexp
+      begin: '/'
+      end: '(?<!\\)/'  # match '/' which don't bebind '\'
+
+      patterns:
+      # escaped character in sync regex
+      - name: constant.character.escape.sync.timeline
+        match: '\\.'
+
+  time:
+    patterns:
+    - match: >
+        (?x)
+          (?<=\n|^)       # must at file/line start
+          (\d+(\.\d+)?)   # int or float
+        (?=\s)            # must following a whitespace
+      captures:
+        '1':
+          name: constant.numeric.time
+
+  window:
+    match: >
+      (?x)
+        (?<=\s)
+        (window)\s
+        (\d+(\.\d+)?            # int or float
+          (,\s*\d+(\.\d+)?)?    # Optional "," and int or float
+        )
+      (?=\s|$)
+    captures:
+      '1':
+        name: keyword.control.window
+      '2':
+        name: constant.numeric.window
+
+  jump:
+    match: >
+      (?x)
+        (?<=\s)
+        (jump)\s
+        (\d+(\.\d+)?)      # int or float
+      (?=\s|$)
+    captures:
+      '1':
+        name: keyword.control.jump
+      '2':
+        name: constant.numeric.jump
+
+  duration:
+    match: >
+      (?x)
+        (?<=\s)
+        (duration)\s
+        (\d+(\.\d+)?)      # int or float
+      (?=\s|$)
+    captures:
+      '1':
+        name: keyword.control.duration
+      '2':
+        name: constant.numeric.duration
+
+scopeName: source.cactbot.timeline
