@@ -32,12 +32,38 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 - Download source code
 
-- Copy the whold directory to your extensions root:
+- Copy the whole directory to your extensions root:
 
   - Linux / OS X: `~/.vscode/extensions/`
   - Windows: `C:\Users\your-name\.vscode\extensions\`
 
 - Re-launch VSCode end enjoy ~
+
+### Enable it in cactbot
+
+Because cactbot timeline file is `*.txt`,
+VSCode would recognize it as `Plain Text` before the extension enabled.
+
+You should enable it manually for timeline file.
+
+- For a single file
+
+Click `Plain Text` button at right bottom,
+select `cactbot-timeline` in the prompt window.
+
+` For the whole repository
+
+Create `.vscode/settings.json` if you have no this file.
+
+Add this below to the file.
+
+```json
+{
+    "files.associations": {
+        "*.txt": "cactbot-timeline"
+    }
+}
+```
 
 ## Known Issues
 
