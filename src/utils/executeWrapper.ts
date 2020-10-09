@@ -9,6 +9,8 @@ export interface Output {
 
 export const executeCommand = async (command: string, args: string[]): Promise<Output> => {
     const child = ChildProcess.spawn(command, args);
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
     let data = "";
     for await (const chunk of child.stdout) {
         data += chunk;
