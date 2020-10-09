@@ -34,7 +34,16 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ### Install from source code
 
+- Install [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/)
+
 - Download source code
+
+- Run the commands below
+
+```bash
+yarn install
+yarn run compile
+```
 
 - Copy the whole directory to your extensions root:
 
