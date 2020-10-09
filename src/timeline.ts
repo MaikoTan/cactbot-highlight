@@ -18,9 +18,9 @@ export const adjustTimeByNumber = async () => {
 
     // show an input box
     const inputValue = await vscode.window.showInputBox({
-        prompt: "input a number (can be negative)",
+        prompt: "Input a number (can be negative)",
         validateInput: (value) => {
-            return /(-)?\d+(\.\d)?/.test(value) ? null : "please input valid number";
+            return /(-)?\d+(\.\d)?/.test(value) ? null : "Please input valid number (1 digit only is allowed)";
         },
     });
 
@@ -54,9 +54,9 @@ export const adjustTimeToNumber = async () => {
 
     // show an input box
     const inputValue = await vscode.window.showInputBox({
-        prompt: "input a number (can be negative)",
+        prompt: "Input a number (can be negative)",
         validateInput: (value) => {
-            return /(-)?\d+(\.\d)?/.test(value) ? null : "please input valid number";
+            return /(-)?\d+(\.\d)?/.test(value) ? null : "Please input valid number";
         },
     });
 

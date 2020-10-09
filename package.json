@@ -34,9 +34,21 @@
     ],
     "activationEvents": [
         "onCommand:cactbot.timeline.adjustTimelineByNumber",
-        "onCommand:cactbot.timeline.adjustTimelineToNumber"
+        "onCommand:cactbot.timeline.adjustTimelineToNumber",
+        "onCommand:cactbot.timeline.translateTimeline"
     ],
     "contributes": {
+        "configuration": {
+            "title": "cactbot-highlight",
+            "properties": {
+                "cactbot.timeline.defaultLocale": {
+                    "type": ["string", "null"],
+                    "default": null,
+                    "enum": ["en", "de", "fr", "ja", "cn", "ko", null],
+                    "description": "Set default locale for timelines. If this property is set, a prompt would not shown."
+                }
+            }
+        },
         "languages": [
             {
                 "id": "cactbot-timeline",
@@ -67,6 +79,10 @@
             {
                 "command": "cactbot.timeline.adjustTimelineToNumber",
                 "title": "Adjust Timeline To ..."
+            },
+            {
+                "command": "cactbot.timeline.translateTimeline",
+                "title": "Translate Timeline To ..."
             }
         ],
         "menus": {
