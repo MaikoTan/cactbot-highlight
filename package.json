@@ -33,7 +33,8 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:cactbot.timeline.adjustTimeline"
+        "onCommand:cactbot.timeline.adjustTimelineByNumber",
+        "onCommand:cactbot.timeline.adjustTimelineToNumber"
     ],
     "contributes": {
         "languages": [
@@ -60,15 +61,24 @@
         ],
         "commands": [
             {
-                "command": "cactbot.timeline.adjustTimeline",
+                "command": "cactbot.timeline.adjustTimelineByNumber",
                 "title": "Adjust Timeline By ..."
+            },
+            {
+                "command": "cactbot.timeline.adjustTimelineToNumber",
+                "title": "Adjust Timeline To ..."
             }
         ],
         "menus": {
             "editor/context": [
                 {
                     "when": "resourceLangId == cactbot-timeline",
-                    "command": "cactbot.timeline.adjustTimeline",
+                    "command": "cactbot.timeline.adjustTimelineByNumber",
+                    "group": "7_modification"
+                },
+                {
+                    "when": "resourceLangId == cactbot-timeline",
+                    "command": "cactbot.timeline.adjustTimelineToNumber",
                     "group": "7_modification"
                 }
             ]
