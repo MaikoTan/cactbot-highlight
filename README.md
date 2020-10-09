@@ -10,6 +10,10 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 > uwu timeline with Monakai color theme
 
+### adjust time
+
+![adjust-time](images/adjust-time.gif)
+
 ### useful snippets
 
 > snippets in trigger.js files
@@ -51,7 +55,7 @@ You should enable it manually for timeline file.
 Click `Plain Text` button at right bottom,
 select `cactbot-timeline` in the prompt window.
 
-` For the whole repository
+- For the whole repository
 
 Create `.vscode/settings.json` if you have no this file.
 
