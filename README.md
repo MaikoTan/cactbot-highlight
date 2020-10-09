@@ -14,6 +14,10 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ![adjust-time](images/adjust-time.gif)
 
+### translate timeline
+
+![translate-timeline.gif](images/translate-timeline.gif)
+
 ### useful snippets
 
 > snippets in trigger.js files
