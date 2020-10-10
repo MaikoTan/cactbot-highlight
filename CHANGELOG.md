@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2020-10-10
+
+### Added
+
+- Rewrite translate module, don't need python anymore
+
+Using vm2(https://github.com/patriksimek/vm2) for executing
+cactbot javascript and take trigger file content out.
+
+Define many types in cactbot for TypeScript,
+maybe helpful when migrating cactbot to TypeScript.
+
+- CommonReplacement support.
+
+- Automatically refresh preview document when original file was changed.
+
 ## [0.0.5] - 2020-10-09
 
 ### Fixed
