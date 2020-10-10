@@ -2,6 +2,16 @@
 
 A custom extension for developing [cactbot](https://github.com/quisquous/cactbot/) modules.
 
+## Index
+
+- [Features](#features)
+- [Install](#install)
+  - [Install from VSIX](#install-from-vsix)
+  - [Install from source code](#install-from-source-code)
+  - [Enable it in cactbot](#enable-it-in-cactbot)
+  - [Available Settings](#available-settings)
+- [Known Issues](#known-issues)
+
 ## Features
 
 ### timeline highlight
