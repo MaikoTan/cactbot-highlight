@@ -14,13 +14,18 @@ Before contributing to this project, you might need to learn glossary from [cact
 
 Run `yarn install` to install all the dependencies.
 
-It is recommanded to install `vsce` globally by `yarn global add vsce`.
+If you want to package the extension to `VSIX`,
+it is recommanded to install `vsce` globally by `yarn global add vsce`.
 
 ### Build and Debug
 
 Press <kbd>F5</kbd> to Debug.
 
 Press <kbd>Ctrl</kbd> + <kbd>F5</kbd> to Run.
+
+### Package
+
+Run `vsce package`.
 
 ## File Structures
 
