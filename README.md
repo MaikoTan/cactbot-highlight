@@ -82,6 +82,14 @@ Add this below to the file.
 }
 ```
 
+### Available Settings
+
+```json
+// Set default locale for timelines. If this property is set, a prompt would not shown.
+// value can be: [ "de","fr","ja","cn","ko" ]
+"cactbot.timeline.defaultLocale": "ja",
+```
+
 ## Known Issues
 
 Timeline highlighting is incomplete.
