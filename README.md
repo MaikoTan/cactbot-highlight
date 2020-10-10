@@ -11,6 +11,7 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
   - [Enable it in cactbot](#enable-it-in-cactbot)
   - [Available Settings](#available-settings)
 - [Known Issues](#known-issues)
+- [Contributing](#contributing)
 
 ## Features
 
@@ -105,3 +106,7 @@ Add this below to the file.
 Timeline highlighting is incomplete.
 
 Need more snippets in other files.
+
+## Contributing
+
+See: [CONTRIBUTING.md](CONTRIBUTING.md)
