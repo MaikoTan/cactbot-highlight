@@ -42,9 +42,20 @@
             "title": "cactbot-highlight",
             "properties": {
                 "cactbot.timeline.defaultLocale": {
-                    "type": ["string", "null"],
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "default": null,
-                    "enum": ["en", "de", "fr", "ja", "cn", "ko", null],
+                    "enum": [
+                        "en",
+                        "de",
+                        "fr",
+                        "ja",
+                        "cn",
+                        "ko",
+                        null
+                    ],
                     "description": "Set default locale for timelines. If this property is set, a prompt would not shown."
                 }
             }
@@ -101,18 +112,21 @@
         }
     },
     "devDependencies": {
-        "@types/vscode": "^1.49.0",
         "@types/glob": "^7.1.3",
         "@types/mocha": "^8.0.0",
         "@types/node": "^12.11.7",
-        "eslint": "^7.9.0",
+        "@types/vscode": "^1.49.0",
         "@typescript-eslint/eslint-plugin": "^4.1.1",
         "@typescript-eslint/parser": "^4.1.1",
+        "eslint": "^7.9.0",
         "glob": "^7.1.6",
         "js-yaml": "^3.14.0",
         "mocha": "^8.1.3",
         "typescript": "^4.0.2",
         "vsce": "^1.81.1",
         "vscode-test": "^1.4.0"
+    },
+    "dependencies": {
+        "vm2": "^3.9.2"
     }
 }

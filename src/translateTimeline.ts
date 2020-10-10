@@ -1,8 +1,65 @@
-import * as vscode from "vscode";
-
 import * as path from "path";
+import * as fs from "fs";
 
-import { executeCommand } from "./utils/executeWrapper";
+import * as vscode from "vscode";
+import { NodeVM } from "vm2";
+
+import {
+    CommonReplacementModule,
+    Locale, Replacement,
+    TimelineReplace,
+    TriggerFile
+} from "./models/trigger";
+
+export const sandboxWrapper = async (
+    triggerPath: string,
+): Promise<{ triggerFile: TriggerFile, commonReplacement: CommonReplacementModule }> => {
+
+    return new Promise((resolve, reject) => {
+
+        const cwd = (vscode.workspace.workspaceFolders as vscode.WorkspaceFolder[])[0].uri.fsPath;
+        const triggerText = String(fs.readFileSync(triggerPath));
+
+        const absolute = (filePath: string): string => {
+            return path.join(cwd, filePath);
+        };
+
+        const vm = new NodeVM({
+            sandbox: {
+                conditionsPath: absolute("resources/conditions.js"),
+                regexesPath: absolute("resources/regexes.js"),
+                netregexesPath: absolute("resources/netregexes.js"),
+                responsesPath: absolute("resources/responses.js"),
+                zoneIdPath: absolute("resources/zone_id.js"),
+                commonReplacementPath: absolute("ui/raidboss/common_replacement.js"),
+                triggerText,
+                callback: (triggerFile: TriggerFile, commonReplacement: CommonReplacementModule) => {
+                    resolve({ triggerFile, commonReplacement });
+                },
+            },
+            require: {
+                external: true,
+                builtin: ['fs', 'path'],
+                root: cwd,
+            }
+        });
+
+        try {
+            vm.run(`
+                    const Conditions = require(conditionsPath);
+                    const Regexes = require(regexesPath);
+                    const NetRegexes = require(netregexesPath);
+                    const ZoneId = require(zoneIdPath);
+                    const Responses = require(responsesPath).responses;
+                    const commonReplacement = require(commonReplacementPath);
+                    var trigger = eval(triggerText);
+                    callback(trigger[0], commonReplacement);
+                `);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
 
 export class TranslatedTimelineProvider implements vscode.TextDocumentContentProvider {
 
@@ -11,29 +68,147 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
     onDidChange = this.onDidChangeEmitter.event;
 
     async provideTextDocumentContent(uri: vscode.Uri): Promise<string> {
-        const filename = uri.path;
+        const timelineFilePath = uri.path;
+        const triggerFilePath = timelineFilePath.replace(/\.txt$/, ".js");
         const locale = uri.query;
-        const cwd = (vscode.workspace.workspaceFolders as vscode.WorkspaceFolder[])[0].uri.fsPath;
-        const pyfile = path.join(cwd, "util/check_translation.py");
 
-        const pythonPath = vscode.workspace.getConfiguration().get("python.pythonPath");
-        let pythonBinary = "python3";
-        if (typeof pythonPath === "string" && pythonPath) {
-            pythonBinary = pythonPath;
+        try {
+            const result = await sandboxWrapper(triggerFilePath);
+            return this.translate({
+                locale: locale as keyof Locale,
+                timelineFile: String(fs.readFileSync(timelineFilePath)),
+                triggerFile: result.triggerFile,
+                commonReplaceModule: result.commonReplacement,
+            });
+        } catch (e) {
+            const err = e as Error;
+            return `Error when translating file "${uri.path}":
+                ${err.name}
+                ${err.message}
+                ${err.stack}
+            `;
         }
-        const output =  await executeCommand(pythonBinary, [
-            pyfile,
-            "-f",
-            filename,
-            "-t",
+    }
+
+    translate(o: {
+        locale: keyof Locale,
+        timelineFile: string,
+        triggerFile: TriggerFile,
+        commonReplaceModule: CommonReplacementModule,
+    }): string {
+        const {
             locale,
-        ]);
-        if (!output.stdout && output.stderr) {
-            return output.stderr;
+            timelineFile,
+            triggerFile,
+            commonReplaceModule,
+        } = o;
+
+        const replace = ((triggerFile: TriggerFile, locale: string): TimelineReplace | undefined => {
+            let replace;
+            if (!(triggerFile && triggerFile?.timelineReplace)) {
+                return undefined;
+            }
+            for (const element of triggerFile.timelineReplace) {
+                if (element.locale === locale) {
+                    replace = element;
+                    break;
+                }
+            }
+            return replace;
+        })(triggerFile, locale);
+
+        if (!replace) {
+            return timelineFile;
         }
-        return output.stdout;
+
+        const replacedTimeline = timelineFile.split(/\r?\n/).map((timeline: string, index: number) => {
+            const line = timeline.trim();
+            if (line === "" || line.startsWith("#")) {
+                return timeline;
+            }
+
+            let replacedLine = timeline;
+
+            try {
+                // match "sync /xxx/"
+                const syncMatched = /(?<keyword>sync\s*)\/(?<key>.*)(?<!\\)\//.exec(line);
+                if (syncMatched) {
+                    let replacedSyncKey = this.replaceKey(syncMatched.groups?.key as string, replace.replaceSync);
+                    replacedSyncKey = this.replaceCommonKey(replacedSyncKey, commonReplaceModule, "sync", locale);
+                    replacedLine = replacedLine.replace(syncMatched[0], [
+                        syncMatched.groups?.keyword,
+                        "/",
+                        replacedSyncKey.replace("/", "\/"),
+                        "/",
+                    ].join(""));
+                }
+    
+                // match "xxxx.x \"xxxx\""
+                const textMatched = /^(?<time>\d+(\.\d)?\s*)"(?<text>.*)(?<!\\)"/.exec(line);
+                if (textMatched) {
+                    let replacedTextKey = this.replaceKey(textMatched.groups?.text as string, replace.replaceText, false);
+                    replacedTextKey = this.replaceCommonKey(replacedTextKey, commonReplaceModule, "text", locale);
+                    replacedLine = replacedLine.replace(textMatched[0], [
+                        textMatched.groups?.time,
+                        "\"",
+                        replacedTextKey.replace("\"", "\/"),
+                        "\"",
+                    ].join(""));
+                }
+            } catch (err) {
+                const error = err as Error;
+                console.warn(`Error in translating line ${index}:
+                    ${error.name}
+                    ${error.message}
+                    ${error.stack}
+                `);
+            }
+
+            return replacedLine;
+        });
+
+        return replacedTimeline.join("\n");
+    }
+
+    replaceKey(original: string, replacement: Replacement, isGlobal: boolean = true): string {
+        if (!replacement) {
+            return original;
+        }
+
+        let modifier = "i";
+        if (isGlobal) {
+            modifier += "g";
+        }
+
+        let text = original;
+        for (const [k, v] of Object.entries(replacement)) {
+            text = text.replace(new RegExp(k, modifier), v);
+        }
+
+        return text;
+    }
+
+    replaceCommonKey(
+        original: string,
+        commonReplacementModule: CommonReplacementModule,
+        key: "sync" | "text" = "sync",
+        locale: keyof Locale,
+    ): string {
+        if (locale === "en") {
+            return original;
+        }
+
+        let text = original;
+        const replace = (key === "sync") ? commonReplacementModule.commonReplacement.replaceSync : commonReplacementModule.commonReplacement.replaceText;
+        for (const [k, v] of Object.entries(replace)) {
+            text = text.replace(new RegExp(k, "gi"), v[locale]);
+        }
+
+        return text;
     }
 };
+
+export const translatedTimelineProvider = new TranslatedTimelineProvider();
 
 export const translateTimeline = async () => {
     const document = vscode.window.activeTextEditor?.document;
@@ -47,8 +222,8 @@ export const translateTimeline = async () => {
         );
         return;
     }
-    if (filename.endsWith(".txt")) {
-        filename = filename.replace(".txt", ".js");
+    if (filename.endsWith(".js")) {
+        filename = filename.replace(/\.js$/, ".txt");
     }
 
     // try to get locale settings in settings.json
@@ -75,4 +250,10 @@ export const translateTimeline = async () => {
     const translatedDocument = await vscode.workspace.openTextDocument(uri); // calls back into the provider
     await vscode.window.showTextDocument(translatedDocument, { preview: false });
     await vscode.languages.setTextDocumentLanguage(translatedDocument, "cactbot-timeline");
+
+    vscode.workspace.onDidChangeTextDocument((e) => {
+        if (e.document === document) {
+            translatedTimelineProvider.onDidChangeEmitter.fire(uri);
+        }
+    });
 };
