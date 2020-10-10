@@ -25,7 +25,7 @@ jobs:
       
       - name: Build
         run: |
-          vsce package
+          yarn run package
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
