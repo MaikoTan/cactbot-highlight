@@ -2,7 +2,6 @@
 .vscode-test/**
 .gitignore
 test/**
-images/**
 syntaxes/*.yaml
 out/test/**
 src/**
