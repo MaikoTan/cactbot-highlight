@@ -6,7 +6,6 @@ on:
       - '**/*.ts'
       - '**/*.js'
       - '.github/workflows/build.yml'
-  workflow_dispatch:
 
 jobs:
   eslint:

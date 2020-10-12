@@ -1,0 +1,53 @@
+name: Publish
+
+on:
+  push:
+    tags-ignore:
+        - "*-alpha"
+        - "*-beta"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      - name: Install Dependencies
+        run: |
+          yarn install
+          yarn global add vsce js-yaml
+      
+      - name: Build
+        run: |
+          yarn run package
+
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      #   with:
+      #     tag_name: ${{ github.event.inputs.version }}
+      #     release_name: ${{ github.event.inputs.info }}
+      #     body: ''
+      #     draft: true
+      #     prerelease: false
+
+      # - name: Upload Release Asset
+      #   id: upload-release-asset
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: publish/*
+      #     asset_name: cactbot-highlight-***.zip
+      #     asset_content_type: application/zip
+
+      - name: Publish to VS Market
+        run: |
+          vsce publish -p ${{ secrets.AZURE_TOKEN }}
