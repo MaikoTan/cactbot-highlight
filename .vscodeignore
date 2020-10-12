@@ -1,12 +1,31 @@
+# VSCode
 .vscode/**
 .vscode-test/**
+
+# Git
 .gitignore
+
+# Test
 test/**
-syntaxes/*.yaml
 out/test/**
+
+# TypeScript
 src/**
-.yarnrc
 **/tsconfig.json
-**/.eslintrc.json
 **/*.map
 **/*.ts
+
+# Yarn
+node_modules/
+.yarnrc
+yarn-error*.log
+yarn.lock
+
+# ESLint
+**/.eslintrc.json
+
+# Assets
+images/
+
+# YAML
+syntaxes/*.yaml
