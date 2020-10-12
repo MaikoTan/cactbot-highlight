@@ -24,8 +24,5 @@ yarn.lock
 # ESLint
 **/.eslintrc.json
 
-# Assets
-images/
-
 # YAML
 syntaxes/*.yaml
