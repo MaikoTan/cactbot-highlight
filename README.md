@@ -1,5 +1,7 @@
 # cactbot-highlight
 
+[![Visual Studio Market](https://img.shields.io/visual-studio-marketplace/v/MaikoTan.cactbot-highlight?label=Visual%20Studio%20Market&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
+
 A custom extension for developing [cactbot](https://github.com/quisquous/cactbot/) modules.
 
 ## Index
@@ -7,9 +9,9 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 - [Features](#features)
 - [Install](#install)
   - [Install from VSIX](#install-from-vsix)
-  - [Install from source code](#install-from-source-code)
   - [Enable it in cactbot](#enable-it-in-cactbot)
   - [Available Settings](#available-settings)
+  - [How to build your own](#how-to-build-your-own)
 - [Known Issues](#known-issues)
 - [Contributing](#contributing)
 
@@ -37,6 +39,9 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ## Install
 
+If you got troubles when install from Visual Studio Market,
+you can install `cactbot-highlight` manually:
+
 ### Install from VSIX
 
 - Download the latest release `cactbot-highlight-x.x.x.vsix` from [Release](https://github.com/MaikoTan/cactbot-highlight/releases)
@@ -46,26 +51,6 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 - Click the `Views and More Actions...` (3-dots) button, select `Install from VSIX...`
 
 - Enjoy ~
-
-### Install from source code
-
-- Install [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/)
-
-- Download source code
-
-- Run the commands below
-
-```bash
-yarn install
-yarn run compile
-```
-
-- Copy the whole directory to your extensions root:
-
-  - Linux / OS X: `~/.vscode/extensions/`
-  - Windows: `C:\Users\your-name\.vscode\extensions\`
-
-- Re-launch VSCode end enjoy ~
 
 ### Enable it in cactbot
 
@@ -100,6 +85,21 @@ Add this below to the file.
 // value can be: [ "de","fr","ja","cn","ko" ]
 "cactbot.timeline.defaultLocale": "ja",
 ```
+
+### How to build your own
+
+- Install [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/)
+
+- Download source code
+
+- Run the commands below
+
+```bash
+yarn install
+yarn run compile
+```
+
+- Press <kbd>F5</kbd> for executing.
 
 ## Known Issues
 
