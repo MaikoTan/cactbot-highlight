@@ -3,7 +3,7 @@
     "displayName": "cactbot-highlight",
     "description": "cactbot timeline highlighting",
     "version": "0.1.0",
-    "publisher": "vscode",
+    "publisher": "MaikoTan",
     "author": {
         "name": "Maiko Tan",
         "email": "maiko.tan.coding@gmail.com",
@@ -13,6 +13,7 @@
         "type": "git",
         "url": "https://github.com/MaikoTan/cactbot-highlight.git"
     },
+    "icon": "images/cactbot-logo-320x320.png",
     "license": "MIT",
     "main": "./out/extension.js",
     "scripts": {
