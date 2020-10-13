@@ -19,7 +19,11 @@ jobs:
       - name: Install Dependencies
         run: |
           yarn install
+
+      - name: Install Global Dependencies
+        run: |
           yarn global add vsce js-yaml
+          echo "::add-path::$(yarn global bin)"
       
       - name: Build
         run: |
