@@ -8,7 +8,7 @@ import {
     CommonReplacementModule,
     Locale, Replacement,
     TimelineReplace,
-    TriggerFile
+    TriggerFile,
 } from "./models/trigger";
 
 export const sandboxWrapper = async (
@@ -41,7 +41,7 @@ export const sandboxWrapper = async (
                 external: true,
                 builtin: ['fs', 'path'],
                 root: cwd,
-            }
+            },
         });
 
         try {
@@ -238,7 +238,7 @@ export const translateTimeline = async () => {
                     return null;
                 }
                 return `Locale should be one of [${validLocales.join(", ")}]`;
-            }
+            },
         });
     }
 

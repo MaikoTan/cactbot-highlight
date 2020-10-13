@@ -1,0 +1,33 @@
+name: Build and Package
+
+on:
+  push:
+    paths:
+      - '**/*.ts'
+      - '**/*.js'
+      - '.github/workflows/build.yml'
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      - name: Install Dependencies
+        run: |
+          yarn install
+          yarn global add vsce js-yaml
+      
+      - name: Build
+        run: |
+          yarn run package
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: cactbot-highlight-build
+          path: cactbot-highlight*.vsix
