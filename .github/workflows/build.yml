@@ -11,6 +11,10 @@ jobs:
   eslint:
     runs-on: ubuntu-latest
     steps:
+      - name: Output Run ID
+        run: |
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number }}
       - name: Checkout Code
         uses: actions/checkout@v1
       - name: Setup Node
