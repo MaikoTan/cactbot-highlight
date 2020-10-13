@@ -18,7 +18,7 @@ export const sandboxWrapper = async (
     return new Promise((resolve, reject) => {
 
         const cwd = (vscode.workspace.workspaceFolders as vscode.WorkspaceFolder[])[0].uri.fsPath;
-        const triggerText = String(fs.readFileSync(triggerPath));
+        const triggerText = String(fs.readFileSync(triggerPath)); // TODO: use async instead?
 
         const absolute = (filePath: string): string => {
             return path.join(cwd, filePath);
@@ -26,6 +26,7 @@ export const sandboxWrapper = async (
 
         const vm = new NodeVM({
             sandbox: {
+                // TODO: move these paths to config file?
                 conditionsPath: absolute("resources/conditions.js"),
                 regexesPath: absolute("resources/regexes.js"),
                 netregexesPath: absolute("resources/netregexes.js"),
@@ -225,6 +226,9 @@ export const translateTimeline = async () => {
         );
         return;
     }
+
+    // TODO: very hacky way
+    // maybe it should be the `timelineFile` or `timeline` key in the trigger file
     if (filename.endsWith(".js")) {
         filename = filename.replace(/\.js$/, ".txt");
     }
@@ -254,6 +258,9 @@ export const translateTimeline = async () => {
     await vscode.window.showTextDocument(translatedDocument, { preview: false });
     await vscode.languages.setTextDocumentLanguage(translatedDocument, "cactbot-timeline");
 
+    // FIXME: this should dispose after file close?
+    // TODO: not only monitor the current document,
+    // but also the related files.
     vscode.workspace.onDidChangeTextDocument((e) => {
         if (e.document === document) {
             translatedTimelineProvider.onDidChangeEmitter.fire(uri);

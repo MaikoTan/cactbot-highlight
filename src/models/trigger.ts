@@ -1,3 +1,7 @@
+// Type Definition for cactbot's raidboss module
+// See https://github.com/quisquous/cactbot/blob/main/docs/RaidbossGuide.md
+// and https://github.com/quisquous/cactbot/blob/main/ui/raidboss/common_replacement.js
+
 export interface Locale {
     en?: string;
     de?: string;
