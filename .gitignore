@@ -3,8 +3,10 @@ node_modules
 *.vsix
 
 # Yarn
-yarn.lock
 yarn-error*.log
+
+# not allowd npm lock
+package-lock.json
 
 # Build
 out/
