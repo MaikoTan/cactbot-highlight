@@ -16,7 +16,6 @@ src/**
 **/*.ts
 
 # Yarn
-node_modules/
 .yarnrc
 yarn-error*.log
 yarn.lock

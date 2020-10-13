@@ -50,7 +50,10 @@ export const sandboxWrapper = async (
                     const Regexes = require(regexesPath);
                     const NetRegexes = require(netregexesPath);
                     const ZoneId = require(zoneIdPath);
-                    const Responses = require(responsesPath).responses;
+                    const ResponsesModule = require(responsesPath);
+                    // Response export name changed in https://github.com/quisquous/cactbot/pull/1868
+                    // responses -> Responses
+                    const Responses = ResponsesModule.Responses ? ResponsesModule.Responses : ResponsesModule.responses;
                     const commonReplacement = require(commonReplacementPath);
                     var trigger = eval(triggerText);
                     callback(trigger[0], commonReplacement);
