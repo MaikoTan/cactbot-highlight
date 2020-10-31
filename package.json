@@ -35,6 +35,7 @@
         "Other"
     ],
     "activationEvents": [
+        "onLanguage:javascript",
         "onCommand:cactbot.timeline.adjustTimelineByNumber",
         "onCommand:cactbot.timeline.adjustTimelineToNumber",
         "onCommand:cactbot.timeline.translateTimeline"
