@@ -143,7 +143,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
                         syncMatched.groups?.keyword,
                         "/",
                         // replace / to \/
-                        replacedSyncKey.replace("/", "\\/"),
+                        replacedSyncKey.replace(/\//g, "\\/"),
                         "/",
                     ].join(""));
                 }
@@ -157,7 +157,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
                         textMatched.groups?.time,
                         "\"",
                         // replace " to \"
-                        replacedTextKey.replace("\"", "\\\""),
+                        replacedTextKey.replace(/"/g, "\\\""),
                         "\"",
                     ].join(""));
                 }
