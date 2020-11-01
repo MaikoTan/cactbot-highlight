@@ -109,7 +109,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
 
         const replace = ((triggerFile: TriggerFile, locale: string): TimelineReplace | undefined => {
             let replace;
-            if (!(triggerFile && triggerFile?.timelineReplace)) {
+            if (!(triggerFile && triggerFile.timelineReplace)) {
                 return undefined;
             }
             for (const element of triggerFile.timelineReplace) {
