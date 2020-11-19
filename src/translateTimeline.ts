@@ -109,7 +109,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
 
         const replace = ((triggerFile: TriggerFile, locale: string): TimelineReplace | undefined => {
             let replace;
-            if (!(triggerFile && triggerFile?.timelineReplace)) {
+            if (!(triggerFile && triggerFile.timelineReplace)) {
                 return undefined;
             }
             for (const element of triggerFile.timelineReplace) {
@@ -142,7 +142,8 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
                     replacedLine = replacedLine.replace(syncMatched[0], [
                         syncMatched.groups?.keyword,
                         "/",
-                        replacedSyncKey.replace("/", "\/"),
+                        // replace / to \/
+                        replacedSyncKey.replace(/\//g, "\\/"),
                         "/",
                     ].join(""));
                 }
@@ -155,7 +156,8 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
                     replacedLine = replacedLine.replace(textMatched[0], [
                         textMatched.groups?.time,
                         "\"",
-                        replacedTextKey.replace("\"", "\/"),
+                        // replace " to \"
+                        replacedTextKey.replace(/"/g, "\\\""),
                         "\"",
                     ].join(""));
                 }
