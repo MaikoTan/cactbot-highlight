@@ -4,6 +4,13 @@ import * as fs from "fs";
 import * as vscode from "vscode";
 import { NodeVM } from "vm2";
 
+import Conditions from "cactbot/dist/resources/conditions";
+import Regexes from "cactbot/dist/resources/regexes";
+import NetRegexes from "cactbot/dist/resources/netregexes";
+import { Responses } from "cactbot/dist/resources/responses";
+import ZoneId from "cactbot/dist/resources/zone_id";
+import * as commonReplacement from "cactbot/dist/ui/raidboss/common_replacement";
+
 import {
     CommonReplacementModule,
     Locale, Replacement,
@@ -20,23 +27,20 @@ export const sandboxWrapper = async (
         const cwd = (vscode.workspace.workspaceFolders as vscode.WorkspaceFolder[])[0].uri.fsPath;
         const triggerText = String(fs.readFileSync(triggerPath)); // TODO: use async instead?
 
-        const absolute = (filePath: string): string => {
-            return path.join(cwd, filePath);
-        };
-
         const vm = new NodeVM({
             sandbox: {
-                // TODO: move these paths to config file?
-                conditionsPath: absolute("resources/conditions.js"),
-                regexesPath: absolute("resources/regexes.js"),
-                netregexesPath: absolute("resources/netregexes.js"),
-                responsesPath: absolute("resources/responses.js"),
-                zoneIdPath: absolute("resources/zone_id.js"),
-                commonReplacementPath: absolute("ui/raidboss/common_replacement.js"),
                 triggerText,
                 callback: (triggerFile: TriggerFile, commonReplacement: CommonReplacementModule) => {
                     resolve({ triggerFile, commonReplacement });
                 },
+                /* eslint-disable @typescript-eslint/naming-convention */
+                Conditions,
+                Regexes,
+                NetRegexes,
+                Responses,
+                ZoneId,
+                commonReplacement,
+                /* eslint-enable */
             },
             require: {
                 external: true,
@@ -47,18 +51,11 @@ export const sandboxWrapper = async (
 
         try {
             vm.run(`
-                    const Conditions = require(conditionsPath);
-                    const Regexes = require(regexesPath);
-                    const NetRegexes = require(netregexesPath);
-                    const ZoneId = require(zoneIdPath);
-                    const ResponsesModule = require(responsesPath);
-                    // Response export name changed in https://github.com/quisquous/cactbot/pull/1868
-                    // responses -> Responses
-                    const Responses = ResponsesModule.Responses ? ResponsesModule.Responses : ResponsesModule.responses;
-                    const commonReplacement = require(commonReplacementPath);
-                    var trigger = eval(triggerText);
-                    callback(trigger[0], commonReplacement);
-                `);
+(async () => {
+    var trigger = eval(triggerText);
+    callback(trigger[0], commonReplacement);
+})();
+                `, cwd + 'index.js');
         } catch (err) {
             reject(err);
         }

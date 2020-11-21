@@ -18,8 +18,9 @@
     "main": "./out/extension.js",
     "scripts": {
         "convert": "js-yaml syntaxes/timeline.tmLanguage.yaml > syntaxes/timeline.tmLanguage.json",
+        "build:cactbot": "babel --config-file ./babel.config.json node_modules/cactbot -d node_modules/cactbot/dist",
         "vscode:prepublish": "yarn run compile",
-        "compile": "yarn run convert && tsc -p ./",
+        "compile": "yarn run build:cactbot && yarn run convert && tsc -p ./",
         "lint": "eslint src --ext ts",
         "watch": "tsc -watch -p ./",
         "pretest": "yarn run compile && yarn run lint",
@@ -68,7 +69,7 @@
                 "extensions": [
                     "txt"
                 ],
-                "configuration": "./language-configuration.json"
+                "configuration": "./syntaxes/language-configuration.json"
             }
         ],
         "grammars": [
@@ -129,6 +130,7 @@
         "vscode-test": "^1.4.0"
     },
     "dependencies": {
+        "cactbot": "MaikoTan/cactbot#moduler",
         "vm2": "^3.9.2"
     }
 }
