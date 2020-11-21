@@ -6,14 +6,16 @@ on:
       - '**/*.ts'
       - '**/*.js'
       - '.github/workflows/build.yml'
+  workflow_dispatch:
 
 
 jobs:
-  eslint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
+
       - name: Setup Node
         uses: actions/setup-node@v2-beta
         with:
