@@ -18,9 +18,8 @@
     "main": "./out/extension.js",
     "scripts": {
         "convert": "js-yaml syntaxes/timeline.tmLanguage.yaml > syntaxes/timeline.tmLanguage.json",
-        "build:cactbot": "babel --config-file ./babel.config.json node_modules/cactbot -d node_modules/cactbot/dist",
         "vscode:prepublish": "yarn run compile",
-        "compile": "yarn run build:cactbot && yarn run convert && tsc -p ./",
+        "compile": "yarn run convert && tsc -p ./",
         "lint": "eslint src --ext ts",
         "watch": "tsc -watch -p ./",
         "pretest": "yarn run compile && yarn run lint",
