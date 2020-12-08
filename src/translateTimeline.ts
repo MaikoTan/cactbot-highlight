@@ -41,7 +41,6 @@ export const sandboxWrapper = async (
 
         try {
             vm.run(`
-debugger;
 let node = null;
 
 babel.traverse(babel.parseSync(String(fs.readFileSync(triggerPath))), {
