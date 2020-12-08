@@ -5,6 +5,7 @@ on:
     tags-ignore:
         - "*-alpha"
         - "*-beta"
+  workflow_dispatch:
 
 jobs:
   publish:
