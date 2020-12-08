@@ -1,61 +1,64 @@
-import * as path from "path";
 import * as fs from "fs";
 
 import * as vscode from "vscode";
+import * as babel from "@babel/core";
+import generator from "@babel/generator";
+const esmRequire = require("esm")(module);
 import { NodeVM } from "vm2";
 
-import Conditions from "cactbot/dist/resources/conditions";
-import Regexes from "cactbot/dist/resources/regexes";
-import NetRegexes from "cactbot/dist/resources/netregexes";
-import { Responses } from "cactbot/dist/resources/responses";
-import ZoneId from "cactbot/dist/resources/zone_id";
-import * as commonReplacement from "cactbot/dist/ui/raidboss/common_replacement";
-
 import {
-    CommonReplacementModule,
+    CommonReplacement,
     Locale, Replacement,
     TimelineReplace,
-    TriggerFile,
 } from "./models/trigger";
 
 export const sandboxWrapper = async (
     triggerPath: string,
-): Promise<{ triggerFile: TriggerFile, commonReplacement: CommonReplacementModule }> => {
+): Promise<{ timelineReplaceList: TimelineReplace[], commonReplacement: CommonReplacement }> => {
 
     return new Promise((resolve, reject) => {
 
         const cwd = (vscode.workspace.workspaceFolders as vscode.WorkspaceFolder[])[0].uri.fsPath;
-        const triggerText = String(fs.readFileSync(triggerPath)); // TODO: use async instead?
 
         const vm = new NodeVM({
             sandbox: {
-                triggerText,
-                callback: (triggerFile: TriggerFile, commonReplacement: CommonReplacementModule) => {
-                    resolve({ triggerFile, commonReplacement });
+                triggerPath,
+                commonPath: cwd + "/ui/raidboss/common_replacement.js",
+                babel,
+                generator,
+                fs,
+                esmRequire,
+                callback: (timelineReplaceList: TimelineReplace[], commonReplacement: CommonReplacement) => {
+                    resolve({ timelineReplaceList, commonReplacement });
                 },
-                /* eslint-disable @typescript-eslint/naming-convention */
-                Conditions,
-                Regexes,
-                NetRegexes,
-                Responses,
-                ZoneId,
-                commonReplacement,
-                /* eslint-enable */
             },
             require: {
                 external: true,
-                builtin: ['fs', 'path'],
+                builtin: [],
                 root: cwd,
             },
         });
 
         try {
             vm.run(`
-(async () => {
-    var trigger = eval(triggerText);
-    callback(trigger[0], commonReplacement);
-})();
-                `, cwd + 'index.js');
+debugger;
+let node = null;
+
+babel.traverse(babel.parseSync(String(fs.readFileSync(triggerPath))), {
+  ObjectProperty(path) {
+    if (path.node.key.name === "timelineReplace") {
+      node = path.node;
+    }
+  }
+});
+
+const timelineReplaceCode = generator(node).code.substring("timelineReplace: ".length);
+const timelineReplaceJson = eval(timelineReplaceCode);
+
+const commonReplacement = esmRequire(commonPath).commonReplacement;
+
+callback(timelineReplaceJson, commonReplacement);
+                `, cwd + '/index.js');
         } catch (err) {
             reject(err);
         }
@@ -78,8 +81,8 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
             return this.translate({
                 locale: locale as keyof Locale,
                 timelineFile: String(fs.readFileSync(timelineFilePath)),
-                triggerFile: result.triggerFile,
-                commonReplaceModule: result.commonReplacement,
+                timelineReplaceList: result.timelineReplaceList,
+                commonReplace: result.commonReplacement,
             });
         } catch (e) {
             const err = e as Error;
@@ -94,29 +97,26 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
     translate(o: {
         locale: keyof Locale,
         timelineFile: string,
-        triggerFile: TriggerFile,
-        commonReplaceModule: CommonReplacementModule,
+        timelineReplaceList: TimelineReplace[],
+        commonReplace: CommonReplacement,
     }): string {
         const {
             locale,
             timelineFile,
-            triggerFile,
-            commonReplaceModule,
+            timelineReplaceList,
+            commonReplace,
         } = o;
 
-        const replace = ((triggerFile: TriggerFile, locale: string): TimelineReplace | undefined => {
+        const replace = ((timelineReplaceList: TimelineReplace[], locale: string): TimelineReplace | undefined => {
             let replace;
-            if (!(triggerFile && triggerFile.timelineReplace)) {
-                return undefined;
-            }
-            for (const element of triggerFile.timelineReplace) {
+            for (const element of timelineReplaceList) {
                 if (element.locale === locale) {
                     replace = element;
                     break;
                 }
             }
             return replace;
-        })(triggerFile, locale);
+        })(timelineReplaceList, locale);
 
         if (!replace) {
             return timelineFile;
@@ -135,7 +135,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
                 const syncMatched = /(?<keyword>sync\s*)\/(?<key>.*)(?<!\\)\//.exec(line);
                 if (syncMatched) {
                     let replacedSyncKey = this.replaceKey(syncMatched.groups?.key as string, replace.replaceSync);
-                    replacedSyncKey = this.replaceCommonKey(replacedSyncKey, commonReplaceModule, "sync", locale);
+                    replacedSyncKey = this.replaceCommonKey(replacedSyncKey, commonReplace, "sync", locale);
                     replacedLine = replacedLine.replace(syncMatched[0], [
                         syncMatched.groups?.keyword,
                         "/",
@@ -149,7 +149,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
                 const textMatched = /^(?<time>\d+(\.\d)?\s*)"(?<text>.*)(?<!\\)"/.exec(line);
                 if (textMatched) {
                     let replacedTextKey = this.replaceKey(textMatched.groups?.text as string, replace.replaceText, false);
-                    replacedTextKey = this.replaceCommonKey(replacedTextKey, commonReplaceModule, "text", locale);
+                    replacedTextKey = this.replaceCommonKey(replacedTextKey, commonReplace, "text", locale);
                     replacedLine = replacedLine.replace(textMatched[0], [
                         textMatched.groups?.time,
                         "\"",
@@ -193,7 +193,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
 
     replaceCommonKey(
         original: string,
-        commonReplacementModule: CommonReplacementModule,
+        commonReplacement: CommonReplacement,
         key: "sync" | "text" = "sync",
         locale: keyof Locale,
     ): string {
@@ -202,7 +202,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
         }
 
         let text = original;
-        const replace = (key === "sync") ? commonReplacementModule.commonReplacement.replaceSync : commonReplacementModule.commonReplacement.replaceText;
+        const replace = (key === "sync") ? commonReplacement.replaceSync : commonReplacement.replaceText;
         for (const [k, v] of Object.entries(replace)) {
             text = text.replace(new RegExp(k, "gi"), v[locale]);
         }
