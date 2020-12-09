@@ -131,7 +131,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
 
             try {
                 // match "sync /xxx/"
-                const syncMatched = /(?<keyword>sync\s*)\/(?<key>.*)(?<!\\)\//.exec(line);
+                const syncMatched = /(?<keyword>sync\s*)\/(?<key>.*?)(?<!\\)\//.exec(line);
                 if (syncMatched) {
                     let replacedSyncKey = this.replaceKey(syncMatched.groups?.key as string, replace.replaceSync);
                     replacedSyncKey = this.replaceCommonKey(replacedSyncKey, commonReplace, "sync", locale);
