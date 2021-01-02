@@ -54,17 +54,20 @@ you can install `cactbot-highlight` manually:
 
 ### Enable it in cactbot
 
-Because cactbot timeline file is `*.txt`,
-VSCode would recognize it as `Plain Text` before the extension enabled.
+If you're using this extension in the repo that you clone from quisquous's branch,
+this feature is already **enabled by default**, because we add a default settings in `.vscode` directory.
 
-You should enable it manually for timeline file.
+But if you're using this extension out of a repo, you *might* need to enable it manually.
 
-- For a single file
+> Because cactbot timeline file is `*.txt`,
+> VSCode would recognize it as `Plain Text` before the extension enabled.
+
+- Enable it for a single file
 
 Click `Plain Text` button at right bottom,
 select `cactbot-timeline` in the prompt window.
 
-- For the whole repository
+- Enable it for the whole workspace
 
 Create `.vscode/settings.json` if you have no this file.
 
@@ -73,12 +76,19 @@ Add this below to the file.
 ```json
 {
     "files.associations": {
-        "*.txt": "cactbot-timeline"
+        "**/data/**/*.txt": "cactbot-timeline"
     }
 }
 ```
 
 ### Available Settings
+
+#### Via GUI
+
+Under `Settings -> Extensions -> cactbot-highlight`,
+you can configure this extension.
+
+#### Via .vscode/settings.json file
 
 ```json
 // Set default locale for timelines. If this property is set, a prompt would not shown.
