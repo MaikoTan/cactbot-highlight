@@ -1,6 +1,7 @@
 # cactbot-highlight
 
-[![Visual Studio Market](https://img.shields.io/visual-studio-marketplace/v/MaikoTan.cactbot-highlight?label=Visual%20Studio%20Market&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
+[![Visual Studio Market](https://img.shields.io/visual-studio-marketplace/v/MaikoTan.cactbot-highlight?color=green&label=Visual%20Studio%20Market)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/MaikoTan.cactbot-highlight?color=green)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
 
 A custom extension for developing [cactbot](https://github.com/quisquous/cactbot/) modules.
 
