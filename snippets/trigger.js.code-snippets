@@ -6,17 +6,47 @@
     "prefix": "alarmText",
     "body": "alarmText: (data, _, output) => output.${0:text}(),",
   },
+  "alarmTextFunc": {
+    "description": "cactbot raidboss alarmText with function",
+    "scope": "typescript,javascript",
+    "prefix": "alarmText",
+    "body": [
+      "alarmText: (data, _, output) => {",
+      "\t$0",
+      "},",
+    ],
+  },
   "alertText": {
     "description": "cactbot raidboss alertText",
     "scope": "typescript,javascript",
     "prefix": "alertText",
     "body": "alertText: (data, _, output) => output.${0:text}(),",
   },
+  "alertTextFunc": {
+    "description": "cactbot raidboss alertText with function",
+    "scope": "typescript,javascript",
+    "prefix": "alertText",
+    "body": [
+      "alertText: (data, _, output) => {",
+      "\t$0",
+      "},",
+    ],
+  },
   "infoText": {
     "description": "cactbot raidboss infoText",
     "scope": "typescript,javascript",
     "prefix": "infoText",
     "body": "infoText: (data, _, output) => output.${0:text}(),",
+  },
+  "infoTextFunc": {
+    "description": "cactbot raidboss infoText with function",
+    "scope": "typescript,javascript",
+    "prefix": "infoText",
+    "body": [
+      "infoText: (data, _, output) => {",
+      "\t$0",
+      "},",
+    ],
   },
   "outputStrings": {
     "description": "cactbot raidboss outputStrings",
