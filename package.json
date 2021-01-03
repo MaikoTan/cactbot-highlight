@@ -50,7 +50,6 @@
                     ],
                     "default": null,
                     "enum": [
-                        "en",
                         "de",
                         "fr",
                         "ja",

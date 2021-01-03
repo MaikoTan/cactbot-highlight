@@ -50,7 +50,7 @@ you can install `cactbot-highlight` manually:
 
 ### Enable it in cactbot
 
-If you're using this extension in the repo that you clone from quisquous's branch,
+If you're using this extension in the repo that you clone from quisquous' branch,
 this feature is already **enabled by default**, because we add a default settings in `.vscode` directory.
 
 But if you're using this extension out of a repo, you *might* need to enable it manually.
