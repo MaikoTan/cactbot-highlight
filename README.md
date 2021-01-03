@@ -33,10 +33,6 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ### useful snippets
 
-> snippets in trigger.js files
-
-![snippets](images/snippets.gif)
-
 ## Install
 
 If you got troubles when install from Visual Studio Market,
