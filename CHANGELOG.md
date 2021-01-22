@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2021-01-22
+
+### Added
+
+- Pick locale in list instead of manually type when translating timeline
+
 ## [0.2.0] - 2021-01-03
 
 ### Added
