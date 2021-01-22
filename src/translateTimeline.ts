@@ -235,23 +235,46 @@ export const translateTimeline = async () => {
     let locale = vscode.workspace.getConfiguration().get("cactbot.timeline.defaultLocale");
 
     if (!(typeof locale === "string" && locale)) {
-        locale = await vscode.window.showInputBox({
-            placeHolder: 'Input a locale...',
-            validateInput: (value) => {
-                const validLocales = ["de", "fr", "ja", "cn", "ko"];
-                if (validLocales.includes(value)) {
-                    return null;
-                }
-                return `Locale should be one of [${validLocales.join(", ")}]`;
-            },
-        });
+        locale = await vscode.window.showQuickPick(
+            [
+                {
+                    label: 'de',
+                    description: 'German',
+                    detail: 'Deutsch',
+                },
+                {
+                    label: 'fr',
+                    description: 'French',
+                    detail: 'français',
+                },
+                {
+                    label: 'ja',
+                    description: 'Japanese',
+                    detail: '日本語',
+                },
+                {
+                    label: 'cn',
+                    description: 'Chinese',
+                    detail: '中文',
+                },
+                {
+                    label: 'ko',
+                    description: 'Korean',
+                    detail: '한국어',
+                },
+            ],
+            {
+                placeHolder: 'Input a locale...',
+                canPickMany: false,
+            }
+        );
     }
 
     if (!locale) {
         return;
     }
 
-    const uri = vscode.Uri.parse('cactbot-timeline:' + filename + "?" + locale);
+    const uri = vscode.Uri.parse('cactbot-timeline:' + filename + "?" + (locale as vscode.QuickPickItem).label);
     const translatedDocument = await vscode.workspace.openTextDocument(uri); // calls back into the provider
     await vscode.window.showTextDocument(translatedDocument, { preview: false });
     await vscode.languages.setTextDocumentLanguage(translatedDocument, "cactbot-timeline");
