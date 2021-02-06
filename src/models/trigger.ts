@@ -3,78 +3,85 @@
 // and https://github.com/quisquous/cactbot/blob/main/ui/raidboss/common_replacement.js
 
 export interface Locale {
-    en?: string;
-    de?: string;
-    fr?: string;
-    ja?: string;
-    cn?: string;
-    ko?: string;
-}
+  en?: string;
+  de?: string;
+  fr?: string;
+  ja?: string;
+  cn?: string;
+  ko?: string;
+};
+
+export interface OutputStrings {
+  [s: string]: Locale;
+};
 
 type TriggerFunction<T> = (data: unknown, matches?: RegExpMatchArray) => T;
 
+type TriggerFunctionWithOutput<T> = (data: unknown, matches?: RegExpMatchArray, output?: any) => T;
+
 export interface Replacement {
-    [s: string]: string;
-}
+  [s: string]: string;
+};
 
 export type CommonReplacementItem = {
-    [s in Exclude<keyof Locale, "en">]: string;
+  [s in Exclude<keyof Locale, "en">]: string;
 };
 
 export interface CommonReplacement {
-    replaceText: { [s: string]: CommonReplacementItem };
-    replaceSync: { [s: string]: CommonReplacementItem };
-}
+  replaceText: { [s: string]: CommonReplacementItem };
+  replaceSync: { [s: string]: CommonReplacementItem };
+};
 
 export interface CommonReplacementModule {
-    commonReplacement: CommonReplacement;
-    partialCommonReplacementKeys: string[];
-    syncKeys: string[];
-}
+  commonReplacement: CommonReplacement;
+  partialCommonReplacementKeys: string[];
+  syncKeys: string[];
+};
 
 export interface TimelineReplace {
-    locale: keyof Locale;
-    replaceText: Replacement;
-    replaceSync: Replacement;
-}
+  locale: keyof Locale;
+  replaceText: Replacement;
+  replaceSync: Replacement;
+};
 
 export interface Trigger {
-    id: string;
-    disabled?: boolean;
-    regex?: RegExp;
-    regexDe?: RegExp;
-    regexFr?: RegExp;
-    regexJa?: RegExp;
-    regexCn?: RegExp;
-    regexKo?: RegExp;
-    netRegex?: RegExp;
-    netRegexDe?: RegExp;
-    netRegexFr?: RegExp;
-    netRegexJa?: RegExp;
-    netRegexCn?: RegExp;
-    netRegexKo?: RegExp;
-    condition?: TriggerFunction<boolean>;
-    preRun?: TriggerFunction<never>;
-    promise?: TriggerFunction<Promise<any>>;
-    delaySeconds?: number | TriggerFunction<number>;
-    durationSeconds?: number | TriggerFunction<number>;
-    suppressSeconds?: number | TriggerFunction<number>;
-    sound?: string;
-    soundVolume?: number;
-    response?: Locale | TriggerFunction<Locale>;
-    alarmText?: Locale | TriggerFunction<Locale>;
-    alertText?: Locale | TriggerFunction<Locale>;
-    infoText?: Locale | TriggerFunction<Locale>;
-    tts?: Locale | TriggerFunction<Locale>;
-    run?: TriggerFunction<never>;
-}
+  id: string;
+  disabled?: boolean;
+  regex?: RegExp;
+  regexDe?: RegExp;
+  regexFr?: RegExp;
+  regexJa?: RegExp;
+  regexCn?: RegExp;
+  regexKo?: RegExp;
+  netRegex?: RegExp;
+  netRegexDe?: RegExp;
+  netRegexFr?: RegExp;
+  netRegexJa?: RegExp;
+  netRegexCn?: RegExp;
+  netRegexKo?: RegExp;
+  condition?: TriggerFunction<boolean>;
+  preRun?: TriggerFunction<never>;
+  promise?: TriggerFunction<Promise<any>>;
+  delaySeconds?: number | TriggerFunction<number>;
+  durationSeconds?: number | TriggerFunction<number>;
+  suppressSeconds?: number | TriggerFunction<number>;
+  sound?: string;
+  soundVolume?: number;
+  response?: Locale | TriggerFunctionWithOutput<Locale>;
+  alarmText?: Locale | TriggerFunctionWithOutput<Locale>;
+  alertText?: Locale | TriggerFunctionWithOutput<Locale>;
+  infoText?: Locale | TriggerFunctionWithOutput<Locale>;
+  tts?: Locale | TriggerFunctionWithOutput<Locale>;
+  run?: TriggerFunction<never>;
+  outputStrings?: OutputStrings;
+};
 
-export interface TriggerFile {
-    zondId?: number;
-    timelineFile?: string;
-    timeline?: string;
-    locale?: keyof Locale;
-    timelineReplace?: TimelineReplace[];
-    triggers?: Trigger[];
-    resetWhenOutOfCombat?: boolean;
-}
+export interface TriggerSet {
+  zondId?: number;
+  timelineFile?: string;
+  timeline?: string;
+  locale?: keyof Locale;
+  timelineReplace?: TimelineReplace[];
+  triggers?: Trigger[];
+  resetWhenOutOfCombat?: boolean;
+};
