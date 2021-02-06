@@ -23,13 +23,17 @@ export interface Replacement {
   [s: string]: string;
 };
 
+export type CommonReplacementWithEnItem = {
+  [s in keyof Locale]: string;
+};
+
 export type CommonReplacementItem = {
   [s in Exclude<keyof Locale, "en">]: string;
 };
 
 export interface CommonReplacement {
   replaceText: { [s: string]: CommonReplacementItem };
-  replaceSync: { [s: string]: CommonReplacementItem };
+  replaceSync: { [s: string]: CommonReplacementWithEnItem };
 };
 
 export interface CommonReplacementModule {

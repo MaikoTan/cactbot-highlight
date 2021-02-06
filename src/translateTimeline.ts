@@ -3,7 +3,9 @@ import * as fs from "fs";
 import * as vscode from "vscode";
 import * as babel from "@babel/core";
 import generator from "@babel/generator";
-const esmRequire = require("esm")(module);
+const esmRequire = require("esm")(module, {
+  mode: "all",
+});
 import { NodeVM } from "vm2";
 
 import {
@@ -11,6 +13,8 @@ import {
   Locale, Replacement,
   TimelineReplace,
 } from "./models/trigger";
+
+import { commonReplacement } from "./models/common_replacement";
 
 export const sandboxWrapper = async (
   triggerPath: string,
@@ -28,7 +32,7 @@ export const sandboxWrapper = async (
         generator,
         fs,
         esmRequire,
-        callback: (timelineReplaceList: TimelineReplace[], commonReplacement: CommonReplacement) => {
+        callback: (timelineReplaceList: TimelineReplace[]) => {
           resolve({ timelineReplaceList, commonReplacement });
         },
       },
@@ -54,9 +58,7 @@ babel.traverse(babel.parseSync(String(fs.readFileSync(triggerPath))), {
 const timelineReplaceCode = generator(node).code.substring("timelineReplace: ".length);
 const timelineReplaceJson = eval(timelineReplaceCode);
 
-const commonReplacement = esmRequire(commonPath).commonReplacement;
-
-callback(timelineReplaceJson, commonReplacement);
+callback(timelineReplaceJson);
                 `, cwd + '/index.js');
     } catch (err) {
       reject(err);
