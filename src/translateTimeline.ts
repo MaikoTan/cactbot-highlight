@@ -3,9 +3,6 @@ import * as fs from "fs";
 import * as vscode from "vscode";
 import * as babel from "@babel/core";
 import generator from "@babel/generator";
-const esmRequire = require("esm")(module, {
-  mode: "all",
-});
 import { NodeVM } from "vm2";
 
 import {
@@ -18,7 +15,7 @@ import { commonReplacement } from "./models/common_replacement";
 
 export const sandboxWrapper = async (
   triggerPath: string,
-): Promise<{ timelineReplaceList: TimelineReplace[], commonReplacement: CommonReplacement }> => {
+): Promise<TimelineReplace[]> => {
 
   return new Promise((resolve, reject) => {
 
@@ -27,19 +24,12 @@ export const sandboxWrapper = async (
     const vm = new NodeVM({
       sandbox: {
         triggerPath,
-        commonPath: cwd + "/ui/raidboss/common_replacement.js",
         babel,
         generator,
         fs,
-        esmRequire,
         callback: (timelineReplaceList: TimelineReplace[]) => {
-          resolve({ timelineReplaceList, commonReplacement });
+          resolve(timelineReplaceList);
         },
-      },
-      require: {
-        external: true,
-        builtin: [],
-        root: cwd,
       },
     });
 
@@ -78,12 +68,12 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
     const locale = uri.query;
 
     try {
-      const result = await sandboxWrapper(triggerFilePath);
+      const timelineReplaceList = await sandboxWrapper(triggerFilePath);
       return this.translate({
         locale: locale as keyof Locale,
         timelineFile: String(fs.readFileSync(timelineFilePath)),
-        timelineReplaceList: result.timelineReplaceList,
-        commonReplace: result.commonReplacement,
+        timelineReplaceList,
+        commonReplace: commonReplacement,
       });
     } catch (e) {
       const err = e as Error;
