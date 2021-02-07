@@ -18,11 +18,7 @@ jobs:
       - name: Install Dependencies
         run: |
           yarn install
-
-      - name: Install Global Dependencies
-        run: |
-          yarn global add vsce js-yaml
-          echo "$(yarn global bin)" >> $GITHUB_PATH
+          echo "$(pwd)/node_modules/.bin/" >> $GITHUB_ENV
       
       - name: Build
         run: |

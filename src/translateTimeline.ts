@@ -1,9 +1,8 @@
-import * as fs from "fs";
+import { readFile } from "fs";
 
 import * as vscode from "vscode";
 import * as babel from "@babel/core";
-import generator from "@babel/generator";
-import { NodeVM } from "vm2";
+import { promisify } from "bluebird";
 
 import {
   CommonReplacement,
@@ -13,47 +12,45 @@ import {
 
 import { commonReplacement } from "./models/common_replacement";
 
-export const sandboxWrapper = async (
+export const extractReplacements = async (
   triggerPath: string,
 ): Promise<TimelineReplace[]> => {
 
-  return new Promise((resolve, reject) => {
-
-    const cwd = (vscode.workspace.workspaceFolders as vscode.WorkspaceFolder[])[0].uri.fsPath;
-
-    const vm = new NodeVM({
-      sandbox: {
-        triggerPath,
-        babel,
-        generator,
-        fs,
-        callback: (timelineReplaceList: TimelineReplace[]) => {
-          resolve(timelineReplaceList);
-        },
-      },
-    });
-
-    try {
-      vm.run(`
-let node = null;
-
-babel.traverse(babel.parseSync(String(fs.readFileSync(triggerPath))), {
-  ObjectProperty(path) {
-    if (path.node.key.name === "timelineReplace") {
-      node = path.node;
-    }
-  }
-});
-
-const timelineReplaceCode = generator(node).code.substring("timelineReplace: ".length);
-const timelineReplaceJson = eval(timelineReplaceCode);
-
-callback(timelineReplaceJson);
-                `, cwd + '/index.js');
-    } catch (err) {
-      reject(err);
-    }
+  const ret: TimelineReplace[] = [];
+  babel.traverse(await babel.parseAsync(String(await promisify(readFile)(triggerPath))), {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    ObjectProperty(path) {
+      const node = path.node as any;
+      if (node.key.name === 'timelineReplace') {
+        node.value.elements.forEach((element: any) => {
+          const timelineReplace = {
+            locale: null,
+            replaceSync: {} as any,
+            replaceText: {} as any,
+          };
+          element.properties.forEach((locales: any) => {
+            const name = locales.key.value || locales.key.name;
+            if (name === 'locale') {
+              timelineReplace.locale = locales.value.value;
+            }
+            if (name === 'replaceSync') {
+              locales.value.properties.forEach(({key, value}: any) => {
+                timelineReplace.replaceSync[key.value] = value.value;
+              });
+            }
+            if (name === 'replaceText') {
+              locales.value.properties.forEach(({key, value}: any) => {
+                timelineReplace.replaceText[key.value] = value.value;
+              });
+            }
+          });
+          ret.push(timelineReplace as unknown as TimelineReplace);
+        });
+      }
+    },
   });
+
+  return ret;
 };
 
 export class TranslatedTimelineProvider implements vscode.TextDocumentContentProvider {
@@ -68,10 +65,10 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
     const locale = uri.query;
 
     try {
-      const timelineReplaceList = await sandboxWrapper(triggerFilePath);
+      const timelineReplaceList = await extractReplacements(triggerFilePath);
       return this.translate({
         locale: locale as keyof Locale,
-        timelineFile: String(fs.readFileSync(timelineFilePath)),
+        timelineFile: String(await promisify(readFile)(timelineFilePath)),
         timelineReplaceList,
         commonReplace: commonReplacement,
       });
