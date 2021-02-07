@@ -27,6 +27,11 @@ jobs:
       - name: Build
         run: |
           yarn run package
+      
+      - name: grep asset name
+        run: |
+          NAME="$(ls | grep 'cactbot-highlight-.*.vsix')"
+          echo "ASSET_NAME=$NAME" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -47,7 +52,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: cactbot-highlight-*.vsix
+          asset_path: ${{ env.ASSET_NAME }}
+          asset_name: ${{ env.ASSET_NAME }}
           asset_content_type: application/zip
 
       - name: Publish to VS Market
