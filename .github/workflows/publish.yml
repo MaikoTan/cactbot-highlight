@@ -42,8 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: cactbot-highlight v${{ github.ref }}
+          tag_name: ${{ steps.autotag.outputs.tagname }}
+          release_name: cactbot-highlight v${{ steps.autotag.outputs.tagname }}
           body: ''
           draft: true
           prerelease: false
