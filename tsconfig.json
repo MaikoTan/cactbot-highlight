@@ -2,10 +2,10 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"moduleResolution": "node",
-		"target": "es6",
+		"target": "es2019",
 		"outDir": "out",
 		"lib": [
-			"es6"
+			"es2019"
 		],
 		"sourceMap": true,
 		"rootDir": "src",
@@ -18,7 +18,9 @@
 	},
 	"include": [
 		"src",
-		"cactbot.d.ts"
+		"cactbot.d.ts",
+		"./node_modules/vscode/vscode.d.ts",
+		"./node_modules/vscode/lib/*",
 	],
 	"exclude": [
 		"node_modules",

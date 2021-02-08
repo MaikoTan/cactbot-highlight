@@ -10,6 +10,7 @@ test/**
 out/test/**
 
 # TypeScript
+out/**
 src/**
 **/tsconfig.json
 **/*.map
