@@ -224,7 +224,7 @@ export const translateTimeline = async () => {
   let locale = vscode.workspace.getConfiguration().get("cactbot.timeline.defaultLocale");
 
   if (!(typeof locale === "string" && locale)) {
-    locale = await vscode.window.showQuickPick(
+    locale = (await vscode.window.showQuickPick(
       [
         {
           label: 'de',
@@ -256,14 +256,14 @@ export const translateTimeline = async () => {
         placeHolder: 'Input a locale...',
         canPickMany: false,
       }
-    );
+    ))?.label;
   }
 
   if (!locale) {
     return;
   }
 
-  const uri = vscode.Uri.parse('cactbot-timeline:' + filename + "?" + (locale as vscode.QuickPickItem).label);
+  const uri = vscode.Uri.parse('cactbot-timeline:' + filename + "?" + locale);
   const translatedDocument = await vscode.workspace.openTextDocument(uri); // calls back into the provider
   await vscode.window.showTextDocument(translatedDocument, { preview: true });
   await vscode.languages.setTextDocumentLanguage(translatedDocument, "cactbot-timeline");
