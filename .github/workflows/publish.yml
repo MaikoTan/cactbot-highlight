@@ -36,7 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: cactbot-hightlight v${{ github.ref }}
+          release_name: cactbot-highlight v${{ github.ref }}
           body: ''
           draft: true
           prerelease: false

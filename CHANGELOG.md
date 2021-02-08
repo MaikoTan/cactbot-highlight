@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2021.02.08
+
+### Added
+
+- Timeline translating feature implemented via pure `babel`
+
+- `cactbot-highlight` now built via webpack, for performance.
+
 ## [0.2.2] - 2021-02-06
 
 ### Added
