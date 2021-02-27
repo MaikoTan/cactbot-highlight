@@ -2,8 +2,12 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
-import { adjustTimeByNumber, adjustTimeToNumber } from "./timeline";
-import { translatedTimelineProvider, translateTimeline } from "./timeline/translate";
+import {
+	adjustTimeByNumber,
+	adjustTimeToNumber,
+	translatedTimelineProvider,
+	translateTimeline,
+} from "./timeline";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
