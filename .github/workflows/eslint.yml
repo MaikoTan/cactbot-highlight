@@ -1,0 +1,21 @@
+name: ESLint
+
+on: [push, pull_request]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+
+      - name: npm run lint
+        run: |
+          yarn run lint
