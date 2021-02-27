@@ -238,6 +238,11 @@ export const translateTimeline = async (): Promise<void> => {
     locale = (await vscode.window.showQuickPick(
       [
         {
+          label: "en",
+          description: "English",
+          detail: "English",
+        },
+        {
           label: "de",
           description: "German",
           detail: "Deutsch",
