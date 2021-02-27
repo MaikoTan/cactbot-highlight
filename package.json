@@ -139,6 +139,7 @@
   "dependencies": {
     "@babel/core": "^7.12.9",
     "@babel/generator": "^7.12.5",
+    "@babel/types": "^7.13.0",
     "bluebird": "^3.7.2"
   }
 }
