@@ -2,15 +2,16 @@ import { readFile } from "fs";
 
 import * as vscode from "vscode";
 import * as babel from "@babel/core";
+import * as t from "@babel/types";
 import { promisify } from "bluebird";
 
 import {
   CommonReplacement,
   Locale, Replacement,
   TimelineReplace,
-} from "./models/trigger";
+} from "../models/trigger";
 
-import { commonReplacement } from "./models/common_replacement";
+import { commonReplacement } from "../models/common_replacement";
 
 export const extractReplacements = async (
   triggerPath: string,
@@ -20,31 +21,41 @@ export const extractReplacements = async (
   babel.traverse(await babel.parseAsync(String(await promisify(readFile)(triggerPath))), {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     ObjectProperty(path) {
-      const node = path.node as any;
-      if (node.key.name === 'timelineReplace') {
-        node.value.elements.forEach((element: any) => {
-          const timelineReplace = {
-            locale: null,
-            replaceSync: {} as any,
-            replaceText: {} as any,
+      const node = path.node;
+      if (t.isIdentifier(node.key) &&
+        node.key.name === "timelineReplace" &&
+        t.isArrayExpression(node.value)) {
+        node.value.elements.forEach((element) => {
+          if (!t.isObjectExpression(element)) { return; }
+          const timelineReplace: TimelineReplace = {
+            locale: "en",
+            replaceSync: {},
+            replaceText: {},
           };
-          element.properties.forEach((locales: any) => {
-            const name = locales.key.value || locales.key.name;
-            if (name === 'locale') {
-              timelineReplace.locale = locales.value.value;
+          element.properties.forEach((locales) => {
+            if (!t.isObjectProperty(locales)) { return; }
+            const name = t.isStringLiteral(locales.key) ? locales.key.value : t.isIdentifier(locales.key) ? locales.key.name : null;
+            if (name === "locale" && t.isStringLiteral(locales.value)) {
+              timelineReplace.locale = locales.value.value as keyof Locale;
             }
-            if (name === 'replaceSync') {
-              locales.value.properties.forEach(({key, value}: any) => {
+            if (name === "replaceSync" && t.isObjectExpression(locales.value)) {
+              locales.value.properties.forEach((prop) => {
+                if (!t.isObjectProperty(prop)) { return; }
+                const { key, value } = prop;
+                if (!t.isStringLiteral(key) || !t.isStringLiteral(value)) { return; }
                 timelineReplace.replaceSync[key.value] = value.value;
               });
             }
-            if (name === 'replaceText') {
-              locales.value.properties.forEach(({key, value}: any) => {
+            if (name === "replaceText" && t.isObjectExpression(locales.value)) {
+              locales.value.properties.forEach((prop) => {
+                if (!t.isObjectProperty(prop)) { return; }
+                const { key, value } = prop;
+                if (!t.isStringLiteral(key) || !t.isStringLiteral(value)) { return; }
                 timelineReplace.replaceText[key.value] = value.value;
               });
             }
           });
-          ret.push(timelineReplace as unknown as TimelineReplace);
+          ret.push(timelineReplace);
         });
       }
     },
@@ -161,7 +172,7 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
     return replacedTimeline.join("\n");
   }
 
-  replaceKey(original: string, replacement: Replacement, isGlobal: boolean = true): string {
+  replaceKey(original: string, replacement: Replacement, isGlobal = true): string {
     if (!replacement) {
       return original;
     }
@@ -197,11 +208,11 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
 
     return text;
   }
-};
+}
 
 export const translatedTimelineProvider = new TranslatedTimelineProvider();
 
-export const translateTimeline = async () => {
+export const translateTimeline = async (): Promise<void> => {
   const document = vscode.window.activeTextEditor?.document;
   if (!document) {
     return;
@@ -227,33 +238,33 @@ export const translateTimeline = async () => {
     locale = (await vscode.window.showQuickPick(
       [
         {
-          label: 'de',
-          description: 'German',
-          detail: 'Deutsch',
+          label: "de",
+          description: "German",
+          detail: "Deutsch",
         },
         {
-          label: 'fr',
-          description: 'French',
-          detail: 'français',
+          label: "fr",
+          description: "French",
+          detail: "français",
         },
         {
-          label: 'ja',
-          description: 'Japanese',
-          detail: '日本語',
+          label: "ja",
+          description: "Japanese",
+          detail: "日本語",
         },
         {
-          label: 'cn',
-          description: 'Chinese',
-          detail: '中文',
+          label: "cn",
+          description: "Chinese",
+          detail: "中文",
         },
         {
-          label: 'ko',
-          description: 'Korean',
-          detail: '한국어',
+          label: "ko",
+          description: "Korean",
+          detail: "한국어",
         },
       ],
       {
-        placeHolder: 'Input a locale...',
+        placeHolder: "Input a locale...",
         canPickMany: false,
       }
     ))?.label;
@@ -263,7 +274,7 @@ export const translateTimeline = async () => {
     return;
   }
 
-  const uri = vscode.Uri.parse('cactbot-timeline:' + filename + "?" + locale);
+  const uri = vscode.Uri.parse("cactbot-timeline:" + filename + "?" + locale);
   const translatedDocument = await vscode.workspace.openTextDocument(uri); // calls back into the provider
   await vscode.window.showTextDocument(translatedDocument, { preview: true });
   await vscode.languages.setTextDocumentLanguage(translatedDocument, "cactbot-timeline");
@@ -272,7 +283,7 @@ export const translateTimeline = async () => {
   // TODO: not only monitor the current document,
   // but also the related files.
   vscode.workspace.onDidChangeTextDocument((e) => {
-    if (e.document.fileName.replace(/\.(js|txt)$/, '') === document.fileName.replace(/\.(js|txt)$/, '')) {
+    if (e.document.fileName.replace(/\.(js|txt)$/, "") === document.fileName.replace(/\.(js|txt)$/, "")) {
       translatedTimelineProvider.onDidChangeEmitter.fire(uri);
     }
   });

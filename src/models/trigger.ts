@@ -9,19 +9,19 @@ export interface Locale {
   ja?: string;
   cn?: string;
   ko?: string;
-};
+}
 
 export interface OutputStrings {
   [s: string]: Locale;
-};
+}
 
 type TriggerFunction<T> = (data: unknown, matches?: RegExpMatchArray) => T;
 
-type TriggerFunctionWithOutput<T> = (data: unknown, matches?: RegExpMatchArray, output?: any) => T;
+type TriggerFunctionWithOutput<T> = (data: unknown, matches?: RegExpMatchArray, output?: { [x: string]: () => Locale }) => T;
 
 export interface Replacement {
   [s: string]: string;
-};
+}
 
 export type CommonReplacementWithEnItem = {
   [s in keyof Locale]: string;
@@ -34,19 +34,19 @@ export type CommonReplacementItem = {
 export interface CommonReplacement {
   replaceText: { [s: string]: CommonReplacementItem };
   replaceSync: { [s: string]: CommonReplacementWithEnItem };
-};
+}
 
 export interface CommonReplacementModule {
   commonReplacement: CommonReplacement;
   partialCommonReplacementKeys: string[];
   syncKeys: string[];
-};
+}
 
 export interface TimelineReplace {
   locale: keyof Locale;
   replaceText: Replacement;
   replaceSync: Replacement;
-};
+}
 
 export interface Trigger {
   id: string;
@@ -65,7 +65,7 @@ export interface Trigger {
   netRegexKo?: RegExp;
   condition?: TriggerFunction<boolean>;
   preRun?: TriggerFunction<never>;
-  promise?: TriggerFunction<Promise<any>>;
+  promise?: TriggerFunction<Promise<unknown>>;
   delaySeconds?: number | TriggerFunction<number>;
   durationSeconds?: number | TriggerFunction<number>;
   suppressSeconds?: number | TriggerFunction<number>;
@@ -78,7 +78,7 @@ export interface Trigger {
   tts?: Locale | TriggerFunctionWithOutput<Locale>;
   run?: TriggerFunction<never>;
   outputStrings?: OutputStrings;
-};
+}
 
 export interface TriggerSet {
   zondId?: number;
@@ -88,4 +88,4 @@ export interface TriggerSet {
   timelineReplace?: TimelineReplace[];
   triggers?: Trigger[];
   resetWhenOutOfCombat?: boolean;
-};
+}

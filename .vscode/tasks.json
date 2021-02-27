@@ -11,7 +11,33 @@
 		{
 			"type": "npm",
 			"script": "watch",
-			"problemMatcher": "$ts-webpack-watch",
+			"problemMatcher": {
+				"owner": "typescript",
+				"pattern": [
+					{
+						"regexp": "WARNING in (.*)",
+						"file": 1
+					},
+					{
+						"regexp": "Module Warning (.*)"
+					},
+					{
+						"regexp": "\\[(\\d+), (\\d+)\\]: (.*)",
+						"line": 1,
+						"column": 2,
+						"message": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": {
+						"regexp": "webpack is watching the files..."
+					},
+					"endsPattern": {
+						"regexp": "webpack .* compiled"
+					}
+				}
+			},
 			"isBackground": true,
 			"presentation": {
 				"reveal": "never"

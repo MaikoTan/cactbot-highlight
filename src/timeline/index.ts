@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
 
-import { adjustTime } from "./utils";
+import { adjustTime } from "../utils";
 
+export * from "./translate";
 
-export const adjustTimeByNumber = async () => {
+export const adjustTimeByNumber = async (): Promise<void> => {
   const editor = vscode.window.activeTextEditor;
   if (!editor) {
     return;
@@ -39,7 +40,7 @@ export const adjustTimeByNumber = async () => {
   });
 };
 
-export const adjustTimeToNumber = async () => {
+export const adjustTimeToNumber = async (): Promise<void> => {
   const editor = vscode.window.activeTextEditor;
   if (!editor) {
     return;

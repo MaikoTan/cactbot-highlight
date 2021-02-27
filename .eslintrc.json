@@ -8,8 +8,13 @@
   "plugins": [
     "@typescript-eslint"
   ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
     "@typescript-eslint/naming-convention": "warn",
+    "@typescript-eslint/quotes": ["error"],
     "@typescript-eslint/semi": ["error", "always"],
     "comma-dangle": [
       "error",
@@ -18,6 +23,7 @@
     "curly": "warn",
     "eqeqeq": "warn",
     "no-throw-literal": "warn",
+    "quotes": "off",
     "semi": "off"
   }
 }
