@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2021-02-27
+
+### Added
+
+- Translating timeline to English is supported now. (See also [#2402](https://github.com/quisquous/cactbot/pull/2402))
+
 ## [0.3.1] - 2021-02-08
 
 ### Fixed
