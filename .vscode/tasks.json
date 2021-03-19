@@ -31,7 +31,7 @@
 				"background": {
 					"activeOnStart": true,
 					"beginsPattern": {
-						"regexp": "webpack is watching the files..."
+						"regexp": "yarn run"
 					},
 					"endsPattern": {
 						"regexp": "webpack .* compiled"
