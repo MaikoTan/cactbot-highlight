@@ -269,7 +269,7 @@ export const translateTimeline = async (): Promise<void> => {
         },
       ],
       {
-        placeHolder: "Input a locale...",
+        placeHolder: "Select a locale...",
         canPickMany: false,
       }
     ))?.label;
