@@ -88,15 +88,15 @@
     "commands": [
       {
         "command": "cactbot.timeline.adjustTimelineByNumber",
-        "title": "Adjust Timeline By ..."
+        "title": "cactbot-highlight: Adjust Timeline By ..."
       },
       {
         "command": "cactbot.timeline.adjustTimelineToNumber",
-        "title": "Adjust Timeline To ..."
+        "title": "cactbot-highlight: Adjust Timeline To ..."
       },
       {
         "command": "cactbot.timeline.translateTimeline",
-        "title": "Translate Timeline To ..."
+        "title": "cactbot-highlight: Translate Timeline To ..."
       }
     ],
     "menus": {
