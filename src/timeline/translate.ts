@@ -1,8 +1,8 @@
 import { readFile } from "fs";
 
-import * as vscode from "vscode";
-import * as babel from "@babel/core";
-import * as t from "@babel/types";
+import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from "vscode";
+import { parseAsync, traverse } from "@babel/core";
+import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from "@babel/types";
 import { promisify } from "bluebird";
 
 import {
@@ -18,39 +18,39 @@ export const extractReplacements = async (
 ): Promise<TimelineReplace[]> => {
 
   const ret: TimelineReplace[] = [];
-  babel.traverse(await babel.parseAsync(String(await promisify(readFile)(triggerPath))), {
+  traverse(await parseAsync(String(await promisify(readFile)(triggerPath))), {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     ObjectProperty(path) {
       const node = path.node;
-      if (t.isIdentifier(node.key) &&
+      if (isIdentifier(node.key) &&
         node.key.name === "timelineReplace" &&
-        t.isArrayExpression(node.value)) {
+        isArrayExpression(node.value)) {
         node.value.elements.forEach((element) => {
-          if (!t.isObjectExpression(element)) { return; }
+          if (!isObjectExpression(element)) { return; }
           const timelineReplace: TimelineReplace = {
             locale: "en",
             replaceSync: {},
             replaceText: {},
           };
           element.properties.forEach((locales) => {
-            if (!t.isObjectProperty(locales)) { return; }
-            const name = t.isStringLiteral(locales.key) ? locales.key.value : t.isIdentifier(locales.key) ? locales.key.name : null;
-            if (name === "locale" && t.isStringLiteral(locales.value)) {
+            if (!isObjectProperty(locales)) { return; }
+            const name = isStringLiteral(locales.key) ? locales.key.value : isIdentifier(locales.key) ? locales.key.name : null;
+            if (name === "locale" && isStringLiteral(locales.value)) {
               timelineReplace.locale = locales.value.value as keyof Locale;
             }
-            if (name === "replaceSync" && t.isObjectExpression(locales.value)) {
+            if (name === "replaceSync" && isObjectExpression(locales.value)) {
               locales.value.properties.forEach((prop) => {
-                if (!t.isObjectProperty(prop)) { return; }
+                if (!isObjectProperty(prop)) { return; }
                 const { key, value } = prop;
-                if (!t.isStringLiteral(key) || !t.isStringLiteral(value)) { return; }
+                if (!isStringLiteral(key) || !isStringLiteral(value)) { return; }
                 timelineReplace.replaceSync[key.value] = value.value;
               });
             }
-            if (name === "replaceText" && t.isObjectExpression(locales.value)) {
+            if (name === "replaceText" && isObjectExpression(locales.value)) {
               locales.value.properties.forEach((prop) => {
-                if (!t.isObjectProperty(prop)) { return; }
+                if (!isObjectProperty(prop)) { return; }
                 const { key, value } = prop;
-                if (!t.isStringLiteral(key) || !t.isStringLiteral(value)) { return; }
+                if (!isStringLiteral(key) || !isStringLiteral(value)) { return; }
                 timelineReplace.replaceText[key.value] = value.value;
               });
             }
@@ -64,13 +64,13 @@ export const extractReplacements = async (
   return ret;
 };
 
-export class TranslatedTimelineProvider implements vscode.TextDocumentContentProvider {
+export class TranslatedTimelineProvider implements TextDocumentContentProvider {
 
-  onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
+  onDidChangeEmitter = new EventEmitter<Uri>();
 
   onDidChange = this.onDidChangeEmitter.event;
 
-  async provideTextDocumentContent(uri: vscode.Uri): Promise<string> {
+  async provideTextDocumentContent(uri: Uri): Promise<string> {
     const timelineFilePath = uri.path;
     const triggerFilePath = timelineFilePath.replace(/\.txt$/, ".js");
     const locale = uri.query;
@@ -213,13 +213,13 @@ export class TranslatedTimelineProvider implements vscode.TextDocumentContentPro
 export const translatedTimelineProvider = new TranslatedTimelineProvider();
 
 export const translateTimeline = async (): Promise<void> => {
-  const document = vscode.window.activeTextEditor?.document;
+  const document = window.activeTextEditor?.document;
   if (!document) {
     return;
   }
   let filename = document.fileName;
   if (!/\w*ui.raidboss.data.\d\d.*\.(js|txt)/.test(filename)) {
-    await vscode.window.showErrorMessage(
+    await window.showErrorMessage(
       `${filename} is not a valid file path, please make sure your active file is "ui/raidboss/data/**/*.js"`
     );
     return;
@@ -232,10 +232,10 @@ export const translateTimeline = async (): Promise<void> => {
   }
 
   // try to get locale settings in settings.json
-  let locale = vscode.workspace.getConfiguration().get("cactbot.timeline.defaultLocale");
+  let locale = workspace.getConfiguration().get("cactbot.timeline.defaultLocale");
 
   if (!(typeof locale === "string" && locale)) {
-    locale = (await vscode.window.showQuickPick(
+    locale = (await window.showQuickPick(
       [
         {
           label: "en",
@@ -279,15 +279,15 @@ export const translateTimeline = async (): Promise<void> => {
     return;
   }
 
-  const uri = vscode.Uri.parse("cactbot-timeline:" + filename + "?" + locale);
-  const translatedDocument = await vscode.workspace.openTextDocument(uri); // calls back into the provider
-  await vscode.window.showTextDocument(translatedDocument, { preview: true });
-  await vscode.languages.setTextDocumentLanguage(translatedDocument, "cactbot-timeline");
+  const uri = Uri.parse("cactbot-timeline:" + filename + "?" + locale);
+  const translatedDocument = await workspace.openTextDocument(uri); // calls back into the provider
+  await window.showTextDocument(translatedDocument, { preview: true });
+  await languages.setTextDocumentLanguage(translatedDocument, "cactbot-timeline");
 
   // FIXME: this should dispose after file close?
   // TODO: not only monitor the current document,
   // but also the related files.
-  vscode.workspace.onDidChangeTextDocument((e) => {
+  workspace.onDidChangeTextDocument((e) => {
     if (e.document.fileName.replace(/\.(js|txt)$/, "") === document.fileName.replace(/\.(js|txt)$/, "")) {
       translatedTimelineProvider.onDidChangeEmitter.fire(uri);
     }

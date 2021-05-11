@@ -1,11 +1,11 @@
-import * as vscode from "vscode";
+import { Range, window } from "vscode";
 
 import { adjustTime } from "../utils";
 
 export * from "./translate";
 
 export const adjustTimeByNumber = async (): Promise<void> => {
-  const editor = vscode.window.activeTextEditor;
+  const editor = window.activeTextEditor;
   if (!editor) {
     return;
   }
@@ -15,10 +15,10 @@ export const adjustTimeByNumber = async (): Promise<void> => {
   const start = selection.start.line;
   const end = selection.end.line;
   // indicate all the lines that selected
-  const range = new vscode.Range(editor.document.lineAt(start).range.start, editor.document.lineAt(end).range.end);
+  const range = new Range(editor.document.lineAt(start).range.start, editor.document.lineAt(end).range.end);
 
   // show an input box
-  const inputValue = await vscode.window.showInputBox({
+  const inputValue = await window.showInputBox({
     prompt: "Input a number (can be negative)",
     validateInput: (value) => {
       return /(-)?\d+(\.\d)?/.test(value) ? null : "Please input valid number (1 digit only is allowed)";
@@ -41,7 +41,7 @@ export const adjustTimeByNumber = async (): Promise<void> => {
 };
 
 export const adjustTimeToNumber = async (): Promise<void> => {
-  const editor = vscode.window.activeTextEditor;
+  const editor = window.activeTextEditor;
   if (!editor) {
     return;
   }
@@ -51,10 +51,10 @@ export const adjustTimeToNumber = async (): Promise<void> => {
   const start = selection.start.line;
   const end = selection.end.line;
   // indicate all the lines that selected
-  const range = new vscode.Range(editor.document.lineAt(start).range.start, editor.document.lineAt(end).range.end);
+  const range = new Range(editor.document.lineAt(start).range.start, editor.document.lineAt(end).range.end);
 
   // show an input box
-  const inputValue = await vscode.window.showInputBox({
+  const inputValue = await window.showInputBox({
     prompt: "Input a number (can be negative)",
     validateInput: (value) => {
       return /(-)?\d+(\.\d)?/.test(value) ? null : "Please input valid number";
