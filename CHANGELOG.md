@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.6] - 2021-05-11
+
+### Added
+
+- Enable extension when open up a timeline file
+
+### Fixed
+
+- Update `vsce` to 1.88.0 to avoid [CVE-2021-23358](https://github.com/advisories/GHSA-cf4h-3jhx-xvhq)
+
 ## [0.3.5] - 2021-04-15
 
 ### Changed
