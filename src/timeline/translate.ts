@@ -4,6 +4,7 @@ import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, work
 import { parseAsync, traverse } from "@babel/core";
 import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from "@babel/types";
 import { promisify } from "bluebird";
+import * as ts from "typescript";
 
 import {
   CommonReplacement,
@@ -18,7 +19,18 @@ export const extractReplacements = async (
 ): Promise<TimelineReplace[]> => {
 
   const ret: TimelineReplace[] = [];
-  traverse(await parseAsync(String(await promisify(readFile)(triggerPath))), {
+
+  let fileContent = String(await promisify(readFile)(triggerPath));
+
+  // transpile typescript first, then feed to babel.
+  if (triggerPath.endsWith(".ts")) {
+    fileContent = ts.transpile(fileContent, {
+      target: ts.ScriptTarget.ES2020,
+      esModuleInterop: true,
+    });
+  }
+
+  traverse(await parseAsync(fileContent), {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     ObjectProperty(path) {
       const node = path.node;
@@ -242,8 +254,8 @@ export const translateTimeline = async (): Promise<void> => {
 
   // TODO: very hacky way
   // maybe it should be the `timelineFile` or `timeline` key in the trigger file
-  if (filename.endsWith(".js")) {
-    filename = filename.replace(/\.js$/, ".txt");
+  if (filename.endsWith(".js") || filename.endsWith(".ts")) {
+    filename = filename.replace(/\.(js|ts)$/, ".txt");
   }
 
   // try to get locale settings in settings.json
@@ -303,7 +315,7 @@ export const translateTimeline = async (): Promise<void> => {
   // TODO: not only monitor the current document,
   // but also the related files.
   workspace.onDidChangeTextDocument((e) => {
-    if (e.document.fileName.replace(/\.(js|txt)$/, "") === document.fileName.replace(/\.(js|txt)$/, "")) {
+    if (e.document.fileName.replace(/\.(js|ts|txt)$/, "") === document.fileName.replace(/\.(js|ts|txt)$/, "")) {
       translatedTimelineProvider.onDidChangeEmitter.fire(uri);
     }
   });
