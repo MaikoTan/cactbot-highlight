@@ -2,7 +2,7 @@
   "name": "cactbot-highlight",
   "displayName": "cactbot-highlight",
   "description": "A VSCode extension for developing cactbot modules.",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "publisher": "MaikoTan",
   "author": {
     "name": "Maiko Tan",

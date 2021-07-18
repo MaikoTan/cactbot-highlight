@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.7] - 2021-07-18
+
+### Fixed
+
+- Translate feature support TypeScript trigger files
+
 ## [0.3.6] - 2021-05-11
 
 ### Added
