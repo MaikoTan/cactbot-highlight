@@ -1,4 +1,4 @@
-import { readFile } from "fs";
+import { existsSync, readFile } from "fs";
 
 import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from "vscode";
 import { parseAsync, traverse } from "@babel/core";
@@ -70,9 +70,24 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
 
   onDidChange = this.onDidChangeEmitter.event;
 
+  getTriggerFilePath(timelineFilePath: string): string | undefined {
+    let triggerFilePath = timelineFilePath.replace(/\.txt$/, ".js");
+    if (existsSync(triggerFilePath)) {
+      return triggerFilePath;
+    }
+    triggerFilePath = triggerFilePath.replace(/\.js$/, ".ts");
+    if (existsSync(triggerFilePath)) {
+      return triggerFilePath;
+    }
+  }
+
   async provideTextDocumentContent(uri: Uri): Promise<string> {
     const timelineFilePath = uri.path;
-    const triggerFilePath = timelineFilePath.replace(/\.txt$/, ".js");
+    const triggerFilePath = this.getTriggerFilePath(timelineFilePath);
+    if (!triggerFilePath) {
+      throw new Error("Cannot find trigger file.");
+    }
+
     const locale = uri.query;
 
     try {
@@ -218,9 +233,9 @@ export const translateTimeline = async (): Promise<void> => {
     return;
   }
   let filename = document.fileName;
-  if (!/\w*ui.raidboss.data.\d\d.*\.(js|txt)/.test(filename)) {
+  if (!/\w*ui.raidboss.data.\d\d.*\.(ts|js|txt)/.test(filename)) {
     await window.showErrorMessage(
-      `${filename} is not a valid file path, please make sure your active file is "ui/raidboss/data/**/*.js"`
+      `${filename} is not a valid file path, please make sure your active file is "ui/raidboss/data/**/*.(js|ts)"`
     );
     return;
   }
