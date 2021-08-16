@@ -1,9 +1,0 @@
-{
-  "presets": [
-    "@babel/preset-env"
-  ],
-  "only": [
-    "**/resources",
-    "**/ui"
-  ]
-}

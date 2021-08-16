@@ -1,10 +1,10 @@
 import { existsSync, readFile } from "fs";
+import { promisify } from "util";
 
 import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from "vscode";
-import { parseAsync, traverse } from "@babel/core";
+import { transformAsync, traverse } from "@babel/core";
 import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from "@babel/types";
-import { promisify } from "bluebird";
-import * as ts from "typescript";
+import ts from "typescript";
 
 import {
   CommonReplacement,
@@ -20,7 +20,7 @@ export const extractReplacements = async (
 
   const ret: TimelineReplace[] = [];
 
-  let fileContent = String(await promisify(readFile)(triggerPath));
+  let fileContent = await promisify(readFile)(triggerPath, "utf8");
 
   // transpile typescript first, then feed to babel.
   if (triggerPath.endsWith(".ts")) {
@@ -29,8 +29,12 @@ export const extractReplacements = async (
       esModuleInterop: true,
     });
   }
+  const babelRet = await transformAsync(fileContent, { ast: true });
+  if (!babelRet) {
+    throw new Error("Error when reading timeline file");
+  }
 
-  traverse(await parseAsync(fileContent), {
+  traverse(babelRet.ast, {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     ObjectProperty(path) {
       const node = path.node;

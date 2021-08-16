@@ -31,10 +31,10 @@
 				"background": {
 					"activeOnStart": true,
 					"beginsPattern": {
-						"regexp": "yarn run"
+						"regexp": "Starting compilation"
 					},
 					"endsPattern": {
-						"regexp": "webpack .* compiled"
+						"regexp": "Found \\d+ errors. Watching for file changes."
 					}
 				}
 			},
