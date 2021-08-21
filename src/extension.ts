@@ -16,12 +16,12 @@ export function activate(context: ExtensionContext): void {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	context.subscriptions.push(commands.registerCommand("cactbot.timeline.adjustTimelineByNumber", () => adjustTimeByNumber()));
-	context.subscriptions.push(commands.registerCommand("cactbot.timeline.adjustTimelineToNumber", () => adjustTimeToNumber()));
+	context.subscriptions.push(commands.registerCommand("cactbot.timeline.incDecTime", () => adjustTimeByNumber()));
+	context.subscriptions.push(commands.registerCommand("cactbot.timeline.setTime", () => adjustTimeToNumber()));
 
 	// register translate timeline
 	context.subscriptions.push(workspace.registerTextDocumentContentProvider("cactbot-timeline", translatedTimelineProvider));
-	context.subscriptions.push(commands.registerCommand("cactbot.timeline.translateTimeline", () => translateTimeline()));
+	context.subscriptions.push(commands.registerCommand("cactbot.timeline.translate", () => translateTimeline()));
 
 }
 

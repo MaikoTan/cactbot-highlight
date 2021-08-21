@@ -36,9 +36,9 @@
   ],
   "activationEvents": [
     "onLanguage:cactbot-timeline",
-    "onCommand:cactbot.timeline.adjustTimelineByNumber",
-    "onCommand:cactbot.timeline.adjustTimelineToNumber",
-    "onCommand:cactbot.timeline.translateTimeline"
+    "onCommand:cactbot.timeline.incDecTime",
+    "onCommand:cactbot.timeline.setTime",
+    "onCommand:cactbot.timeline.translate"
   ],
   "contributes": {
     "configuration": {
@@ -87,28 +87,25 @@
     ],
     "commands": [
       {
-        "command": "cactbot.timeline.adjustTimelineByNumber",
-        "title": "cactbot-highlight: Adjust Timeline By ..."
+        "command": "cactbot.timeline.incDecTime",
       },
       {
-        "command": "cactbot.timeline.adjustTimelineToNumber",
-        "title": "cactbot-highlight: Adjust Timeline To ..."
+        "command": "cactbot.timeline.setTime",
       },
       {
-        "command": "cactbot.timeline.translateTimeline",
-        "title": "cactbot-highlight: Translate Timeline To ..."
+        "command": "cactbot.timeline.translate",
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "resourceLangId == cactbot-timeline",
-          "command": "cactbot.timeline.adjustTimelineByNumber",
+          "command": "cactbot.timeline.incDecTime",
           "group": "7_modification"
         },
         {
           "when": "resourceLangId == cactbot-timeline",
-          "command": "cactbot.timeline.adjustTimelineToNumber",
+          "command": "cactbot.timeline.setTime",
           "group": "7_modification"
         }
       ]
@@ -129,7 +126,6 @@
     "js-yaml": "^3.14.0",
     "mocha": "^8.1.3",
     "ts-node": "^10.1.0",
-    "typescript": "^4.0.2",
     "vsce": "^1.88.0",
     "vscode-test": "^1.4.0"
   },
@@ -138,6 +134,7 @@
     "@babel/generator": "^7.12.5",
     "@babel/plugin-transform-typescript": "^7.15.0",
     "@babel/types": "^7.13.0",
+    "typescript": "^4.0.2",
     "vscode-nls": "^5.0.0"
   }
 }
