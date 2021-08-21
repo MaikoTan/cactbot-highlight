@@ -114,6 +114,13 @@ Timeline highlighting is incomplete.
 
 Need more snippets in other files.
 
+## Multi-language support
+
+This extension supports multi-language.
+
+If you want to add a new language, or contribute to the existing ones,
+please visit [our project on Crowdin](https://crowdin.com/project/cactbot-highlight).
+
 ## Contributing
 
 See: [CONTRIBUTING.md](CONTRIBUTING.md)

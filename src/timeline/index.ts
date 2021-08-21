@@ -1,10 +1,13 @@
 import { Range, window } from "vscode";
+import * as nls from "vscode-nls";
 
 import { adjustTime } from "../utils";
 
 export * from "./translate";
 
-export const adjustTimeByNumber = async (): Promise<void> => {
+const localize = nls.loadMessageBundle();
+
+export const incDecTime = async (): Promise<void> => {
   const editor = window.activeTextEditor;
   if (!editor) {
     return;
@@ -19,9 +22,12 @@ export const adjustTimeByNumber = async (): Promise<void> => {
 
   // show an input box
   const inputValue = await window.showInputBox({
-    prompt: "Input a number (can be negative)",
+    prompt: localize("incDecTime.prompt", "Input a number (can be negative)"),
     validateInput: (value) => {
-      return /(-)?\d+(\.\d)?/.test(value) ? null : "Please input valid number (1 digit only is allowed)";
+      if (/(-)?\d+(\.\d)?/.test(value)) {
+        return null;
+      }
+      return localize("incDecTime.inputValidNumber1DigitOnly", "Please input valid number (1 digit only is allowed)");
     },
   });
 
@@ -40,7 +46,7 @@ export const adjustTimeByNumber = async (): Promise<void> => {
   });
 };
 
-export const adjustTimeToNumber = async (): Promise<void> => {
+export const setTime = async (): Promise<void> => {
   const editor = window.activeTextEditor;
   if (!editor) {
     return;
@@ -55,9 +61,12 @@ export const adjustTimeToNumber = async (): Promise<void> => {
 
   // show an input box
   const inputValue = await window.showInputBox({
-    prompt: "Input a number (can be negative)",
+    prompt: localize("setTime.prompt", "Input a number (can be negative)"),
     validateInput: (value) => {
-      return /(-)?\d+(\.\d)?/.test(value) ? null : "Please input valid number";
+      if (/\d+(\.\d)?/.test(value)) {
+        return null;
+      }
+      return localize("setTime.inputValidNumber", "Please input valid number");
     },
   });
 

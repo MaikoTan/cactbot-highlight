@@ -16,3 +16,6 @@ dist/
 syntaxes/*.json
 !syntaxes/tmLanguage.schema.json
 !syntaxes/language-configuration.json
+
+# i18n
+package.nls.*.json

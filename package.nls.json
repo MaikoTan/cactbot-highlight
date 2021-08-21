@@ -1,0 +1,6 @@
+{
+  "config.cactbot.defaultLocale.description": "Set a default language for timelines translating. If you don't want to be asked which language do you want to translate to every time, you can set this property to your prefer language.",
+  "command.cactbot.timeline.incDecTime": "Increase/Decrease Time of Selection",
+  "command.cactbot.timeline.setTime": "Set Time of Selection",
+  "command.cactbot.timeline.translate": "Translate Current Timeline"
+}

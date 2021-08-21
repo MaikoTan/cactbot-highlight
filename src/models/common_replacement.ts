@@ -111,7 +111,7 @@ export const commonReplacement: CommonReplacement = {
       cn: "--东--",
       ko: "--동쪽--",
     },
-    "Enrage": {
+    Enrage: {
       de: "Finalangriff",
       fr: "Enrage",
       ja: "時間切れ",

@@ -17,7 +17,11 @@ export interface OutputStrings {
 
 type TriggerFunction<T> = (data: unknown, matches?: RegExpMatchArray) => T;
 
-type TriggerFunctionWithOutput<T> = (data: unknown, matches?: RegExpMatchArray, output?: { [x: string]: () => Locale }) => T;
+type TriggerFunctionWithOutput<T> = (
+  data: unknown,
+  matches?: RegExpMatchArray,
+  output?: { [x: string]: () => Locale },
+) => T;
 
 export interface Replacement {
   [s: string]: string;
