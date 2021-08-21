@@ -7,10 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2021-08-22
+
+### Added
+
+- Multi-language support.
+
 ### Changed
 
 - Timeline highlight method changed, should be more stable.
 - The name of the extension changed to "Cactbot Highlight".
+- Now using gulp to build the extension.
 
 ## [0.3.8] - 2021-07-18
 
