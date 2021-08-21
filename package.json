@@ -1,6 +1,6 @@
 {
   "name": "cactbot-highlight",
-  "displayName": "cactbot-highlight",
+  "displayName": "Cactbot Highlight",
   "description": "A VSCode extension for developing cactbot modules.",
   "version": "0.3.8",
   "publisher": "MaikoTan",
@@ -18,7 +18,6 @@
   "main": "./dist/extension.js",
   "scripts": {
     "convert": "js-yaml syntaxes/timeline.tmLanguage.yaml > syntaxes/timeline.tmLanguage.json",
-    "vscode:prepublish": "yarn run compile",
     "compile": "yarn run convert && tsc",
     "lint": "eslint src --ext ts",
     "watch": "tsc --watch",
