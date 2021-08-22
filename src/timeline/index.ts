@@ -27,7 +27,7 @@ export const incDecTime = async (): Promise<void> => {
       if (/(-)?\d+(\.\d)?/.test(value)) {
         return null;
       }
-      return localize("incDecTime.inputValidNumber1DigitOnly", "Please input valid number (1 digit only is allowed)");
+      return localize("incDecTime.inputValidNumber1DigitOnly", "Please input valid number (only 1 decimal place is allowed)");
     },
   });
 
