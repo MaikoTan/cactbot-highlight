@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const { doesNotMatch } = require("assert");
 const del = require("del");
 const es = require("event-stream");
 const gulp = require("gulp");
 const filter = require("gulp-filter");
 const ts = require("gulp-typescript");
 const jsYaml = require("js-yaml");
+const path = require("path");
 const typescript = require("typescript");
 const vsce = require("vsce");
 const nls = require("vscode-nls-dev");
@@ -12,7 +14,7 @@ const nls = require("vscode-nls-dev");
 const tsProject = ts.createProject("./tsconfig.json", { typescript });
 
 const languages = [
-  { folderName: "ja-JP", id: "ja" },
+  { folderName: "ja", id: "ja" },
   { folderName: "zh-CN", id: "zh-cn" },
   { folderName: "zh-TW", id: "zh-tw" },
 ];
@@ -64,6 +66,15 @@ gulp.task("port-i18n", function() {
   .pipe(gulp.src(["package.nls.json"]))
   .pipe(nls.createXlfFiles("cactbot-highlight", "cactbot-highlight"))
   .pipe(gulp.dest("../crowdin-i18n"));
+});
+
+gulp.task("import-translations", function(done) {
+  return es.merge(languages.map((language) => {
+    return gulp.src([`../crowdin-i18n/cactbot-highlight (translations)/${language.folderName}/*.xlf`])
+      .pipe(nls.prepareJsonFiles())
+      .pipe(gulp.dest(path.join("./i18n", language.folderName)));
+  }))
+  .pipe(es.wait(() => done()));
 });
 
 const addI18nTask = function() {
