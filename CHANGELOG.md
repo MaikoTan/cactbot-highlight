@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.3] - 2021-08-22
+
+### Added
+
+- Translations:
+  - Japanese (`ja`)
+  - Simplified Chinese (`zh-CN`)
+  - Traditional Chinese (`zh-TW`)
+
 ## [0.4.2] - 2021-08-22
 
 ### Fixed
