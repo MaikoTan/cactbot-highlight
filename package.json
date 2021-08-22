@@ -153,6 +153,8 @@
     "singleQuote": false,
     "trailingComma": "all",
     "useTabs": false,
-    "tabWidth": 2
+    "tabWidth": 2,
+    "quoteProps": "as-needed",
+    "semi": true
   }
 }

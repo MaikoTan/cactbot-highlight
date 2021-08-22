@@ -127,7 +127,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
       const err = e as Error;
       return localize(
         "error.timeline.translate.stack",
-        'Error when translating file "{0}":\n{1}\n{2}\n{3}',
+        "Error when translating file \"{0}\":\n{1}\n{2}\n{3}",
         uri.path,
         err.name,
         err.message,
@@ -194,10 +194,10 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
             textMatched[0],
             [
               textMatched.groups?.time,
-              '"',
+              "\"",
               // replace " to \"
-              replacedTextKey.replace(/"/g, '\\"'),
-              '"',
+              replacedTextKey.replace(/"/g, "\\\""),
+              "\"",
             ].join(""),
           );
         }
@@ -206,7 +206,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
         console.warn(
           localize(
             "error.transle.line.stack",
-            "Error in translating line {0}:\n{1}\n{2}\n${3}",
+            "Error in translating line {0}:\n{1}\n{2}\n{3}",
             index,
             error.name,
             error.message,
@@ -271,7 +271,7 @@ export const translateTimeline = async (): Promise<void> => {
     await window.showErrorMessage(
       localize(
         "error.timeline.file.not.valid",
-        '{0} is not a valid file path, please make sure your active file is "ui/raidboss/data/**/*.(js|ts)"',
+        "{0} is not a valid file path, please make sure your active file is \"ui/raidboss/data/**/*.(js|ts)\"",
       ),
     );
     return;
