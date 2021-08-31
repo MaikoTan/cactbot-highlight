@@ -13,7 +13,7 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
   - [Enable it in cactbot](#enable-it-in-cactbot)
   - [Available Settings](#available-settings)
   - [How to build your own](#how-to-build-your-own)
-- [Known Issues](#known-issues)
+- [Multi-language support](#multi-language-support)
 - [Contributing](#contributing)
 
 ## Features
@@ -108,15 +108,15 @@ yarn run compile
 
 - Press <kbd>F5</kbd> for executing.
 
-## Known Issues
-
-Timeline highlighting is incomplete.
-
-Need more snippets in other files.
-
 ## Multi-language support
 
 This extension supports multi-language.
+
+Translators are listed below. Thanks for your contribution!
+
+  - Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
+  - Traditional Chinese - [@MaikoTan](https://github.com/MaikoTan)
+  - Japanese - [@MaikoTan](https://github.com/MaikoTan)
 
 If you want to add a new language, or contribute to the existing ones,
 please visit [our project on Crowdin](https://crowdin.com/project/cactbot-highlight).
