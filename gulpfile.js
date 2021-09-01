@@ -73,14 +73,14 @@ gulp.task("import-translations", function(done) {
   return es.merge(languages.map((language) => {
     return gulp.src([`../crowdin-i18n/cactbot-highlight (translations)/${language.folderName}/*.xlf`])
       .pipe(nls.prepareJsonFiles())
-      .pipe(gulp.dest(path.join("./i18n", language.folderName)));
+      .pipe(gulp.dest(path.join("./i18n", language.folderName, "dist")));
   }))
   .pipe(es.wait(() => done()));
 });
 
 const addI18nTask = function() {
 	return gulp.src(["package.nls.json"])
-		.pipe(nls.createAdditionalLanguageFiles(languages, "i18n"))
+		.pipe(nls.createAdditionalLanguageFiles(languages, "i18n", "dist"))
 		.pipe(gulp.dest("."));
 };
 
