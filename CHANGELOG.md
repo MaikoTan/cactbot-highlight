@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.5] - 2021-09-01
+
+### Fixed
+
+- Load translations error (message bundle not found)
+
 ## [0.4.4] - 2021-09-01
 
 ### Added
