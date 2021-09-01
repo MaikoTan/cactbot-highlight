@@ -17,6 +17,7 @@ const languages = [
   { folderName: "ja", id: "ja" },
   { folderName: "zh-CN", id: "zh-cn" },
   { folderName: "zh-TW", id: "zh-tw" },
+  { folderName: "fr", id: "fr" },
 ];
 
 const cleanTask = function() {
