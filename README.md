@@ -117,6 +117,7 @@ Translators are listed below. Thanks for your contribution!
   - Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
   - Traditional Chinese - [@MaikoTan](https://github.com/MaikoTan)
   - Japanese - [@MaikoTan](https://github.com/MaikoTan)
+  - French - [@MaikoTan](https://github.com/MaikoTan)
 
 If you want to add a new language, or contribute to the existing ones,
 please visit [our project on Crowdin](https://crowdin.com/project/cactbot-highlight).
