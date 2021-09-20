@@ -120,7 +120,7 @@
     "@types/gulp": "^4.0.9",
     "@types/js-yaml": "^4.0.2",
     "@types/mocha": "^8.0.0",
-    "@types/node": "^12.11.7",
+    "@types/node": "^16.9.4",
     "@types/vscode": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.31.1",
