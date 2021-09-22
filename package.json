@@ -141,7 +141,7 @@
     "vscode-test": "^1.4.0"
   },
   "dependencies": {
-    "@babel/core": "^7.12.9",
+    "@babel/core": "^7.15.5",
     "@babel/generator": "^7.12.5",
     "@babel/plugin-transform-typescript": "^7.15.4",
     "@babel/types": "^7.15.6",
