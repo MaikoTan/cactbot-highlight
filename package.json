@@ -138,7 +138,7 @@
     "ts-node": "^10.1.0",
     "vsce": "^1.100.0",
     "vscode-nls-dev": "^3.3.2",
-    "vscode-test": "^1.4.0"
+    "vscode-test": "^1.6.1"
   },
   "dependencies": {
     "@babel/core": "^7.15.5",
