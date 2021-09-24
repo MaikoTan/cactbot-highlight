@@ -135,7 +135,7 @@
     "js-yaml": "^4.1.0",
     "mocha": "^9.1.1",
     "prettier": "^2.4.1",
-    "ts-node": "^10.1.0",
+    "ts-node": "^10.2.1",
     "vsce": "^1.100.0",
     "vscode-nls-dev": "^3.3.2",
     "vscode-test": "^1.6.1"
