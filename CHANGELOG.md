@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.6] - 2021-09-28
+
+### Changed
+
+- upgrade vscode to 1.60.0.
+  - if your vscode is lower than this version, vscode would automatically install the older version.
+
 ## [0.4.5] - 2021-09-01
 
 ### Fixed
