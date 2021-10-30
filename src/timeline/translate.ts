@@ -8,7 +8,6 @@ import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, 
 import ts from "typescript";
 
 import { CommonReplacement, Locale, Replacement, TimelineReplace } from "../models/trigger";
-
 import { commonReplacement } from "../models/common_replacement";
 
 const localize = nls.loadMessageBundle();
@@ -27,7 +26,7 @@ export const extractReplacements = async (triggerPath: string): Promise<Timeline
   }
   const babelRet = await transformAsync(fileContent, { ast: true });
   if (!babelRet) {
-    throw new Error(localize("error.babel.transpile", "Error when reading timeline file"));
+    throw new Error(localize("error.babel.transpile", "Error when reading trigger file: {0}", triggerPath));
   }
 
   traverse(babelRet.ast, {
