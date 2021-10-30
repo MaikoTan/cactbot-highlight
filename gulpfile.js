@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { doesNotMatch } = require("assert");
 const del = require("del");
 const es = require("event-stream");
 const gulp = require("gulp");
