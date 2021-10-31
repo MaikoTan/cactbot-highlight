@@ -7,13 +7,17 @@ import { transformAsync, traverse } from "@babel/core";
 import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from "@babel/types";
 import ts from "typescript";
 
-import { CommonReplacement, Locale, Replacement, TimelineReplace } from "../models/trigger";
-import { commonReplacement } from "../models/common_replacement";
+import type { Lang } from "cactbot/resources/languages";
+import type { LocaleText } from "cactbot/types/trigger";
+import { commonReplacement } from "cactbot/ui/raidboss/common_replacement";
+import type { TimelineReplacement } from "cactbot/ui/raidboss/timeline";
+
+type CommonReplacement = typeof commonReplacement;
 
 const localize = nls.loadMessageBundle();
 
-export const extractReplacements = async (triggerPath: string): Promise<TimelineReplace[]> => {
-  const ret: TimelineReplace[] = [];
+export const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
+  const ret: TimelineReplacement[] = [];
 
   let fileContent = await promisify(readFile)(triggerPath, "utf8");
 
@@ -38,8 +42,9 @@ export const extractReplacements = async (triggerPath: string): Promise<Timeline
           if (!isObjectExpression(element)) {
             return;
           }
-          const timelineReplace: TimelineReplace = {
+          const timelineReplace: Required<TimelineReplacement> = {
             locale: "en",
+            missingTranslations: false,
             replaceSync: {},
             replaceText: {},
           };
@@ -53,7 +58,7 @@ export const extractReplacements = async (triggerPath: string): Promise<Timeline
               ? locales.key.name
               : null;
             if (name === "locale" && isStringLiteral(locales.value)) {
-              timelineReplace.locale = locales.value.value as keyof Locale;
+              timelineReplace.locale = locales.value.value as keyof LocaleText;
             }
             if (name === "replaceSync" && isObjectExpression(locales.value)) {
               locales.value.properties.forEach((prop) => {
@@ -117,7 +122,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     try {
       const timelineReplaceList = await extractReplacements(triggerFilePath);
       return this.translate({
-        locale: locale as keyof Locale,
+        locale: locale as keyof LocaleText,
         timelineFile: String(await promisify(readFile)(timelineFilePath)),
         timelineReplaceList,
         commonReplace: commonReplacement,
@@ -136,14 +141,14 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
   }
 
   translate(o: {
-    locale: keyof Locale;
+    locale: keyof LocaleText;
     timelineFile: string;
-    timelineReplaceList: TimelineReplace[];
+    timelineReplaceList: TimelineReplacement[];
     commonReplace: CommonReplacement;
   }): string {
     const { locale, timelineFile, timelineReplaceList, commonReplace } = o;
 
-    const replace = ((timelineReplaceList: TimelineReplace[], locale: string): TimelineReplace | undefined => {
+    const replace = ((timelineReplaceList: TimelineReplacement[], locale: string): TimelineReplacement | undefined => {
       let replace;
       for (const element of timelineReplaceList) {
         if (element.locale === locale) {
@@ -169,7 +174,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
       try {
         // match "sync /xxx/"
         const syncMatched = /(?<keyword>sync\s*)\/(?<key>.*?)(?<!\\)\//.exec(line);
-        if (syncMatched) {
+        if (syncMatched && replace.replaceSync) {
           let replacedSyncKey = this.replaceKey(syncMatched.groups?.key as string, replace.replaceSync);
           replacedSyncKey = this.replaceCommonKey(replacedSyncKey, commonReplace, "sync", locale);
           replacedLine = replacedLine.replace(
@@ -186,7 +191,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
 
         // match "xxxx.x \"xxxx\""
         const textMatched = /^(?<time>\d+(\.\d)?\s*)"(?<text>.*)(?<!\\)"/.exec(line);
-        if (textMatched) {
+        if (textMatched && replace.replaceText) {
           let replacedTextKey = this.replaceKey(textMatched.groups?.text as string, replace.replaceText, false);
           replacedTextKey = this.replaceCommonKey(replacedTextKey, commonReplace, "text", locale);
           replacedLine = replacedLine.replace(
@@ -220,7 +225,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     return replacedTimeline.join("\n");
   }
 
-  replaceKey(original: string, replacement: Replacement, isGlobal = true): string {
+  replaceKey(original: string, replacement: { [x: string]: string }, isGlobal = true): string {
     if (!replacement) {
       return original;
     }
@@ -242,7 +247,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     original: string,
     commonReplacement: CommonReplacement,
     key: "sync" | "text" = "sync",
-    locale: keyof Locale,
+    locale: Lang,
   ): string {
     if (locale === "en") {
       return original;
@@ -251,7 +256,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     let text = original;
     const replace = key === "sync" ? commonReplacement.replaceSync : commonReplacement.replaceText;
     for (const [k, v] of Object.entries(replace)) {
-      text = text.replace(new RegExp(k, "gi"), v[locale]);
+      text = text.replace(new RegExp(k, "gi"), v[locale] ?? "");
     }
 
     return text;
