@@ -1,0 +1,3 @@
+[submodule "3rdparty/cactbot"]
+	path = 3rdparty/cactbot
+	url = https://github.com/quisquous/cactbot.git
