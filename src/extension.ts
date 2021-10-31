@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import { commands, workspace, ExtensionContext } from "vscode";
 
-import { incDecTime, setTime, translatedTimelineProvider, translateTimeline } from "./timeline";
+import { incDecTime, setTime, TimelineEditorProvider, translatedTimelineProvider, translateTimeline } from "./timeline";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -18,6 +18,9 @@ export function activate(context: ExtensionContext): void {
     workspace.registerTextDocumentContentProvider("cactbot-timeline", translatedTimelineProvider),
   );
   context.subscriptions.push(commands.registerCommand("cactbot.timeline.translate", () => translateTimeline()));
+
+  // register timeline editor (webview based)
+  context.subscriptions.push(TimelineEditorProvider.register(context));
 }
 
 // this method is called when your extension is deactivated

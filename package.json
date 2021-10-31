@@ -111,7 +111,19 @@
           "group": "7_modification"
         }
       ]
-    }
+    },
+    "customEditors": [
+      {
+        "viewType": "cactbot.timeline.editor",
+        "displayName": "Timeline Editor",
+        "selector": [
+          {
+            "filenamePattern": "**/data/**/*.txt"
+          }
+        ],
+        "priority": "default"
+      }
+    ]
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
