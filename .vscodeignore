@@ -26,3 +26,6 @@ yarn.lock
 
 # YAML
 syntaxes/*.yaml
+
+# Node
+node_modules/**
