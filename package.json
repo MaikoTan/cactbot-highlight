@@ -21,9 +21,14 @@
     "lint": "eslint src --ext ts",
     "watch": "tsc --watch",
     "clean": "gulp clean",
-    "pretest": "yarn run compile && yarn run lint",
+    "pretest": "yarn run build && yarn run lint",
     "test": "node ./out/test/runTest.js",
-    "package": "gulp package"
+    "package": "gulp package",
+    "********* MANAGE I18N FILES **********": "",
+    "import-i18n": "gulp import-i18n",
+    "port-i18n": "gulp port-i18n",
+    "crowdin:pull": "crowdin download",
+    "crowdin:push": "crowdin upload sources"
   },
   "engines": {
     "vscode": "^1.60.0"
