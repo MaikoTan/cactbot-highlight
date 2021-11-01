@@ -1,5 +1,7 @@
 # cactbot-highlight
 
+<a href="https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight" target="_blank"><img align="right" src="./images/cactbot-logo-320x320.png"></img></a>
+
 [![Visual Studio Market](https://img.shields.io/visual-studio-marketplace/v/MaikoTan.cactbot-highlight?color=green&label=Visual%20Studio%20Market)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
 [![Downloads](https://img.shields.io/visual-studio-marketplace/d/MaikoTan.cactbot-highlight?color=green)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
 
@@ -41,34 +43,36 @@ you can install `cactbot-highlight` manually:
 
 ### Install from VSIX
 
-- Download the latest release `cactbot-highlight-x.x.x.vsix` from [Release](https://github.com/MaikoTan/cactbot-highlight/releases)
+1. Download the latest release `cactbot-highlight-x.x.x.vsix` from [Release](https://github.com/MaikoTan/cactbot-highlight/releases)
 
-- Launch VSCode and switch to `Extensions` tab
+1. Launch VSCode and switch to `Extensions` tab
 
-- Click the `Views and More Actions...` (3-dots) button, select `Install from VSIX...`
+1. Click the `Views and More Actions...` (3-dots) button, select `Install from VSIX...`
 
-- Enjoy ~
+1. select the file you downloaded and click `OK`
 
-### Enable it in cactbot
+1. Enjoy ~
 
-If you're using this extension in the repo that you clone from quisquous' branch,
-this feature is already **enabled by default**, because we add a default settings in `.vscode` directory.
+### Enable timeline highlighting in cactbot repo
+
+If you're using this extension in the cactbot repo that you clone from [quisquous' branch](https://github.com/quisquous/cactbot),
+this feature is already **enabled by default**, because there is already a default settings in `.vscode` directory.
 
 But if you're using this extension out of a repo, you *might* need to enable it manually.
 
-> Because cactbot timeline file is `*.txt`,
+> Because cactbot timeline file is a `*.txt` file,
 > VSCode would recognize it as `Plain Text` before the extension enabled.
 
-- Enable it for a single file
+#### Enable it for your activated timeline document
 
 Click `Plain Text` button at right bottom,
 select `cactbot-timeline` in the prompt window.
 
-- Enable it for the whole workspace
+#### Enable it for the whole workspace (aka, the `cactbot` repo)
 
 Create `.vscode/settings.json` if you have no this file.
 
-Add this below to the file.
+Add/modify this below to the file.
 
 ```json
 {
@@ -80,16 +84,18 @@ Add this below to the file.
 
 ### Available Settings
 
-#### Via GUI
+#### GUI
 
-Under `Settings -> Extensions -> cactbot-highlight`,
-you can configure this extension.
+Under `Settings -> Extensions -> Cactbot Highlight`,
+you can configure this extension by GUI.
 
-#### Via .vscode/settings.json file
+#### `settings.json` file
 
-```json
-// Set default locale for timelines. If this property is set, a prompt would not shown.
-// value can be: [ "de","fr","ja","cn","ko" ]
+```jsonc
+// Set a default language for timelines translating.
+// If you don't want to be asked which language do you want to translate to
+// every time, you can set this property to your prefer language.
+// value can be one of: [ "de", "fr", "ja", "cn", "ko" ]
 "cactbot.timeline.defaultLocale": "ja",
 ```
 
@@ -103,10 +109,17 @@ you can configure this extension.
 
 ```bash
 yarn install
-yarn run compile
+yarn run build
 ```
 
-- Press <kbd>F5</kbd> for executing.
+- Press <kbd>F5</kbd> for executing in development mode.
+
+- If you want to package a VSIX file, run the commands below:
+
+```bash
+yarn run build
+yarn run package
+```
 
 ## Multi-language support
 
@@ -114,14 +127,23 @@ This extension supports multi-language.
 
 Translators are listed below. Thanks for your contribution!
 
-  - Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
-  - Traditional Chinese - [@MaikoTan](https://github.com/MaikoTan)
-  - Japanese - [@MaikoTan](https://github.com/MaikoTan)
-  - French - [@MaikoTan](https://github.com/MaikoTan)
+- Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
+- Traditional Chinese - [@MaikoTan](https://github.com/MaikoTan)
+- Japanese - [@MaikoTan](https://github.com/MaikoTan)
+- French - [@MaikoTan](https://github.com/MaikoTan)
 
 If you want to add a new language, or contribute to the existing ones,
 please visit [our project on Crowdin](https://crowdin.com/project/cactbot-highlight).
 
+If you want to add a new language, you should make sure that the language is supported by VSCode officially.
+You can search for the language name in the Extensions Marketplace,
+or access [microsoft/vscode-loc](https://github.com/microsoft/vscode-loc) to see if your language is supported or not.
+
 ## Contributing
 
 See: [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+This project is licensed under the MIT license,
+see [LICENSE](LICENSE.md) for more detail.

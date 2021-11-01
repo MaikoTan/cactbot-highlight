@@ -9,6 +9,7 @@ const path = require("path");
 const typescript = require("typescript");
 const vsce = require("vsce");
 const nls = require("vscode-nls-dev");
+const webpack = require("webpack-stream");
 
 const tsProject = ts.createProject("./tsconfig.json", { typescript });
 
@@ -84,8 +85,11 @@ const addI18nTask = function() {
 };
 
 const compile = () => {
-  return tsProject.src()
-    .pipe(tsProject()).js
+  return gulp.src("./src/extension.ts")
+    .pipe(webpack({
+      config: require("./webpack.config.js"),
+      mode: "production",
+    }))
     .pipe(nls.rewriteLocalizeCalls())
     .pipe(nls.createAdditionalLanguageFiles(languages, "i18n", "dist"))
     .pipe(gulp.dest("./dist"));
