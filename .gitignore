@@ -22,3 +22,4 @@ package.nls.*.json
 
 # i18n for crowdin
 crowdin-i18n/
+i18n/
