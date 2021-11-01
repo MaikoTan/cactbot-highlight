@@ -19,3 +19,6 @@ syntaxes/*.json
 
 # i18n
 package.nls.*.json
+
+# i18n for crowdin
+crowdin-i18n/
