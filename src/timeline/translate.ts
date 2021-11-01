@@ -5,7 +5,7 @@ import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, work
 import * as nls from "vscode-nls";
 import { transformAsync, traverse } from "@babel/core";
 import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from "@babel/types";
-import ts from "typescript";
+import * as ts from "typescript";
 
 import type { Lang } from "cactbot/resources/languages";
 import type { LocaleText } from "cactbot/types/trigger";
@@ -275,7 +275,8 @@ export const translateTimeline = async (): Promise<void> => {
     await window.showErrorMessage(
       localize(
         "error.timeline.file.not.valid",
-        "{0} is not a valid file path, please make sure your active file is \"ui/raidboss/data/**/*.(js|ts)\"",
+        "{0} is not a valid file path, please make sure the path of your active file is \"ui/raidboss/data/**/*.(js|ts)\"",
+        filename,
       ),
     );
     return;
