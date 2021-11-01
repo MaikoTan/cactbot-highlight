@@ -43,15 +43,15 @@ you can install `cactbot-highlight` manually:
 
 ### Install from VSIX
 
-- Download the latest release `cactbot-highlight-x.x.x.vsix` from [Release](https://github.com/MaikoTan/cactbot-highlight/releases)
+1. Download the latest release `cactbot-highlight-x.x.x.vsix` from [Release](https://github.com/MaikoTan/cactbot-highlight/releases)
 
-- Launch VSCode and switch to `Extensions` tab
+1. Launch VSCode and switch to `Extensions` tab
 
-- Click the `Views and More Actions...` (3-dots) button, select `Install from VSIX...`
+1. Click the `Views and More Actions...` (3-dots) button, select `Install from VSIX...`
 
-- select the file you downloaded and click `OK`
+1. select the file you downloaded and click `OK`
 
-- Enjoy ~
+1. Enjoy ~
 
 ### Enable timeline highlighting in cactbot repo
 
@@ -63,12 +63,12 @@ But if you're using this extension out of a repo, you *might* need to enable it 
 > Because cactbot timeline file is a `*.txt` file,
 > VSCode would recognize it as `Plain Text` before the extension enabled.
 
-- Enable it for your activated timeline document
+#### Enable it for your activated timeline document
 
 Click `Plain Text` button at right bottom,
 select `cactbot-timeline` in the prompt window.
 
-- Enable it for the whole workspace (aka, the `cactbot` repo)
+#### Enable it for the whole workspace (aka, the `cactbot` repo)
 
 Create `.vscode/settings.json` if you have no this file.
 
@@ -127,15 +127,15 @@ This extension supports multi-language.
 
 Translators are listed below. Thanks for your contribution!
 
-  - Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
-  - Traditional Chinese - [@MaikoTan](https://github.com/MaikoTan)
-  - Japanese - [@MaikoTan](https://github.com/MaikoTan)
-  - French - [@MaikoTan](https://github.com/MaikoTan)
+- Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
+- Traditional Chinese - [@MaikoTan](https://github.com/MaikoTan)
+- Japanese - [@MaikoTan](https://github.com/MaikoTan)
+- French - [@MaikoTan](https://github.com/MaikoTan)
 
 If you want to add a new language, or contribute to the existing ones,
 please visit [our project on Crowdin](https://crowdin.com/project/cactbot-highlight).
 
-If you want to add a new language, you should make sure that this language is supported by VSCode officially.
+If you want to add a new language, you should make sure that the language is supported by VSCode officially.
 You can search for the language name in the Extensions Marketplace,
 or access [microsoft/vscode-loc](https://github.com/microsoft/vscode-loc) to see if your language is supported or not.
 
