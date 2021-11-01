@@ -38,6 +38,13 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           echo "$(pwd)/node_modules/.bin/" >> $GITHUB_PATH
+      
+      - name: "Fetch i18n files"
+        with:
+          CROWDIN_API_KEY: "${{ secrets.CROWDIN_API_KEY }}"
+        run: |
+          yarn port-i18n
+          yarn crowdin:pull
 
       - name: Build
         run: |
