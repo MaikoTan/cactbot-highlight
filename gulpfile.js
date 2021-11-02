@@ -96,7 +96,7 @@ const addI18nTask = function() {
 		.pipe(gulp.dest("."));
 };
 
-const compile = (minify) => () => {
+const compileWrapper = (minify) => function compile() {
   return gulp.src("./src/extension.ts")
     .pipe(esbuild({
       sourcemap: true,
@@ -105,6 +105,7 @@ const compile = (minify) => () => {
       bundle: true,
       platform: "node",
       outfile: "extension.js",
+      tsconfig: "tsconfig.json",
     }))
     .pipe(nls.rewriteLocalizeCalls())
     .pipe(nls.createAdditionalLanguageFiles(languages, "i18n", "dist"))
@@ -117,6 +118,6 @@ const vscePackageTask = () => {
 
 gulp.task("clean", cleanTask);
 
-gulp.task("build", gulp.series(convertYaml, compile(false), addI18nTask));
+gulp.task("build", gulp.series(convertYaml, compileWrapper(false), addI18nTask));
 
-gulp.task("package", gulp.series(convertYaml, compile(true), addI18nTask, vscePackageTask));
+gulp.task("package", gulp.series(convertYaml, compileWrapper(true), addI18nTask, vscePackageTask));
