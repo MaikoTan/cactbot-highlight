@@ -103,7 +103,7 @@ const compile = () => {
       minify: true,
       target: "es2019",
       format: "cjs",
-      outfile: "estension.js",
+      outfile: "extension.js",
     }))
     .pipe(nls.rewriteLocalizeCalls())
     .pipe(nls.createAdditionalLanguageFiles(languages, "i18n", "dist"))
