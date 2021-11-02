@@ -23,6 +23,7 @@
     "clean": "gulp clean",
     "toc": "md-magic --path \"README.md\"",
     "pretest": "yarn run build && yarn run lint",
+    "tsc": "tsc --noEmit",
     "test": "node ./out/test/runTest.js",
     "package": "gulp package",
     "********* MANAGE I18N FILES **********": "",
@@ -145,7 +146,7 @@
     "markdown-magic": "^2.5.2",
     "mocha": "^9.1.3",
     "prettier": "^2.4.1",
-    "vsce": "^1.100.1",
+    "vsce": "^1.101.0",
     "vscode-nls-dev": "^3.3.2",
     "vscode-test": "^1.6.1"
   },
