@@ -9,14 +9,22 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ## Index
 
+<!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=3) -->
+- [Index](#index)
 - [Features](#features)
+  - [timeline highlight](#timeline-highlight)
+  - [adjust time](#adjust-time)
+  - [translate timeline](#translate-timeline)
+  - [useful snippets](#useful-snippets)
 - [Install](#install)
   - [Install from VSIX](#install-from-vsix)
-  - [Enable it in cactbot](#enable-it-in-cactbot)
+  - [Enable timeline highlighting in cactbot repo](#enable-timeline-highlighting-in-cactbot-repo)
   - [Available Settings](#available-settings)
   - [How to build your own](#how-to-build-your-own)
 - [Localisation](#localisation)
 - [Contributing](#contributing)
+- [License](#license)
+<!-- AUTO-GENERATED-CONTENT:END -->
 
 ## Features
 
