@@ -43,7 +43,7 @@ jobs:
 
       - name: "Fetch i18n files"
         env:
-          CROWDIN_API_KEY: "${{ secrets.CROWDIN_API_KEY }}"
+          CROWDIN_API_TOKEN: "${{ secrets.CROWDIN_API_TOKEN }}"
         run: |
           yarn port-i18n
           yarn crowdin:pull
