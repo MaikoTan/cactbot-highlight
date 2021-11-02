@@ -47,6 +47,7 @@ jobs:
         run: |
           yarn port-i18n
           yarn crowdin:pull
+          yarn import-i18n
 
       - name: Build
         run: |

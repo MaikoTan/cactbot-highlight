@@ -125,8 +125,6 @@ yarn run package
 
 This extension supports multi-language.
 
-Current localisation process: [![Crowdin](https://badges.crowdin.net/cactbot-highlight/localized.svg)](https://crowdin.com/project/cactbot-highlight)
-
 Translators are listed below. Thanks for your contribution!
 
 - Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
