@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.7] - 2021-11-02
+
+### Fixed
+
+- change some message to ease of reading
+
+### Changed
+
+- import cactbot as a submodule, stop copying code from cactbot.
+- automatically fetch translations from crowdin in every build.
+
 ## [0.4.6] - 2021-09-28
 
 ### Changed
