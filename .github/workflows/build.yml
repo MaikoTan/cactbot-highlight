@@ -1,0 +1,50 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install Dependencies
+        run: |
+          yarn install --frozen-lockfile
+          echo "$(pwd)/node_modules/.bin/" >> $GITHUB_PATH
+          # Install Crowdin CLI
+          yarn global add @crowdin/cli
+
+      - name: "Fetch i18n files"
+        env:
+          CROWDIN_API_TOKEN: "${{ secrets.CROWDIN_API_TOKEN }}"
+        run: |
+          yarn port-i18n
+          yarn crowdin:pull
+          yarn import-i18n
+
+      - name: "TypeScript Check"
+        run: |
+          yarn run tsc
+
+      - name: Build
+        run: |
+          yarn run package

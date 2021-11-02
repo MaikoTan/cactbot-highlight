@@ -23,6 +23,7 @@
     "clean": "gulp clean",
     "toc": "md-magic --path \"README.md\"",
     "pretest": "yarn run build && yarn run lint",
+    "tsc": "tsc --noEmit",
     "test": "node ./out/test/runTest.js",
     "package": "gulp package",
     "********* MANAGE I18N FILES **********": "",
