@@ -5,6 +5,12 @@
 # Git
 .gitignore
 
+# Github
+.github/**
+
+# Build
+gulpfile.js
+
 # Test
 test/**
 out/test/**
@@ -14,6 +20,7 @@ out/**
 src/**
 **/tsconfig.json
 **/*.map
+!dist/extension.js.map
 **/*.ts
 
 # Yarn
@@ -26,6 +33,14 @@ yarn.lock
 
 # YAML
 syntaxes/*.yaml
+syntaxes/tmLanguage.schema.json
 
 # Node
 node_modules/**
+
+# 3rd Party
+3rdparty/**
+
+# i18n
+crowdin.yml
+crowdin-i18n/**

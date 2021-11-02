@@ -113,7 +113,9 @@ const compileWrapper = (minify) => function compile() {
 };
 
 const vscePackageTask = () => {
-	return vsce.createVSIX();
+	return vsce.createVSIX({
+    useYarn: true,
+  });
 };
 
 gulp.task("clean", cleanTask);
