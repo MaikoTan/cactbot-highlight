@@ -7,7 +7,7 @@ const jsYaml = require("js-yaml");
 const path = require("path");
 const vsce = require("vsce");
 const nls = require("vscode-nls-dev");
-const webpack = require("webpack-stream");
+const esbuild = require("gulp-esbuild");
 const babel = require("gulp-babel");
 
 const languages = [
@@ -98,9 +98,12 @@ const addI18nTask = function() {
 
 const compile = () => {
   return gulp.src("./src/extension.ts")
-    .pipe(webpack({
-      config: require("./webpack.config.js"),
-      mode: "production",
+    .pipe(esbuild({
+      sourcemap: true,
+      minify: true,
+      target: "es2019",
+      format: "cjs",
+      outfile: "estension.js",
     }))
     .pipe(nls.rewriteLocalizeCalls())
     .pipe(nls.createAdditionalLanguageFiles(languages, "i18n", "dist"))
