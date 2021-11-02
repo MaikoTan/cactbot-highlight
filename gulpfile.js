@@ -3,15 +3,12 @@ const del = require("del");
 const es = require("event-stream");
 const gulp = require("gulp");
 const filter = require("gulp-filter");
-const ts = require("gulp-typescript");
 const jsYaml = require("js-yaml");
 const path = require("path");
-const typescript = require("typescript");
 const vsce = require("vsce");
 const nls = require("vscode-nls-dev");
 const webpack = require("webpack-stream");
-
-const tsProject = ts.createProject("./tsconfig.json", { typescript });
+const babel = require("gulp-babel");
 
 const languages = [
   { folderName: "ja", id: "ja" },
@@ -21,7 +18,12 @@ const languages = [
 ];
 
 const cleanTask = function() {
-	return del(["dist/**", "package.nls.*.json", "cactbot-highlight*.vsix"]);
+	return del([
+    "dist/**",
+    "package.nls.*.json",
+    "cactbot-highlight*.vsix",
+    "crowdin-i18n/**",
+  ]);
 };
 
 const convertYaml = function() {
@@ -51,8 +53,18 @@ const convertYaml = function() {
 };
 
 gulp.task("port-i18n", function() {
-  return tsProject.src()
-  .pipe(tsProject()).js
+  // In order to include localisable text of localisation function calls
+  // provided by `vscode-nls`, we need to transpile typescript to javascript
+  // so that `vscode-nls-dev` would recognize those calls.
+
+  // But importing cactbot directly cause errors that are not easily to fix.
+  // So we use babel (and its typescript preset) to transpile, as babel would
+  // only translate typescript to javascript, and not do the type checking.
+  // Also, here we should exclude test files as they has no localisation.
+  return gulp.src(["./src/**/*.ts", "!./src/test/**/*"])
+  .pipe(babel({
+    presets: ["@babel/preset-typescript"],
+  }))
   .pipe(nls.createMetaDataFiles())
   // Filter down to only the files we need
   .pipe(filter(["**/*.nls.json", "**/*.nls.metadata.json"]))
@@ -65,13 +77,13 @@ gulp.task("port-i18n", function() {
 
   // Add package.nls.json, used to localized package.json
   .pipe(gulp.src(["package.nls.json"]))
-  .pipe(nls.createXlfFiles("cactbot-highlight", "cactbot-highlight"))
-  .pipe(gulp.dest("../crowdin-i18n"));
+  .pipe(nls.createXlfFiles("en", "cactbot-highlight"))
+  .pipe(gulp.dest("./crowdin-i18n/cactbot-highlight"));
 });
 
-gulp.task("import-translations", function(done) {
+gulp.task("import-i18n", function(done) {
   return es.merge(languages.map((language) => {
-    return gulp.src([`../crowdin-i18n/cactbot-highlight (translations)/${language.folderName}/*.xlf`])
+    return gulp.src([`./crowdin-i18n/cactbot-highlight/${language.folderName}/*.xlf`])
       .pipe(nls.prepareJsonFiles())
       .pipe(gulp.dest(path.join("./i18n", language.folderName, "dist")));
   }))

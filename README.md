@@ -15,7 +15,7 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
   - [Enable it in cactbot](#enable-it-in-cactbot)
   - [Available Settings](#available-settings)
   - [How to build your own](#how-to-build-your-own)
-- [Multi-language support](#multi-language-support)
+- [Localisation](#localisation)
 - [Contributing](#contributing)
 
 ## Features
@@ -121,9 +121,11 @@ yarn run build
 yarn run package
 ```
 
-## Multi-language support
+## Localisation
 
 This extension supports multi-language.
+
+Current localisation process: [![Crowdin](https://badges.crowdin.net/cactbot-highlight/localized.svg)](https://crowdin.com/project/cactbot-highlight)
 
 Translators are listed below. Thanks for your contribution!
 

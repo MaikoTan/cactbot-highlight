@@ -21,9 +21,14 @@
     "lint": "eslint src --ext ts",
     "watch": "tsc --watch",
     "clean": "gulp clean",
-    "pretest": "yarn run compile && yarn run lint",
+    "pretest": "yarn run build && yarn run lint",
     "test": "node ./out/test/runTest.js",
-    "package": "gulp package"
+    "package": "gulp package",
+    "********* MANAGE I18N FILES **********": "",
+    "import-i18n": "gulp import-i18n",
+    "port-i18n": "gulp port-i18n",
+    "crowdin:pull": "crowdin download",
+    "crowdin:push": "crowdin upload sources"
   },
   "engines": {
     "vscode": "^1.60.0"
@@ -115,6 +120,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
+    "@babel/preset-env": "^7.16.0",
     "@babel/preset-typescript": "^7.16.0",
     "@types/babel__core": "^7.1.16",
     "@types/glob": "^7.2.0",
@@ -132,13 +138,12 @@
     "event-stream": "^4.0.1",
     "glob": "^7.2.0",
     "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.3.0",
     "gulp-filter": "^7.0.0",
-    "gulp-typescript": "^6.0.0-alpha.1",
     "js-yaml": "^4.1.0",
     "mocha": "^9.1.3",
     "prettier": "^2.4.1",
-    "ts-node": "^10.3.0",
     "vsce": "^1.100.1",
     "vscode-nls-dev": "^3.3.2",
     "vscode-test": "^1.6.1",
