@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.9] - 2021-11-03
+
+### Changed
+
+- Remove cactbot from the archive cause it is already bundled in `extension.js`
+
+### Security
+
+- Bump `@babel/generator` and `@babel/plugin-transform-typescript` to latest.
+
 ## [0.4.8] - 2021-11-02
 
 ### Fixed
