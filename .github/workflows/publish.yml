@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
+        with:
+          submodules: true
 
       - name: Setup Node
         uses: actions/setup-node@v2
