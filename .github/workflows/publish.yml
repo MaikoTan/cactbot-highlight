@@ -50,33 +50,21 @@ jobs:
         run: |
           yarn run package
 
-      - name: grep asset name
+      - name: grep asset name and tag name
         run: |
           NAME="$(ls | grep 'cactbot-highlight-.*.vsix')"
           echo "ASSET_NAME=$NAME" >> $GITHUB_ENV
+          TAG="$(echo '${{ github.ref }}' | sed 's/refs\/tags\///g')"
+          echo "TAG=$TAG" >> $GITHUB_ENV
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.autotag.outputs.tagname }}
-          release_name: Cactbot Highlight v${{ steps.autotag.outputs.tagname }}
+          name: Cactbot Highlight ${{ env.TAG }}
           body: ''
           draft: true
-          prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.ASSET_NAME }}
-          asset_name: ${{ env.ASSET_NAME }}
-          asset_content_type: application/zip
+          files: |
+            ${{ env.ASSET_NAME }}
 
       - name: Publish to VS Market
         run: |
