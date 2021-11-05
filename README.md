@@ -5,22 +5,19 @@
 [![Visual Studio Market](https://img.shields.io/visual-studio-marketplace/v/MaikoTan.cactbot-highlight?color=green&label=Visual%20Studio%20Market)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
 [![Downloads](https://img.shields.io/visual-studio-marketplace/d/MaikoTan.cactbot-highlight?color=green)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
 
-A custom extension for developing [cactbot](https://github.com/quisquous/cactbot/) modules.
+A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot/) modules.
 
 ## Index
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=3) -->
 - [Index](#index)
 - [Features](#features)
-  - [timeline highlight](#timeline-highlight)
-  - [adjust time](#adjust-time)
-  - [translate timeline](#translate-timeline)
-  - [useful snippets](#useful-snippets)
+  - [Timeline Highlight](#timeline-highlight)
+  - [Time Adjustment](#time-adjustment)
+  - [Timeline Translating](#timeline-translating)
 - [Install](#install)
-  - [Install from VSIX](#install-from-vsix)
-  - [Enable timeline highlighting in cactbot repo](#enable-timeline-highlighting-in-cactbot-repo)
+  - [Enable Highlighting Feature Manually](#enable-highlighting-feature-manually)
   - [Available Settings](#available-settings)
-  - [How to build your own](#how-to-build-your-own)
 - [Localisation](#localisation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -28,59 +25,55 @@ A custom extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ## Features
 
-### timeline highlight
+### Timeline Highlight
 
 ![timeline-highlight](images/timeline-highlight.png)
 
-> uwu timeline with Monakai color theme
+> Ultima Weapon Ultimate timeline with Monakai color theme
 
-### adjust time
+### Time Adjustment
 
 ![adjust-time](images/adjust-time.gif)
 
-### translate timeline
+### Timeline Translating
 
 ![translate-timeline.gif](images/translate-timeline.gif)
 
-### useful snippets
+To use this feature, you should make sure your file actived
+is a valid timeline file or trigger file that there are a valid
+timeline file which has the same name in the same directory,
+also make sure you are in the cactbot repository.
+
+Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> (Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>) to open the Command Palette,
+then type and select `Translate Current Timeline` to translate the active file.
 
 ## Install
 
 If you got troubles when install from Visual Studio Market,
-you can install `cactbot-highlight` manually:
+you can download the VSIX file of `Cactbot Highlight` from [VSCode Extension Market](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
+and [install it manually](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix).
 
-### Install from VSIX
-
-1. Download the latest release `cactbot-highlight-x.x.x.vsix` from [Release](https://github.com/MaikoTan/cactbot-highlight/releases)
-
-1. Launch VSCode and switch to `Extensions` tab
-
-1. Click the `Views and More Actions...` (3-dots) button, select `Install from VSIX...`
-
-1. select the file you downloaded and click `OK`
-
-1. Enjoy ~
-
-### Enable timeline highlighting in cactbot repo
+### Enable Highlighting Feature Manually
 
 If you're using this extension in the cactbot repo that you clone from [quisquous' branch](https://github.com/quisquous/cactbot),
 this feature is already **enabled by default**, because there is already a default settings in `.vscode` directory.
 
 But if you're using this extension out of a repo, you *might* need to enable it manually.
 
-> Because cactbot timeline file is a `*.txt` file,
-> VSCode would recognize it as `Plain Text` before the extension enabled.
+> The extension name of Cactbot's timeline file is a `txt` file,
+> which is recognized as "Plain Text" defaultly in VSCode,
+> thus we should add an extra setting to enable the highlighting.
 
-#### Enable it for your activated timeline document
+#### For a Single File
 
 Click `Plain Text` button at right bottom,
 select `cactbot-timeline` in the prompt window.
 
-#### Enable it for the whole workspace (aka, the `cactbot` repo)
+#### For the Whole Workspace
 
-Create `.vscode/settings.json` if you have no this file.
+Create or edit `.vscode/settings.json`.
 
-Add/modify this below to the file.
+Add or modify this below to the file.
 
 ```json
 {
@@ -97,7 +90,7 @@ Add/modify this below to the file.
 Under `Settings -> Extensions -> Cactbot Highlight`,
 you can configure this extension by GUI.
 
-#### `settings.json` file
+#### `settings.json` File
 
 ```jsonc
 // Set a default language for timelines translating.
@@ -105,28 +98,6 @@ you can configure this extension by GUI.
 // every time, you can set this property to your prefer language.
 // value can be one of: [ "de", "fr", "ja", "cn", "ko" ]
 "cactbot.timeline.defaultLocale": "ja",
-```
-
-### How to build your own
-
-- Install [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/)
-
-- Download source code
-
-- Run the commands below
-
-```bash
-yarn install
-yarn run build
-```
-
-- Press <kbd>F5</kbd> for executing in development mode.
-
-- If you want to package a VSIX file, run the commands below:
-
-```bash
-yarn run build
-yarn run package
 ```
 
 ## Localisation
@@ -149,7 +120,7 @@ or access [microsoft/vscode-loc](https://github.com/microsoft/vscode-loc) to see
 
 ## Contributing
 
-See: [CONTRIBUTING.md](CONTRIBUTING.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License
 
