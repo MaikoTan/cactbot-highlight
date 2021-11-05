@@ -122,4 +122,4 @@ gulp.task("clean", cleanTask);
 
 gulp.task("build", gulp.series(convertYaml, compileWrapper(false), addI18nTask));
 
-gulp.task("package", gulp.series(convertYaml, compileWrapper(true), addI18nTask, vscePackageTask));
+gulp.task("package", gulp.series(cleanTask, convertYaml, compileWrapper(true), addI18nTask, vscePackageTask));
