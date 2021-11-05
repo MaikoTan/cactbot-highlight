@@ -1,50 +1,50 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "npm",
-			"script": "convert",
-			"problemMatcher": [],
-			"label": "npm: convert",
-			"detail": "npx js-yaml syntaxes/timeline.tmLanguage.yaml > syntaxes/timeline.tmLanguage.json"
-		},
-		{
-			"type": "npm",
-			"script": "watch",
-			"problemMatcher": {
-				"owner": "typescript",
-				"pattern": [
-					{
-						"regexp": "WARNING in (.*)",
-						"file": 1
-					},
-					{
-						"regexp": "Module Warning (.*)"
-					},
-					{
-						"regexp": "\\[(\\d+), (\\d+)\\]: (.*)",
-						"line": 1,
-						"column": 2,
-						"message": 3
-					}
-				],
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": {
-						"regexp": "Starting compilation"
-					},
-					"endsPattern": {
-						"regexp": "Found \\d+ errors. Watching for file changes."
-					}
-				}
-			},
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never"
-			},
-			"group": "build",
-			"label": "npm: watch",
-			"detail": "tsc --watch"
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "convert",
+      "problemMatcher": [],
+      "label": "npm: convert",
+      "detail": "npx js-yaml syntaxes/timeline.tmLanguage.yaml > syntaxes/timeline.tmLanguage.json"
+    },
+    {
+      "type": "npm",
+      "script": "watch",
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": [
+          {
+            "regexp": "WARNING in (.*)",
+            "file": 1
+          },
+          {
+            "regexp": "Module Warning (.*)"
+          },
+          {
+            "regexp": "\\[(\\d+), (\\d+)\\]: (.*)",
+            "line": 1,
+            "column": 2,
+            "message": 3
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": "Starting compilation"
+          },
+          "endsPattern": {
+            "regexp": "Found \\d+ errors. Watching for file changes."
+          }
+        }
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": "build",
+      "label": "npm: watch",
+      "detail": "tsc --watch"
+    }
+  ]
 }

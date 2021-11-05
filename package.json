@@ -20,6 +20,7 @@
     "build": "gulp build",
     "lint": "eslint src --ext ts",
     "watch": "tsc --watch",
+    "format": "prettier .",
     "clean": "gulp clean",
     "toc": "md-magic --path \"README.md\"",
     "pretest": "yarn run build && yarn run lint",

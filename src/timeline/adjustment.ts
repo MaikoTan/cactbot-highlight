@@ -9,10 +9,7 @@ const localize = nls.loadMessageBundle();
 const selectWholeLines = (selection: Selection, editor: TextEditor): Range => {
   const start = selection.start;
   const end = selection.end;
-  return new Range(
-    editor.document.lineAt(start).range.start,
-    editor.document.lineAt(end).range.end
-  );
+  return new Range(editor.document.lineAt(start).range.start, editor.document.lineAt(end).range.end);
 };
 
 export const incDecTime = async (): Promise<void> => {
@@ -30,7 +27,10 @@ export const incDecTime = async (): Promise<void> => {
       if (/(-)?\d+(\.\d)?/.test(value)) {
         return null;
       }
-      return localize("incDecTime.inputValidNumber1DigitOnly", "Please input valid number (only 1 decimal place is allowed)");
+      return localize(
+        "incDecTime.inputValidNumber1DigitOnly",
+        "Please input valid number (only 1 decimal place is allowed)",
+      );
     },
   });
 

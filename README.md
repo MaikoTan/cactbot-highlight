@@ -10,6 +10,7 @@ A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot
 ## Index
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=3) -->
+
 - [Index](#index)
 - [Features](#features)
   - [Timeline Highlight](#timeline-highlight)
@@ -58,7 +59,7 @@ and [install it manually](https://code.visualstudio.com/docs/editor/extension-ma
 If you're using this extension in the cactbot repo that you clone from [quisquous' branch](https://github.com/quisquous/cactbot),
 this feature is already **enabled by default**, because there is already a default settings in `.vscode` directory.
 
-But if you're using this extension out of a repo, you *might* need to enable it manually.
+But if you're using this extension out of a repo, you _might_ need to enable it manually.
 
 > The extension name of Cactbot's timeline file is a `txt` file,
 > which is recognized as "Plain Text" defaultly in VSCode,
@@ -77,9 +78,9 @@ Add or modify this below to the file.
 
 ```json
 {
-    "files.associations": {
-        "**/data/**/*.txt": "cactbot-timeline"
-    }
+  "files.associations": {
+    "**/data/**/*.txt": "cactbot-timeline"
+  }
 }
 ```
 

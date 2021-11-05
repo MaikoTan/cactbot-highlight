@@ -49,17 +49,10 @@
       "$ref": "#/definitions/repository"
     }
   },
-  "required": [
-    "scopeName",
-    "patterns"
-  ],
+  "required": ["scopeName", "patterns"],
   "dependencies": {
-    "foldingStartMarker": [
-      "foldingStopMarker"
-    ],
-    "foldingStopMarker": [
-      "foldingStartMarker"
-    ]
+    "foldingStartMarker": ["foldingStopMarker"],
+    "foldingStopMarker": ["foldingStartMarker"]
   },
   "additionalProperties": true,
   "definitions": {
@@ -70,10 +63,7 @@
         },
         {
           "type": "number",
-          "enum": [
-            0,
-            1
-          ]
+          "enum": [0, 1]
         }
       ]
     },
@@ -187,73 +177,47 @@
           "allOf": [
             {
               "not": {
-                "required": [
-                  "match"
-                ]
+                "required": ["match"]
               }
             },
             {
               "not": {
-                "required": [
-                  "begin"
-                ]
+                "required": ["begin"]
               }
             }
           ]
         },
         "match": {
           "not": {
-            "required": [
-              "begin"
-            ]
+            "required": ["begin"]
           }
         },
         "begin": {
           "oneOf": [
             {
-              "required": [
-                "end"
-              ]
+              "required": ["end"]
             },
             {
-              "required": [
-                "while"
-              ]
+              "required": ["while"]
             }
           ]
         },
-        "end": [
-          "begin"
-        ],
-        "while": [
-          "begin"
-        ],
-        "applyEndPatternLast": [
-          "begin"
-        ],
+        "end": ["begin"],
+        "while": ["begin"],
+        "applyEndPatternLast": ["begin"],
         "captures": {
           "oneOf": [
             {
-              "required": [
-                "match"
-              ]
+              "required": ["match"]
             },
             {
-              "required": [
-                "begin"
-              ]
+              "required": ["begin"]
             }
           ]
         },
-        "beginCaptures": [
-          "begin"
-        ],
-        "endCaptures": [
-          "end"
-        ],
-        "whileCaptures": [
-          "while"
-        ]
+        "beginCaptures": ["begin"],
+        "endCaptures": ["end"],
+        "whileCaptures": ["while"]
       }
     }
   }
