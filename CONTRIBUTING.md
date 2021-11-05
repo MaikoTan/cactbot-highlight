@@ -6,26 +6,35 @@ Before contributing to this project, you might need to learn glossary from [cact
 
 ### Requirements
 
-- [VSCode](https://code.visualstudio.com/)
-- [Node.js](https://nodejs.org/)
+- [VSCode Insider](https://code.visualstudio.com/), note ONLY insider version can be used to develop VSCode extensions.
+- [Node.js](https://nodejs.org/), Node.js version >= 14.x is required.
 - [Yarn](https://yarnpkg.com/)
 
 ### Install dependencies
 
 Run `yarn install` to install all the dependencies.
 
-If you want to package the extension to `VSIX`,
-it is recommanded to install `vsce` globally by `yarn global add vsce`.
-
 ### Build and Debug
 
-Press <kbd>F5</kbd> to Debug.
+Run `yarn build` to build the project.
 
-Press <kbd>Ctrl</kbd> + <kbd>F5</kbd> to Run.
+After building, you can press <kbd>F5</kbd> to debug, or
+press <kbd>Ctrl</kbd> + <kbd>F5</kbd> to run without debugging.
 
 ### Package
 
-Run `vsce package`.
+You can run `yarn package` to build and package code to a VSIX package,
+which can be installed manually in VSCode.
+
+### Internationalization
+
+i18n files is not upload to GitHub.
+The GitHub Action workflow would export and download i18n files
+from crowdin, which is the site that we are using for localization.
+
+You can run `yarn port-i18n` to export i18n json files from source code.
+
+If you want to contribute translations, please access [crowdin](https://crowdin.com/project/cactbot-highlight).
 
 ## File Structures
 
