@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### [0.4.10] - 2021-11-04
+## [0.4.11] - 2021-11-05
+
+### Fixed
+
+- Changed some text
+
+### Changed
+
+- Extension setting title change to "Cactbot Highlight"
+
+### Security
+
+- Bump `vsce` to 2.1.0
+
+## [0.4.10] - 2021-11-04
 
 ### Security
 
