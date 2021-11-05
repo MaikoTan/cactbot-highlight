@@ -13,7 +13,7 @@
   "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "@typescript-eslint/naming-convention": "warn",
-    "@typescript-eslint/quotes": ["error"],
+    "@typescript-eslint/quotes": ["error", { "avoidEscape": true }],
     "@typescript-eslint/semi": ["error", "always"],
     "comma-dangle": ["error", "always-multiline"],
     "curly": "warn",
