@@ -1,0 +1,13 @@
+# Node
+node_modules/
+
+# Build
+dist/
+
+# i18n
+i18n/
+crowdin-i18n/
+package.nls.*.json
+
+# Third Party
+3rdparty/
