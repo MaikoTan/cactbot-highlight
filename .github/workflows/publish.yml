@@ -8,6 +8,11 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: [14, 16]
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
@@ -17,7 +22,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '12'
+          node-version: ${{ matrix.node }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
