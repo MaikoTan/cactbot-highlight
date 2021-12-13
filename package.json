@@ -124,7 +124,7 @@
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
-    "@babel/preset-typescript": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.5",
     "@types/babel__core": "^7.1.17",
     "@types/glob": "^7.2.0",
     "@types/gulp": "^4.0.9",
