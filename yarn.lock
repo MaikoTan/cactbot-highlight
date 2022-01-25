@@ -3297,19 +3297,7 @@ globby@^10.0.2:
     merge2 "^1.2.3"
     slash "^3.0.0"
 
-globby@^11.0.1:
-  version "11.0.3"
-  resolved "https://registry.yarnpkg.com/globby/-/globby-11.0.3.tgz#9b1f0cb523e171dd1ad8c7b2a9fb4b644b9593cb"
-  integrity sha512-ffdmosjA807y7+lA1NM0jELARVmYul/715xiILEjo3hBLPTcirgQNnXECn5g3mtR8TOLCVbkfua1Hpen25/Xcg==
-  dependencies:
-    array-union "^2.1.0"
-    dir-glob "^3.0.1"
-    fast-glob "^3.1.1"
-    ignore "^5.1.4"
-    merge2 "^1.3.0"
-    slash "^3.0.0"
-
-globby@^11.0.3:
+globby@^11.0.1, globby@^11.0.3:
   version "11.0.4"
   resolved "https://registry.yarnpkg.com/globby/-/globby-11.0.4.tgz#2cbaff77c2f2a62e71e9b2813a67b97a3a3001a5"
   integrity sha512-9O4MVG9ioZJ08ffbcyVYyLOJLk5JQ688pJ4eMGLpdWLHq/Wr1D9BlriLQyL0E+jbkuePVZXYFj47QM/v093wHg==
@@ -3918,6 +3906,11 @@ jsesc@~0.5.0:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
+json-alexander@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/json-alexander/-/json-alexander-0.1.8.tgz#d6717780c1bd2eca06fc4a88b79f142191d54389"
+  integrity sha512-5TZYawo7vu63e7e0xFaxZXsySKBuKJgEX6F2edjFakXEnpsZnp040Wdd5Exm2qWAhf54S6v+DNMQHo7yV+rkgw==
+
 json-schema-traverse@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
@@ -4146,10 +4139,10 @@ markdown-it@^10.0.0:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markdown-magic@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/markdown-magic/-/markdown-magic-2.5.2.tgz#4d114308e613b236fd015de5bf0b14582461d7cf"
-  integrity sha512-bIiV0CKmwHDlvJRPGVZCJfWlt6ORlTidMJrvWallycaknGOdobnHEId1bBbaWcKFnj/CHC8QArsp/2wEABK8NA==
+markdown-magic@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/markdown-magic/-/markdown-magic-2.6.0.tgz#cc5a5551be6fe58c395bdcf5b6e2a51f7b60eb68"
+  integrity sha512-uCjrs6LjroExjnchTpPs3MLkeZ3ewgtX3SP3a6pLrtPBsQXzbeUVYOmRC/hMFR5aZHX9sWYBTKabHIKGFmDs4g==
   dependencies:
     "@technote-space/doctoc" "^2.4.7"
     commander "^7.2.0"
@@ -4157,6 +4150,7 @@ markdown-magic@^2.5.2:
     find-up "^5.0.0"
     globby "^10.0.2"
     is-local-path "^0.1.6"
+    json-alexander "^0.1.8"
     mkdirp "^1.0.4"
     sync-request "^6.1.0"
 
