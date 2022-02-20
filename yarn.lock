@@ -3348,10 +3348,10 @@ gulp-cli@^2.2.0, gulp-cli@^2.3.0:
     v8flags "^3.2.0"
     yargs "^7.1.0"
 
-gulp-esbuild@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/gulp-esbuild/-/gulp-esbuild-0.10.0.tgz#4aaf793b238201cd8bff05d83d48b1f948c78bdf"
-  integrity sha512-zh4jkbe5urgzCo+Q+6c0W5kl2XhKDa1mkcW9GWxt40uT3vudoX9gU1HblcRePc+Xzp5olcS3p2UyNDSkmsCHbw==
+gulp-esbuild@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/gulp-esbuild/-/gulp-esbuild-0.10.1.tgz#1dfad8c2b614b567fc12caf704619b9b60cdeb77"
+  integrity sha512-7hj++0ALA/ykYak/fxbK0hPaVz0KtB3XdBvSuYYSprAf8eElGPuCnHfo8GFwJ4nM/86lTElm/iE9XCtrL5qmCw==
   dependencies:
     esbuild "^0.14.9"
     plugin-error "^1.0.1"
