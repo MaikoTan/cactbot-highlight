@@ -1,5 +1,4 @@
-import { existsSync, readFile } from "fs";
-import { promisify } from "util";
+import { TextDecoder } from "util";
 
 import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from "vscode";
 import * as nls from "vscode-nls";
@@ -10,7 +9,8 @@ import * as ts from "typescript";
 import type { Lang } from "cactbot/resources/languages";
 import type { LocaleText } from "cactbot/types/trigger";
 import { commonReplacement } from "cactbot/ui/raidboss/common_replacement";
-import type { TimelineReplacement } from "cactbot/ui/raidboss/timeline";
+import type { TimelineReplacement } from "cactbot/ui/raidboss/timeline_parser";
+import { URI } from "vscode-uri";
 
 type CommonReplacement = typeof commonReplacement;
 
@@ -19,7 +19,7 @@ const localize = nls.loadMessageBundle();
 export const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
   const ret: TimelineReplacement[] = [];
 
-  let fileContent = await promisify(readFile)(triggerPath, "utf8");
+  let fileContent = new TextDecoder().decode(await workspace.fs.readFile(URI.file(triggerPath)));
 
   // transpile typescript first, then feed to babel.
   if (triggerPath.endsWith(".ts")) {
@@ -99,20 +99,24 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
 
   onDidChange = this.onDidChangeEmitter.event;
 
-  getTriggerFilePath(timelineFilePath: string): string | undefined {
+  async getTriggerFilePath(timelineFilePath: string): Promise<string | undefined> {
     let triggerFilePath = timelineFilePath.replace(/\.txt$/, ".js");
-    if (existsSync(triggerFilePath)) {
+    try {
+      await workspace.fs.stat(URI.file(triggerFilePath));
       return triggerFilePath;
-    }
-    triggerFilePath = triggerFilePath.replace(/\.js$/, ".ts");
-    if (existsSync(triggerFilePath)) {
-      return triggerFilePath;
+    } catch (err) {
+      try {
+        triggerFilePath = triggerFilePath.replace(/\.js$/, ".ts");
+        return triggerFilePath;
+      } catch (err) {
+        return undefined;
+      }
     }
   }
 
   async provideTextDocumentContent(uri: Uri): Promise<string> {
     const timelineFilePath = uri.path;
-    const triggerFilePath = this.getTriggerFilePath(timelineFilePath);
+    const triggerFilePath = await this.getTriggerFilePath(timelineFilePath);
     if (!triggerFilePath) {
       throw new Error(localize("error.trigger.notfound", "Cannot find trigger file."));
     }
@@ -123,7 +127,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
       const timelineReplaceList = await extractReplacements(triggerFilePath);
       return this.translate({
         locale: locale as keyof LocaleText,
-        timelineFile: String(await promisify(readFile)(timelineFilePath)),
+        timelineFile: new TextDecoder().decode(await workspace.fs.readFile(URI.file(timelineFilePath))),
         timelineReplaceList,
         commonReplace: commonReplacement,
       });

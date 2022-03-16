@@ -157,7 +157,8 @@
     "@babel/plugin-transform-typescript": "^7.16.1",
     "@babel/types": "^7.17.0",
     "typescript": "^4.6.2",
-    "vscode-nls": "^5.0.0"
+    "vscode-nls": "^5.0.0",
+    "vscode-uri": "^3.0.3"
   },
   "prettier": {
     "printWidth": 120,
