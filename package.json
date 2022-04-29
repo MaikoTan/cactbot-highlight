@@ -155,7 +155,7 @@
     "@babel/core": "^7.17.9",
     "@babel/generator": "^7.17.9",
     "@babel/plugin-transform-typescript": "^7.16.1",
-    "@babel/types": "^7.17.0",
+    "@babel/types": "^7.17.10",
     "typescript": "^4.6.4",
     "vscode-nls": "^5.0.1"
   },
