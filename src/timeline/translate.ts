@@ -1,16 +1,15 @@
-import { TextDecoder } from "util";
-
-import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from "vscode";
-import * as nls from "vscode-nls";
-import { transformAsync, traverse } from "@babel/core";
-import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from "@babel/types";
-import * as ts from "typescript";
-
 import type { Lang } from "cactbot/resources/languages";
 import type { LocaleText } from "cactbot/types/trigger";
 import { commonReplacement } from "cactbot/ui/raidboss/common_replacement";
 import type { TimelineReplacement } from "cactbot/ui/raidboss/timeline_parser";
+import * as ts from "typescript";
+import { EventEmitter, TextDocumentContentProvider, Uri, languages, window, workspace } from "vscode";
+import * as nls from "vscode-nls/browser";
 import { URI } from "vscode-uri";
+
+import type { PluginObj } from "@babel/core";
+import { availablePlugins, registerPlugin, transform } from "@babel/standalone";
+import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from "@babel/types";
 
 type CommonReplacement = typeof commonReplacement;
 
@@ -19,7 +18,7 @@ const localize = nls.loadMessageBundle();
 export const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
   const ret: TimelineReplacement[] = [];
 
-  let fileContent = new TextDecoder().decode(await workspace.fs.readFile(URI.file(triggerPath)));
+  let fileContent = (await workspace.fs.readFile(URI.file(triggerPath))).toString();
 
   // transpile typescript first, then feed to babel.
   if (triggerPath.endsWith(".ts")) {
@@ -28,68 +27,13 @@ export const extractReplacements = async (triggerPath: string): Promise<Timeline
       esModuleInterop: true,
     });
   }
-  const babelRet = await transformAsync(fileContent, { ast: true });
+  if (!availablePlugins.extractReplacements) {
+    registerPlugin("extractReplacements", extractReplacementsPluginWrapper(ret));
+  }
+  const babelRet = await transform(fileContent, { plugins: ["extractReplacements"] });
   if (!babelRet) {
     throw new Error(localize("error.babel.transpile", "Error when reading trigger file: {0}", triggerPath));
   }
-
-  traverse(babelRet.ast, {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    ObjectProperty(path) {
-      const node = path.node;
-      if (isIdentifier(node.key) && node.key.name === "timelineReplace" && isArrayExpression(node.value)) {
-        node.value.elements.forEach((element) => {
-          if (!isObjectExpression(element)) {
-            return;
-          }
-          const timelineReplace: Required<TimelineReplacement> = {
-            locale: "en",
-            missingTranslations: false,
-            replaceSync: {},
-            replaceText: {},
-          };
-          element.properties.forEach((locales) => {
-            if (!isObjectProperty(locales)) {
-              return;
-            }
-            const name = isStringLiteral(locales.key)
-              ? locales.key.value
-              : isIdentifier(locales.key)
-              ? locales.key.name
-              : null;
-            if (name === "locale" && isStringLiteral(locales.value)) {
-              timelineReplace.locale = locales.value.value as keyof LocaleText;
-            }
-            if (name === "replaceSync" && isObjectExpression(locales.value)) {
-              locales.value.properties.forEach((prop) => {
-                if (!isObjectProperty(prop)) {
-                  return;
-                }
-                const { key, value } = prop;
-                if (!isStringLiteral(key) || !isStringLiteral(value)) {
-                  return;
-                }
-                timelineReplace.replaceSync[key.value] = value.value;
-              });
-            }
-            if (name === "replaceText" && isObjectExpression(locales.value)) {
-              locales.value.properties.forEach((prop) => {
-                if (!isObjectProperty(prop)) {
-                  return;
-                }
-                const { key, value } = prop;
-                if (!isStringLiteral(key) || !isStringLiteral(value)) {
-                  return;
-                }
-                timelineReplace.replaceText[key.value] = value.value;
-              });
-            }
-          });
-          ret.push(timelineReplace);
-        });
-      }
-    },
-  });
 
   return ret;
 };
@@ -127,7 +71,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
       const timelineReplaceList = await extractReplacements(triggerFilePath);
       return this.translate({
         locale: locale as keyof LocaleText,
-        timelineFile: new TextDecoder().decode(await workspace.fs.readFile(URI.file(timelineFilePath))),
+        timelineFile: (await workspace.fs.readFile(URI.file(timelineFilePath))).toString(),
         timelineReplaceList,
         commonReplace: commonReplacement,
       });
@@ -355,4 +299,65 @@ export const translateTimeline = async (): Promise<void> => {
       translatedTimelineProvider.onDidChangeEmitter.fire(uri);
     }
   });
+};
+
+const extractReplacementsPluginWrapper: (ret: TimelineReplacement[]) => PluginObj = (ret) => {
+  return {
+    visitor: {
+      ObjectProperty(path) {
+        const node = path.node;
+        if (isIdentifier(node.key) && node.key.name === "timelineReplace" && isArrayExpression(node.value)) {
+          node.value.elements.forEach((element) => {
+            if (!isObjectExpression(element)) {
+              return;
+            }
+            const timelineReplace: Required<TimelineReplacement> = {
+              locale: "en",
+              missingTranslations: false,
+              replaceSync: {},
+              replaceText: {},
+            };
+            element.properties.forEach((locales) => {
+              if (!isObjectProperty(locales)) {
+                return;
+              }
+              const name = isStringLiteral(locales.key)
+                ? locales.key.value
+                : isIdentifier(locales.key)
+                ? locales.key.name
+                : null;
+              if (name === "locale" && isStringLiteral(locales.value)) {
+                timelineReplace.locale = locales.value.value as keyof LocaleText;
+              }
+              if (name === "replaceSync" && isObjectExpression(locales.value)) {
+                locales.value.properties.forEach((prop) => {
+                  if (!isObjectProperty(prop)) {
+                    return;
+                  }
+                  const { key, value } = prop;
+                  if (!isStringLiteral(key) || !isStringLiteral(value)) {
+                    return;
+                  }
+                  timelineReplace.replaceSync[key.value] = value.value;
+                });
+              }
+              if (name === "replaceText" && isObjectExpression(locales.value)) {
+                locales.value.properties.forEach((prop) => {
+                  if (!isObjectProperty(prop)) {
+                    return;
+                  }
+                  const { key, value } = prop;
+                  if (!isStringLiteral(key) || !isStringLiteral(value)) {
+                    return;
+                  }
+                  timelineReplace.replaceText[key.value] = value.value;
+                });
+              }
+            });
+            ret.push(timelineReplace);
+          });
+        }
+      },
+    },
+  };
 };
