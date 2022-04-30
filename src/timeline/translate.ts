@@ -10,7 +10,7 @@ import * as ts from "typescript";
 import type { Lang } from "cactbot/resources/languages";
 import type { LocaleText } from "cactbot/types/trigger";
 import { commonReplacement } from "cactbot/ui/raidboss/common_replacement";
-import type { TimelineReplacement } from "cactbot/ui/raidboss/timeline";
+import type { TimelineReplacement } from "cactbot/ui/raidboss/timeline_parser";
 
 type CommonReplacement = typeof commonReplacement;
 
