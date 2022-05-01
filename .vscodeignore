@@ -44,3 +44,6 @@ node_modules/**
 # i18n
 crowdin.yml
 crowdin-i18n/**
+
+# Test
+test/**

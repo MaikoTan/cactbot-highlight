@@ -19,6 +19,6 @@
       "cactbot/*": ["./3rdparty/cactbot/*"]
     }
   },
-  "include": ["src", "./node_modules/vscode/vscode.d.ts", "./node_modules/vscode/lib/*"],
+  "include": ["src", "./node_modules/vscode/vscode.d.ts", "./node_modules/vscode/lib/*", "test"],
   "exclude": ["node_modules", ".vscode-test"]
 }
