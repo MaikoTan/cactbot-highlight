@@ -153,7 +153,9 @@
     "prettier": "^2.6.2",
     "vsce": "^2.7.0",
     "vscode-nls-dev": "^4.0.0",
-    "vscode-test": "^1.6.1"
+    "vscode-test": "^1.6.1",
+    "webpack": "^5.72.0",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "@babel/standalone": "^7.17.11",
