@@ -1,7 +1,7 @@
 import { Range, Selection, TextEditor, window } from "vscode";
 import * as nls from "vscode-nls";
 
-import { adjustTime } from "../utils";
+import { adjustTime } from "../common/utils";
 
 const localize = nls.loadMessageBundle();
 
