@@ -147,7 +147,7 @@
     "markdown-magic": "^2.6.0",
     "mocha": "^10.0.0",
     "prettier": "^2.6.2",
-    "vsce": "^2.7.0",
+    "vsce": "^2.8.0",
     "vscode-nls-dev": "^4.0.0",
     "vscode-test": "^1.6.1"
   },
