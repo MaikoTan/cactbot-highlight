@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const del = require("del");
 const es = require("event-stream");
 const gulp = require("gulp");
 const filter = require("gulp-filter");
@@ -17,8 +16,8 @@ const languages = [
   { folderName: "fr", id: "fr" },
 ];
 
-const cleanTask = function () {
-  return del(["dist/**", "package.nls.*.json", "cactbot-highlight*.vsix", "crowdin-i18n/**"]);
+const cleanTask = async function () {
+  return (await import('del')).deleteAsync(["dist/**", "package.nls.*.json", "cactbot-highlight*.vsix", "crowdin-i18n/**"]);
 };
 
 const convertYaml = function () {
