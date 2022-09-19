@@ -20,7 +20,7 @@
     "build": "gulp build",
     "lint": "eslint src --ext ts",
     "watch": "tsc --watch",
-    "format": "prettier .",
+    "format": "prettier --write .",
     "clean": "gulp clean",
     "toc": "md-magic --path \"README.md\"",
     "pretest": "yarn run build && yarn run lint",
@@ -166,11 +166,11 @@
   },
   "prettier": {
     "printWidth": 120,
-    "singleQuote": false,
+    "singleQuote": true,
     "trailingComma": "all",
     "useTabs": false,
     "tabWidth": 2,
     "quoteProps": "as-needed",
-    "semi": true
+    "semi": false
   }
 }

@@ -40,9 +40,9 @@ jobs:
           # Install Crowdin CLI
           yarn global add @crowdin/cli
 
-      - name: "Fetch i18n files"
+      - name: 'Fetch i18n files'
         env:
-          CROWDIN_API_TOKEN: "${{ secrets.CROWDIN_API_TOKEN }}"
+          CROWDIN_API_TOKEN: '${{ secrets.CROWDIN_API_TOKEN }}'
         run: |
           yarn port-i18n
           yarn crowdin:pull

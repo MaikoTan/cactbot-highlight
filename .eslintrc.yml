@@ -2,12 +2,12 @@ root: true
 env:
   node: true
   es6: true
-parser: "@typescript-eslint/parser"
+parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 6
   sourceType: module
 plugins:
-  - "@typescript-eslint"
+  - '@typescript-eslint'
   - import
 extends:
   - eslint:recommended
@@ -16,33 +16,33 @@ extends:
   - plugin:import/typescript
 settings:
   import/parsers:
-    "@typescript-eslint/parser":
-      - ".ts"
-      - ".tsx"
+    '@typescript-eslint/parser':
+      - '.ts'
+      - '.tsx'
   import/resolver:
     typescript:
       alwaysTryTypes: true
 rules:
-  "@typescript-eslint/naming-convention": warn
-  "@typescript-eslint/quotes":
+  '@typescript-eslint/naming-convention': warn
+  '@typescript-eslint/quotes':
     - error
     - single
     - avoidEscape: true
-  "@typescript-eslint/semi":
+  '@typescript-eslint/semi':
     - error
     - never
-  
+
   import/order:
     - error
     - groups:
-      - builtin
-      - external
-      - internal
-      - parent
-      - sibling
-      - index
-      - object
-      - type
+        - builtin
+        - external
+        - internal
+        - parent
+        - sibling
+        - index
+        - object
+        - type
       newlines-between: always
       alphabetize:
         order: asc
@@ -55,5 +55,5 @@ rules:
   eqeqeq: warn
   no-throw-literal: warn
   no-trailing-spaces: error
-  quotes: "off"
-  semi: "off"
+  quotes: 'off'
+  semi: 'off'

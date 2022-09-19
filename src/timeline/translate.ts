@@ -1,199 +1,200 @@
-import { existsSync, readFile } from "fs";
-import { promisify } from "util";
+import { existsSync, readFile } from 'fs'
+import { promisify } from 'util'
 
-import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from "vscode";
-import * as nls from "vscode-nls";
-import { transformAsync, traverse } from "@babel/core";
-import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from "@babel/types";
-import * as ts from "typescript";
+import { transformAsync, traverse } from '@babel/core'
+import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from '@babel/types'
+import * as ts from 'typescript'
+import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
+import * as nls from 'vscode-nls'
 
-import type { Lang } from "cactbot/resources/languages";
-import type { LocaleText } from "cactbot/types/trigger";
-import { commonReplacement } from "cactbot/ui/raidboss/common_replacement";
-import type { TimelineReplacement } from "cactbot/ui/raidboss/timeline_parser";
+import { commonReplacement } from 'cactbot/ui/raidboss/common_replacement'
 
-type CommonReplacement = typeof commonReplacement;
+import type { Lang } from 'cactbot/resources/languages'
+import type { LocaleText } from 'cactbot/types/trigger'
+import type { TimelineReplacement } from 'cactbot/ui/raidboss/timeline_parser'
 
-const localize = nls.loadMessageBundle();
+type CommonReplacement = typeof commonReplacement
+
+const localize = nls.loadMessageBundle()
 
 export const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
-  const ret: TimelineReplacement[] = [];
+  const ret: TimelineReplacement[] = []
 
-  let fileContent = await promisify(readFile)(triggerPath, "utf8");
+  let fileContent = await promisify(readFile)(triggerPath, 'utf8')
 
   // transpile typescript first, then feed to babel.
-  if (triggerPath.endsWith(".ts")) {
+  if (triggerPath.endsWith('.ts')) {
     fileContent = ts.transpile(fileContent, {
       target: ts.ScriptTarget.ES2020,
       esModuleInterop: true,
-    });
+    })
   }
-  const babelRet = await transformAsync(fileContent, { ast: true });
+  const babelRet = await transformAsync(fileContent, { ast: true })
   if (!babelRet) {
-    throw new Error(localize("error.babel.transpile", "Error when reading trigger file: {0}", triggerPath));
+    throw new Error(localize('error.babel.transpile', 'Error when reading trigger file: {0}', triggerPath))
   }
 
   traverse(babelRet.ast, {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     ObjectProperty(path) {
-      const node = path.node;
-      if (isIdentifier(node.key) && node.key.name === "timelineReplace" && isArrayExpression(node.value)) {
+      const node = path.node
+      if (isIdentifier(node.key) && node.key.name === 'timelineReplace' && isArrayExpression(node.value)) {
         node.value.elements.forEach((element) => {
           if (!isObjectExpression(element)) {
-            return;
+            return
           }
           const timelineReplace: Required<TimelineReplacement> = {
-            locale: "en",
+            locale: 'en',
             missingTranslations: false,
             replaceSync: {},
             replaceText: {},
-          };
+          }
           element.properties.forEach((locales) => {
             if (!isObjectProperty(locales)) {
-              return;
+              return
             }
             const name = isStringLiteral(locales.key)
               ? locales.key.value
               : isIdentifier(locales.key)
               ? locales.key.name
-              : null;
-            if (name === "locale" && isStringLiteral(locales.value)) {
-              timelineReplace.locale = locales.value.value as keyof LocaleText;
+              : null
+            if (name === 'locale' && isStringLiteral(locales.value)) {
+              timelineReplace.locale = locales.value.value as keyof LocaleText
             }
-            if (name === "replaceSync" && isObjectExpression(locales.value)) {
+            if (name === 'replaceSync' && isObjectExpression(locales.value)) {
               locales.value.properties.forEach((prop) => {
                 if (!isObjectProperty(prop)) {
-                  return;
+                  return
                 }
-                const { key, value } = prop;
+                const { key, value } = prop
                 if (!isStringLiteral(key) || !isStringLiteral(value)) {
-                  return;
+                  return
                 }
-                timelineReplace.replaceSync[key.value] = value.value;
-              });
+                timelineReplace.replaceSync[key.value] = value.value
+              })
             }
-            if (name === "replaceText" && isObjectExpression(locales.value)) {
+            if (name === 'replaceText' && isObjectExpression(locales.value)) {
               locales.value.properties.forEach((prop) => {
                 if (!isObjectProperty(prop)) {
-                  return;
+                  return
                 }
-                const { key, value } = prop;
+                const { key, value } = prop
                 if (!isStringLiteral(key) || !isStringLiteral(value)) {
-                  return;
+                  return
                 }
-                timelineReplace.replaceText[key.value] = value.value;
-              });
+                timelineReplace.replaceText[key.value] = value.value
+              })
             }
-          });
-          ret.push(timelineReplace);
-        });
+          })
+          ret.push(timelineReplace)
+        })
       }
     },
-  });
+  })
 
-  return ret;
-};
+  return ret
+}
 
 export class TranslatedTimelineProvider implements TextDocumentContentProvider {
-  onDidChangeEmitter = new EventEmitter<Uri>();
+  onDidChangeEmitter = new EventEmitter<Uri>()
 
-  onDidChange = this.onDidChangeEmitter.event;
+  onDidChange = this.onDidChangeEmitter.event
 
   getTriggerFilePath(timelineFilePath: string): string | undefined {
-    let triggerFilePath = timelineFilePath.replace(/\.txt$/, ".js");
+    let triggerFilePath = timelineFilePath.replace(/\.txt$/, '.js')
     if (existsSync(triggerFilePath)) {
-      return triggerFilePath;
+      return triggerFilePath
     }
-    triggerFilePath = triggerFilePath.replace(/\.js$/, ".ts");
+    triggerFilePath = triggerFilePath.replace(/\.js$/, '.ts')
     if (existsSync(triggerFilePath)) {
-      return triggerFilePath;
+      return triggerFilePath
     }
   }
 
   async provideTextDocumentContent(uri: Uri): Promise<string> {
-    const timelineFilePath = uri.path;
-    const triggerFilePath = this.getTriggerFilePath(timelineFilePath);
+    const timelineFilePath = uri.path
+    const triggerFilePath = this.getTriggerFilePath(timelineFilePath)
     if (!triggerFilePath) {
-      throw new Error(localize("error.trigger.notfound", "Cannot find trigger file."));
+      throw new Error(localize('error.trigger.notfound', 'Cannot find trigger file.'))
     }
 
-    const locale = uri.query;
+    const locale = uri.query
 
     try {
-      const timelineReplaceList = await extractReplacements(triggerFilePath);
+      const timelineReplaceList = await extractReplacements(triggerFilePath)
       return this.translate({
         locale: locale as keyof LocaleText,
         timelineFile: String(await promisify(readFile)(timelineFilePath)),
         timelineReplaceList,
         commonReplace: commonReplacement,
-      });
+      })
     } catch (e) {
-      const err = e as Error;
+      const err = e as Error
       return localize(
-        "error.timeline.translate.stack",
+        'error.timeline.translate.stack',
         'Error when translating file "{0}":\n{1}\n{2}\n{3}',
         uri.path,
         err.name,
         err.message,
         err.stack,
-      );
+      )
     }
   }
 
   translate(o: {
-    locale: keyof LocaleText;
-    timelineFile: string;
-    timelineReplaceList: TimelineReplacement[];
-    commonReplace: CommonReplacement;
+    locale: keyof LocaleText
+    timelineFile: string
+    timelineReplaceList: TimelineReplacement[]
+    commonReplace: CommonReplacement
   }): string {
-    const { locale, timelineFile, timelineReplaceList, commonReplace } = o;
+    const { locale, timelineFile, timelineReplaceList, commonReplace } = o
 
     const replace = ((timelineReplaceList: TimelineReplacement[], locale: string): TimelineReplacement | undefined => {
-      let replace;
+      let replace
       for (const element of timelineReplaceList) {
         if (element.locale === locale) {
-          replace = element;
-          break;
+          replace = element
+          break
         }
       }
-      return replace;
-    })(timelineReplaceList, locale);
+      return replace
+    })(timelineReplaceList, locale)
 
     if (!replace) {
-      return timelineFile;
+      return timelineFile
     }
 
     const replacedTimeline = timelineFile.split(/\r?\n/).map((timeline: string, index: number) => {
-      const line = timeline.trim();
-      if (line === "" || line.startsWith("#")) {
-        return timeline;
+      const line = timeline.trim()
+      if (line === '' || line.startsWith('#')) {
+        return timeline
       }
 
-      let replacedLine = timeline;
+      let replacedLine = timeline
 
       try {
         // match "sync /xxx/"
-        const syncMatched = /(?<keyword>sync\s*)\/(?<key>.*?)(?<!\\)\//.exec(line);
+        const syncMatched = /(?<keyword>sync\s*)\/(?<key>.*?)(?<!\\)\//.exec(line)
         if (syncMatched && replace.replaceSync) {
-          let replacedSyncKey = this.replaceKey(syncMatched.groups?.key as string, replace.replaceSync);
-          replacedSyncKey = this.replaceCommonKey(replacedSyncKey, commonReplace, "sync", locale);
+          let replacedSyncKey = this.replaceKey(syncMatched.groups?.key as string, replace.replaceSync)
+          replacedSyncKey = this.replaceCommonKey(replacedSyncKey, commonReplace, 'sync', locale)
           replacedLine = replacedLine.replace(
             syncMatched[0],
             [
               syncMatched.groups?.keyword,
-              "/",
+              '/',
               // replace / to \/
-              replacedSyncKey.replace(/\//g, "\\/"),
-              "/",
-            ].join(""),
-          );
+              replacedSyncKey.replace(/\//g, '\\/'),
+              '/',
+            ].join(''),
+          )
         }
 
         // match "xxxx.x \"xxxx\""
-        const textMatched = /^(?<time>\d+(\.\d)?\s*)"(?<text>.*)(?<!\\)"/.exec(line);
+        const textMatched = /^(?<time>\d+(\.\d)?\s*)"(?<text>.*)(?<!\\)"/.exec(line)
         if (textMatched && replace.replaceText) {
-          let replacedTextKey = this.replaceKey(textMatched.groups?.text as string, replace.replaceText, false);
-          replacedTextKey = this.replaceCommonKey(replacedTextKey, commonReplace, "text", locale);
+          let replacedTextKey = this.replaceKey(textMatched.groups?.text as string, replace.replaceText, false)
+          replacedTextKey = this.replaceCommonKey(replacedTextKey, commonReplace, 'text', locale)
           replacedLine = replacedLine.replace(
             textMatched[0],
             [
@@ -202,153 +203,153 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
               // replace " to \"
               replacedTextKey.replace(/"/g, '\\"'),
               '"',
-            ].join(""),
-          );
+            ].join(''),
+          )
         }
       } catch (err) {
-        const error = err as Error;
+        const error = err as Error
         console.warn(
           localize(
-            "error.transle.line.stack",
-            "Error in translating line {0}:\n{1}\n{2}\n{3}",
+            'error.transle.line.stack',
+            'Error in translating line {0}:\n{1}\n{2}\n{3}',
             index,
             error.name,
             error.message,
             error.stack,
           ),
-        );
+        )
       }
 
-      return replacedLine;
-    });
+      return replacedLine
+    })
 
-    return replacedTimeline.join("\n");
+    return replacedTimeline.join('\n')
   }
 
   replaceKey(original: string, replacement: { [x: string]: string }, isGlobal = true): string {
     if (!replacement) {
-      return original;
+      return original
     }
 
-    let modifier = "i";
+    let modifier = 'i'
     if (isGlobal) {
-      modifier += "g";
+      modifier += 'g'
     }
 
-    let text = original;
+    let text = original
     for (const [k, v] of Object.entries(replacement)) {
-      text = text.replace(new RegExp(k, modifier), v);
+      text = text.replace(new RegExp(k, modifier), v)
     }
 
-    return text;
+    return text
   }
 
   replaceCommonKey(
     original: string,
     commonReplacement: CommonReplacement,
-    key: "sync" | "text" = "sync",
+    key: 'sync' | 'text' = 'sync',
     locale: Lang,
   ): string {
-    if (locale === "en") {
-      return original;
+    if (locale === 'en') {
+      return original
     }
 
-    let text = original;
-    const replace = key === "sync" ? commonReplacement.replaceSync : commonReplacement.replaceText;
+    let text = original
+    const replace = key === 'sync' ? commonReplacement.replaceSync : commonReplacement.replaceText
     for (const [k, v] of Object.entries(replace)) {
-      text = text.replace(new RegExp(k, "gi"), v[locale] ?? "");
+      text = text.replace(new RegExp(k, 'gi'), v[locale] ?? '')
     }
 
-    return text;
+    return text
   }
 }
 
-export const translatedTimelineProvider = new TranslatedTimelineProvider();
+export const translatedTimelineProvider = new TranslatedTimelineProvider()
 
 export const translateTimeline = async (): Promise<void> => {
-  const document = window.activeTextEditor?.document;
+  const document = window.activeTextEditor?.document
   if (!document) {
-    return;
+    return
   }
-  let filename = document.fileName;
+  let filename = document.fileName
   if (!/\w*ui.raidboss.data.\d\d.*\.(ts|js|txt)/.test(filename)) {
     await window.showErrorMessage(
       localize(
-        "error.timeline.file.not.valid",
+        'error.timeline.file.not.valid',
         '{0} is not a valid file path, please make sure the path of your active file is "ui/raidboss/data/**/*.(js|ts)"',
         filename,
       ),
-    );
-    return;
+    )
+    return
   }
 
   // TODO: very hacky way
   // maybe it should be the `timelineFile` or `timeline` key in the trigger file
-  if (filename.endsWith(".js") || filename.endsWith(".ts")) {
-    filename = filename.replace(/\.(js|ts)$/, ".txt");
+  if (filename.endsWith('.js') || filename.endsWith('.ts')) {
+    filename = filename.replace(/\.(js|ts)$/, '.txt')
   }
 
   // try to get locale settings in settings.json
-  let locale = workspace.getConfiguration().get("cactbot.timeline.defaultLocale");
+  let locale = workspace.getConfiguration().get('cactbot.timeline.defaultLocale')
 
-  if (!(typeof locale === "string" && locale)) {
+  if (!(typeof locale === 'string' && locale)) {
     locale = (
       await window.showQuickPick(
         [
           {
-            label: "en",
-            description: "English",
-            detail: "English",
+            label: 'en',
+            description: 'English',
+            detail: 'English',
           },
           {
-            label: "de",
-            description: "German",
-            detail: "Deutsch",
+            label: 'de',
+            description: 'German',
+            detail: 'Deutsch',
           },
           {
-            label: "fr",
-            description: "French",
-            detail: "français",
+            label: 'fr',
+            description: 'French',
+            detail: 'français',
           },
           {
-            label: "ja",
-            description: "Japanese",
-            detail: "日本語",
+            label: 'ja',
+            description: 'Japanese',
+            detail: '日本語',
           },
           {
-            label: "cn",
-            description: "Chinese",
-            detail: "中文",
+            label: 'cn',
+            description: 'Chinese',
+            detail: '中文',
           },
           {
-            label: "ko",
-            description: "Korean",
-            detail: "한국어",
+            label: 'ko',
+            description: 'Korean',
+            detail: '한국어',
           },
         ],
         {
-          placeHolder: localize("translate.locale.prompt", "Select a locale..."),
+          placeHolder: localize('translate.locale.prompt', 'Select a locale...'),
           canPickMany: false,
         },
       )
-    )?.label;
+    )?.label
   }
 
   if (!locale) {
-    return;
+    return
   }
 
-  const uri = Uri.parse("cactbot-timeline:" + filename + "?" + locale);
-  const translatedDocument = await workspace.openTextDocument(uri); // calls back into the provider
-  await window.showTextDocument(translatedDocument, { preview: true });
-  await languages.setTextDocumentLanguage(translatedDocument, "cactbot-timeline");
+  const uri = Uri.parse('cactbot-timeline:' + filename + '?' + locale)
+  const translatedDocument = await workspace.openTextDocument(uri) // calls back into the provider
+  await window.showTextDocument(translatedDocument, { preview: true })
+  await languages.setTextDocumentLanguage(translatedDocument, 'cactbot-timeline')
 
   // FIXME: this should dispose after file close?
   // TODO: not only monitor the current document,
   // but also the related files.
   workspace.onDidChangeTextDocument((e) => {
-    if (e.document.fileName.replace(/\.(js|ts|txt)$/, "") === document.fileName.replace(/\.(js|ts|txt)$/, "")) {
-      translatedTimelineProvider.onDidChangeEmitter.fire(uri);
+    if (e.document.fileName.replace(/\.(js|ts|txt)$/, '') === document.fileName.replace(/\.(js|ts|txt)$/, '')) {
+      translatedTimelineProvider.onDidChangeEmitter.fire(uri)
     }
-  });
-};
+  })
+}

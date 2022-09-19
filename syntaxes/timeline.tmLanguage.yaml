@@ -1,15 +1,15 @@
 ---
-"$schema": https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json
+'$schema': https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json
 
 name: cactbot-timeline
 
 patterns:
-  - include: "#comment"
-  - include: "#keywords"
+  - include: '#comment'
+  - include: '#keywords'
   # match any double-quoted strings
-  - include: "#strings"
+  - include: '#strings'
   # match one line in timeline file
-  - include: "#line"
+  - include: '#line'
 
 repository:
   keywords:
@@ -34,9 +34,9 @@ repository:
           \b
 
   comment:
-    begin: "#"
+    begin: '#'
     beginCaptures:
-      "0":
+      '0':
         name: punctuation.definition.comment.timeline
     end: '$|\n'
     name: comment.line.number-sign.timeline
@@ -54,14 +54,14 @@ repository:
       # 0.0 "--Reset--" sync / 21:........:40000010:/ window 10000 jump 0 duration 5
       #  ^       ^                     ^                       ^        ^          ^
       # #time #strings           #sync / regex             #window   #jump     #duration
-      - include: "#number"
-      - include: "#strings"
-      - include: "#comma"
-      - include: "#regex"
+      - include: '#number'
+      - include: '#strings'
+      - include: '#comma'
+      - include: '#regex'
 
   regex:
     name: constant.regexp.timeline
-    begin: "/"
+    begin: '/'
     end: '(?<!\\)/' # match '/' which don't bebind '\'
 
     patterns:
@@ -77,11 +77,11 @@ repository:
             (\d+(\.\d+)?)   # int or float
             \b
         captures:
-          "1":
+          '1':
             name: constant.numeric.timeline
 
   comma:
-    match: ","
+    match: ','
     name: punctuation.separator.timeline
 
 scopeName: source.cactbot.timeline
