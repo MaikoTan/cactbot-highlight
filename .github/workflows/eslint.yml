@@ -33,8 +33,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yarn install --frozen-lockfile
+          yarn install
 
       - name: npm run lint
         run: |
-          yarn run lint
+          yarn lint

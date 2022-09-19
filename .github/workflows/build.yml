@@ -3,7 +3,7 @@ name: Build
 on: [push, pull_request]
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -35,25 +35,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yarn install --frozen-lockfile
-          echo "$(pwd)/node_modules/.bin/" >> $GITHUB_PATH
-          # Install Crowdin CLI
-          yarn global add @crowdin/cli
-
-      - name: 'Fetch i18n files'
-        env:
-          CROWDIN_API_TOKEN: '${{ secrets.CROWDIN_API_TOKEN }}'
-        run: |
-          yarn port-i18n
-          yarn crowdin:pull
-          yarn import-i18n
-
-      # Disable temporately
-      # because there are errors in cactbot repo
-      # - name: "TypeScript Check"
-      #   run: |
-      #     yarn run tsc
+          yarn install
 
       - name: Build
         run: |
-          yarn run package
+          yarn build
