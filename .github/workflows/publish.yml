@@ -36,18 +36,10 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           echo "$(pwd)/node_modules/.bin/" >> $GITHUB_PATH
-          # Install Crowdin CLI
-          yarn global add @crowdin/cli
-
-      - name: "Fetch i18n files"
-        env:
-          CROWDIN_API_TOKEN: "${{ secrets.CROWDIN_API_TOKEN }}"
-        run: |
-          yarn port-i18n
-          yarn crowdin:pull
-          yarn import-i18n
 
       - name: Build
+        env:
+          CROWDIN_API_TOKEN: "${{ secrets.CROWDIN_API_TOKEN }}"
         run: |
           yarn run package
 
