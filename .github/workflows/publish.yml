@@ -34,8 +34,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yarn install --frozen-lockfile
-          echo "$(pwd)/node_modules/.bin/" >> $GITHUB_PATH
+          yarn install
 
       - name: Build
         env:
