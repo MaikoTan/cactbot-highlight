@@ -22,12 +22,6 @@
       "export default triggerSet;",
     ],
   },
-  "raidboss-alarmText": {
-    "description": "cactbot raidboss alarmText",
-    "scope": "typescript,javascript",
-    "prefix": "ca-r-alarmText",
-    "body": "alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
-  },
   "raidboss-timeline-trigger": {
     "description": "cactbot raidboss timeline trigger",
     "scope": "typescript,javascript",
@@ -40,6 +34,25 @@
       "\t$0",
       "}",
     ],
+  },
+  "raidboss-trigger": {
+    "description": "cactbot raidboss trigger",
+    "scope": "typescript,javascript",
+    "prefix": "ca-r-trigger",
+    "body": [
+      "{",
+      "\tid: '${1:${TM_FILENAME_BASE/(.)([^_]*)_?/${1:/upcase}$2 /g}}',",
+      "\ttype: '${2|StartsUsing|}',",
+      "\tnetRegex: NetRegexes.${2/(.*)/${1:/camelcase}/}({ $3 }),",
+      "\t$0",
+      "},",
+    ],
+  },
+  "raidboss-alarmText": {
+    "description": "cactbot raidboss alarmText",
+    "scope": "typescript,javascript",
+    "prefix": "ca-r-alarmText",
+    "body": "alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
   },
   "raidboss-alarmText-function": {
     "description": "cactbot raidboss alarmText with function",
