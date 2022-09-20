@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- update cactbot to commit [5abbfdc](https://github.com/quisquous/cactbot/compare/a441ac5355a7e02baa51ae6afa710784469f47c7...5abbfdce0973b542d770feb149b56beae15acbc5)
+
 ## [0.4.12] - 2022-05-09
 
 ## Fixed
