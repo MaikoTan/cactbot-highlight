@@ -64,41 +64,5 @@
     "prefix": "outputStrings",
     "body": ["outputStrings: {", "\t${1:text}: {", "\t\t${2|en,de,fr,ja,cn,ko|}: '$0',", "\t},", "},"]
   },
-  "locale key en": {
-    "description": "cactbot trigger English translation snippet",
-    "scope": "typescript,javascript",
-    "prefix": "en",
-    "body": "en: '$0',"
-  },
-  "locale key de": {
-    "description": "cactbot trigger German translation snippet",
-    "scope": "typescript,javascript",
-    "prefix": "de",
-    "body": "de: '$0',"
-  },
-  "locale key fr": {
-    "description": "cactbot trigger French translation snippet",
-    "scope": "typescript,javascript",
-    "prefix": "fr",
-    "body": "fr: '$0',"
-  },
-  "locale key ja": {
-    "description": "cactbot trigger Japanese translation snippet",
-    "scope": "typescript,javascript",
-    "prefix": "ja",
-    "body": "ja: '$0',"
-  },
-  "locale key cn": {
-    "description": "cactbot trigger Chinese translation snippet",
-    "scope": "typescript,javascript",
-    "prefix": "cn",
-    "body": "cn: '$0',"
-  },
-  "locale key ko": {
-    "description": "cactbot trigger Korean translation snippet",
-    "scope": "typescript,javascript",
-    "prefix": "ko",
-    "body": "ko: '$0',"
-  }
   // #endregion
 }
