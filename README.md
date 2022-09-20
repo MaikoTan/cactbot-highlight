@@ -26,17 +26,19 @@ A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ## Features
 
-### Timeline Highlight
+### [Raidboss](https://github.com/quisquous/cactbot/#raidboss-module) Timeline
+
+#### Syntax Highlight
 
 ![timeline-highlight](images/timeline-highlight.png)
 
 > Ultima Weapon Ultimate timeline with Monakai color theme
 
-### Time Adjustment
+#### Time Adjustment
 
 ![adjust-time](images/adjust-time.gif)
 
-### Timeline Translating
+#### Translation Validation
 
 ![translate-timeline.gif](images/translate-timeline.gif)
 
@@ -47,6 +49,47 @@ also make sure you are in the cactbot repository.
 
 Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> (Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>) to open the Command Palette,
 then type and select `Translate Current Timeline` to translate the active file.
+
+### [Raidboss](https://github.com/quisquous/cactbot/#raidboss-module) Triggers
+
+#### Code Snippets
+
+<table>
+<thead>
+<tr>
+<th>Snippet</th>
+<th>Description</th>
+<th>Example</th>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ca-init</code>
+</td>
+<td>initiate a complete trigger set</td>
+<td>
+
+```ts
+import ZoneId from '../../../../../resources/zone_id';
+import { RaidbossData } from '../../../../../types/data';
+import { TriggerSet } from '../../../../../types/trigger';
+
+export type Data = RaidbossData;
+
+const triggerSet: TriggerSet<Params> = {
+  zoneId: ZoneId.TheBindingCoilOfBahamutTurn4,
+  timelineFile: 't13.txt',
+  timelineTriggers: [],
+  triggers: [],
+  timelineReplace: [],
+};
+
+export default triggerSet;
+```
+</td>
+</tr>
+</tbody>
+</table>
 
 ## Install
 
