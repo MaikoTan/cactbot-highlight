@@ -1,7 +1,7 @@
 {
   // #region Raidboss module snippets
-  "raidboss-trigger-init": {
-    "description": "cactbot raidboss trigger init",
+  "raidboss-trigger-set-init": {
+    "description": "cactbot raidboss trigger set init",
     "scope": "typescript,javascript",
     "prefix": "ca-r-init",
     "body": [
