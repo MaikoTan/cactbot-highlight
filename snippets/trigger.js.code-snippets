@@ -43,37 +43,37 @@
     "body": ["outputStrings: {", "\t${1:text}: {", "\t\t$0", "\t},", "},"]
   },
   "locale key en": {
-    "description": "cactbot locale English snippet",
+    "description": "cactbot trigger English translation snippet",
     "scope": "typescript,javascript",
     "prefix": "en",
     "body": "en: '$0',"
   },
   "locale key de": {
-    "description": "cactbot locale Deutsch snippet",
+    "description": "cactbot trigger German translation snippet",
     "scope": "typescript,javascript",
     "prefix": "de",
     "body": "de: '$0',"
   },
   "locale key fr": {
-    "description": "cactbot locale français snippet",
+    "description": "cactbot trigger French translation snippet",
     "scope": "typescript,javascript",
     "prefix": "fr",
     "body": "fr: '$0',"
   },
   "locale key ja": {
-    "description": "cactbot locale 日本語 snippet",
+    "description": "cactbot trigger Japanese translation snippet",
     "scope": "typescript,javascript",
     "prefix": "ja",
     "body": "ja: '$0',"
   },
   "locale key cn": {
-    "description": "cactbot locale 中文 snippet",
+    "description": "cactbot trigger Chinese translation snippet",
     "scope": "typescript,javascript",
     "prefix": "cn",
     "body": "cn: '$0',"
   },
   "locale key ko": {
-    "description": "cactbot locale 한국어 snippet",
+    "description": "cactbot trigger Korean translation snippet",
     "scope": "typescript,javascript",
     "prefix": "ko",
     "body": "ko: '$0',"
