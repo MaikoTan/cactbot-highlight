@@ -1,4 +1,4 @@
-# cactbot-highlight
+# Cactbot Highlight
 
 <a href="https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight" target="_blank"><img align="right" src="./images/cactbot-logo-320x320.png"></img></a>
 
@@ -7,18 +7,21 @@
 
 A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot/) modules.
 
-## Index
-
-<!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=3) -->
-
-- [Index](#index)
+<!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=4) -->
 - [Features](#features)
-  - [Timeline Highlight](#timeline-highlight)
-  - [Time Adjustment](#time-adjustment)
-  - [Timeline Translating](#timeline-translating)
+  - [Raidboss Timeline](#raidboss-timeline)
+    - [Syntax Highlight](#syntax-highlight)
+    - [Time Adjustment](#time-adjustment)
+    - [Translation Validation](#translation-validation)
+  - [Raidboss Triggers](#raidboss-triggers)
+    - [Code Snippets](#code-snippets)
 - [Install](#install)
   - [Enable Highlighting Feature Manually](#enable-highlighting-feature-manually)
+    - [For a Single File](#for-a-single-file)
+    - [For the Whole Workspace](#for-the-whole-workspace)
   - [Available Settings](#available-settings)
+    - [GUI](#gui)
+    - [`settings.json` File](#settingsjson-file)
 - [Localisation](#localisation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -26,17 +29,19 @@ A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ## Features
 
-### Timeline Highlight
+### [Raidboss](https://github.com/quisquous/cactbot/#raidboss-module) Timeline
+
+#### Syntax Highlight
 
 ![timeline-highlight](images/timeline-highlight.png)
 
 > Ultima Weapon Ultimate timeline with Monakai color theme
 
-### Time Adjustment
+#### Time Adjustment
 
 ![adjust-time](images/adjust-time.gif)
 
-### Timeline Translating
+#### Translation Validation
 
 ![translate-timeline.gif](images/translate-timeline.gif)
 
@@ -47,6 +52,129 @@ also make sure you are in the cactbot repository.
 
 Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> (Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>) to open the Command Palette,
 then type and select `Translate Current Timeline` to translate the active file.
+
+### [Raidboss](https://github.com/quisquous/cactbot/#raidboss-module) Triggers
+
+#### Code Snippets
+
+<table>
+<thead>
+<tr>
+<th>Snippet</th>
+<th>Description</th>
+<th>Example</th>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ca-r-init</code>
+</td>
+<td>initiate a complete trigger set</td>
+<td>
+
+```ts
+import ZoneId from '../../../../../resources/zone_id'
+import { RaidbossData } from '../../../../../types/data'
+import { TriggerSet } from '../../../../../types/trigger'
+
+export type Data = RaidbossData
+
+const triggerSet: TriggerSet<Params> = {
+  zoneId: ZoneId.TheBindingCoilOfBahamutTurn4,
+  timelineFile: 't13.txt',
+  timelineTriggers: [],
+  triggers: [],
+  timelineReplace: [],
+}
+
+export default triggerSet
+```
+
+</td>
+</tr>
+<tr>
+<td>
+<code>ca-r-timeline-trigger</code>
+</td>
+<td>initiate a timeline trigger</td>
+<td>
+
+```ts
+{
+  id: 'T13 Phase 2',
+  regex: /Regex/,
+  beforeSeconds: 5,
+}
+```
+
+</td>
+</tr>
+<tr>
+<td>
+<code>ca-r-trigger</code>
+</td>
+<td>initiate a trigger</td>
+<td>
+
+```ts
+{
+  id: 'T13 Gigaflare',
+  type: 'Ability',
+  netRegex: NetRegexes.ability({ }),
+},
+```
+
+</td>
+</tr>
+<tr>
+<td>
+<code>ca-r-timeline-replace</code>
+</td>
+<td>initiate a timeline replace section</td>
+<td>
+
+```ts
+{
+  'locale': 'de',
+  'replaceSync': {},
+  'replaceText': {},
+},
+```
+
+</td>
+</tr>
+<tr>
+<td>
+<code>ca-r-timeline-replace-all</code>
+</td>
+<td>initiate timeline replace sections with all languages</td>
+<td>
+
+```ts
+{
+  'locale': 'en',
+  'replaceSync': {},
+  'replaceText': {},
+},
+{
+  'locale': 'de',
+  'missingTranslations': true,
+  'replaceSync': {},
+  'replaceText': {},
+},
+// ...
+{
+  'locale': 'ko',
+  'missingTranslations': true,
+  'replaceSync': {},
+  'replaceText': {},
+},
+```
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ## Install
 
