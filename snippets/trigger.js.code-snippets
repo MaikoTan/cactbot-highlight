@@ -42,7 +42,7 @@
     "body": [
       "{",
       "\tid: '${1:${TM_FILENAME_BASE/(.)([^_]*)_?/${1:/upcase}$2 /g}}',",
-      "\ttype: '${2|StartsUsing|}',",
+      "\ttype: '${2|StartsUsing,Ability,GainsEffect,LosesEffect,HeadMarker|}',",
       "\tnetRegex: NetRegexes.${2/(.*)/${1:/camelcase}/}({ $3 }),",
       "\t$0",
       "},",
