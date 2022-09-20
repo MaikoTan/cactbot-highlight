@@ -89,7 +89,6 @@
     ],
     "snippets": [
       {
-        "language": "javascript",
         "path": "./snippets/trigger.js.code-snippets"
       }
     ],
