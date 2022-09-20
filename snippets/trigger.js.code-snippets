@@ -28,6 +28,19 @@
     "prefix": "ca-r-alarmText",
     "body": "alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
   },
+  "raidboss-timeline-trigger": {
+    "description": "cactbot raidboss timeline trigger",
+    "scope": "typescript,javascript",
+    "prefix": "ca-r-timeline-trigger",
+    "body": [
+      "{",
+      "\tid: '${1:${TM_FILENAME_BASE/(.)([^_]*)_?/${1:/upcase}$2 /g}}',",
+      "\tregex: /${2:Regex}/,",
+      "\tbeforeSeconds: ${3:5},",
+      "\t$0",
+      "}",
+    ],
+  },
   "raidboss-alarmText-function": {
     "description": "cactbot raidboss alarmText with function",
     "scope": "typescript,javascript",
