@@ -22,46 +22,46 @@
       "export default triggerSet;",
     ],
   },
-  "alarmText": {
+  "raidboss-alarmText": {
     "description": "cactbot raidboss alarmText",
     "scope": "typescript,javascript",
-    "prefix": "alarmText",
+    "prefix": "ca-r-alarmText",
     "body": "alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
   },
-  "alarmTextFunc": {
+  "raidboss-alarmText-function": {
     "description": "cactbot raidboss alarmText with function",
     "scope": "typescript,javascript",
-    "prefix": "alarmText",
+    "prefix": "ca-r-alarmText",
     "body": ["alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
   },
-  "alertText": {
+  "raidboss-alertText": {
     "description": "cactbot raidboss alertText",
     "scope": "typescript,javascript",
-    "prefix": "alertText",
+    "prefix": "ca-r-alertText",
     "body": "alertText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
   },
-  "alertTextFunc": {
+  "raidboss-alertText-function": {
     "description": "cactbot raidboss alertText with function",
     "scope": "typescript,javascript",
-    "prefix": "alertText",
+    "prefix": "ca-r-alertText",
     "body": ["alertText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
   },
-  "infoText": {
+  "raidboss-infoText": {
     "description": "cactbot raidboss infoText",
     "scope": "typescript,javascript",
-    "prefix": "infoText",
+    "prefix": "ca-r-infoText",
     "body": "infoText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
   },
-  "infoTextFunc": {
+  "raidboss-infoText-function": {
     "description": "cactbot raidboss infoText with function",
     "scope": "typescript,javascript",
-    "prefix": "infoText",
+    "prefix": "ca-r-infoText",
     "body": ["infoText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
   },
-  "outputStrings": {
+  "raidboss-outputStrings": {
     "description": "cactbot raidboss outputStrings",
     "scope": "typescript,javascript",
-    "prefix": "outputStrings",
+    "prefix": "ca-r-outputStrings",
     "body": ["outputStrings: {", "\t${1:text}: {", "\t\t${2|en,de,fr,ja,cn,ko|}: '$0',", "\t},", "},"]
   },
   // #endregion
