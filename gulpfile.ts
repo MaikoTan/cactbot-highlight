@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const es = require('event-stream')
-const gulp = require('gulp')
-const filter = require('gulp-filter')
-const jsYaml = require('js-yaml')
-const path = require('path')
-const vsce = require('vsce')
-const nls = require('vscode-nls-dev')
-const esbuild = require('gulp-esbuild')
-const babel = require('gulp-babel')
+import path from 'path'
+
+import * as es from 'event-stream'
+import gulp from 'gulp'
+import babel from 'gulp-babel'
+import esbuild from 'gulp-esbuild'
+import filter from 'gulp-filter'
+import jsYaml from 'js-yaml'
+import File from 'vinyl'
+import { createVSIX } from 'vsce'
+import * as nls from 'vscode-nls-dev'
 
 const languages = [
   { folderName: 'ja', id: 'ja' },
@@ -29,7 +31,7 @@ const convertYaml = function () {
   return gulp
     .src(['syntaxes/timeline.tmLanguage.yaml'])
     .pipe(
-      es.map(function (file, cb) {
+      es.map(function (file: File, cb: (err: Error | null, data?: File) => void) {
         if (file.isNull()) {
           // pass along
           return cb(null, file)
@@ -38,9 +40,9 @@ const convertYaml = function () {
           return cb(new Error('Streaming not supported'))
         }
 
-        const content = file.contents.toString('utf8')
+        const content = file.contents?.toString('utf8')
         try {
-          const json = jsYaml.load(content)
+          const json = jsYaml.load(content ?? '')
           const result = JSON.stringify(json, null, 2)
           file.contents = Buffer.from(result)
           file.path = file.path.replace(/\.yaml$/, '.json')
@@ -108,7 +110,7 @@ const addI18nTask = function () {
     .pipe(gulp.dest('.'))
 }
 
-const compileWrapper = (minify) =>
+const compileWrapper = (minify: boolean) =>
   function compile() {
     return gulp
       .src('./src/extension.ts')
@@ -129,7 +131,7 @@ const compileWrapper = (minify) =>
   }
 
 const vscePackageTask = () => {
-  return vsce.createVSIX({
+  return createVSIX({
     useYarn: true,
   })
 }
