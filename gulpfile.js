@@ -1,56 +1,60 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const del = require("del");
-const es = require("event-stream");
-const gulp = require("gulp");
-const filter = require("gulp-filter");
-const jsYaml = require("js-yaml");
-const path = require("path");
-const vsce = require("vsce");
-const nls = require("vscode-nls-dev");
-const esbuild = require("gulp-esbuild");
-const babel = require("gulp-babel");
+const es = require('event-stream')
+const gulp = require('gulp')
+const filter = require('gulp-filter')
+const jsYaml = require('js-yaml')
+const path = require('path')
+const vsce = require('vsce')
+const nls = require('vscode-nls-dev')
+const esbuild = require('gulp-esbuild')
+const babel = require('gulp-babel')
 
 const languages = [
-  { folderName: "ja", id: "ja" },
-  { folderName: "zh-CN", id: "zh-cn" },
-  { folderName: "zh-TW", id: "zh-tw" },
-  { folderName: "fr", id: "fr" },
-];
+  { folderName: 'ja', id: 'ja' },
+  { folderName: 'zh-CN', id: 'zh-cn' },
+  { folderName: 'zh-TW', id: 'zh-tw' },
+  { folderName: 'fr', id: 'fr' },
+]
 
-const cleanTask = function () {
-  return del(["dist/**", "package.nls.*.json", "cactbot-highlight*.vsix", "crowdin-i18n/**"]);
-};
+const cleanTask = async function () {
+  return (await import('del')).deleteAsync([
+    'dist/**',
+    'package.nls.*.json',
+    'cactbot-highlight*.vsix',
+    'crowdin-i18n/**',
+  ])
+}
 
 const convertYaml = function () {
   return gulp
-    .src(["syntaxes/timeline.tmLanguage.yaml"])
+    .src(['syntaxes/timeline.tmLanguage.yaml'])
     .pipe(
       es.map(function (file, cb) {
         if (file.isNull()) {
           // pass along
-          return cb(null, file);
+          return cb(null, file)
         }
         if (file.isStream()) {
-          return cb(new Error("Streaming not supported"));
+          return cb(new Error('Streaming not supported'))
         }
 
-        const content = file.contents.toString("utf8");
+        const content = file.contents.toString('utf8')
         try {
-          const json = jsYaml.load(content);
-          const result = JSON.stringify(json, null, 2);
-          file.contents = Buffer.from(result);
-          file.path = file.path.replace(/\.yaml$/, ".json");
-          cb(null, file);
+          const json = jsYaml.load(content)
+          const result = JSON.stringify(json, null, 2)
+          file.contents = Buffer.from(result)
+          file.path = file.path.replace(/\.yaml$/, '.json')
+          cb(null, file)
         } catch (e) {
-          console.log(e);
-          return cb(null, file);
+          console.log(e)
+          return cb(null, file)
         }
       }),
     )
-    .pipe(gulp.dest("syntaxes/"));
-};
+    .pipe(gulp.dest('syntaxes/'))
+}
 
-gulp.task("port-i18n", function () {
+gulp.task('port-i18n', function () {
   // In order to include localisable text of localisation function calls
   // provided by `vscode-nls`, we need to transpile typescript to javascript
   // so that `vscode-nls-dev` would recognize those calls.
@@ -61,77 +65,77 @@ gulp.task("port-i18n", function () {
   // Also, here we should exclude test files as they has no localisation.
   return (
     gulp
-      .src(["./src/**/*.ts", "!./src/test/**/*"])
+      .src(['./src/**/*.ts', '!./src/test/**/*'])
       .pipe(
         babel({
-          presets: ["@babel/preset-typescript"],
+          presets: ['@babel/preset-typescript'],
         }),
       )
       .pipe(nls.createMetaDataFiles())
       // Filter down to only the files we need
-      .pipe(filter(["**/*.nls.json", "**/*.nls.metadata.json"]))
+      .pipe(filter(['**/*.nls.json', '**/*.nls.metadata.json']))
 
       // Consoldate them into nls.metadata.json, which the xlf is built from.
-      .pipe(nls.bundleMetaDataFiles("maikotan.cactbot-highlight", "."))
+      .pipe(nls.bundleMetaDataFiles('maikotan.cactbot-highlight', '.'))
 
       // filter down to just the resulting metadata files
-      .pipe(filter(["**/nls.metadata.header.json", "**/nls.metadata.json"]))
+      .pipe(filter(['**/nls.metadata.header.json', '**/nls.metadata.json']))
 
       // Add package.nls.json, used to localized package.json
-      .pipe(gulp.src(["package.nls.json"]))
-      .pipe(nls.createXlfFiles("en", "cactbot-highlight"))
-      .pipe(gulp.dest("./crowdin-i18n/cactbot-highlight"))
-  );
-});
+      .pipe(gulp.src(['package.nls.json']))
+      .pipe(nls.createXlfFiles('en', 'cactbot-highlight'))
+      .pipe(gulp.dest('./crowdin-i18n/cactbot-highlight'))
+  )
+})
 
-gulp.task("import-i18n", function (done) {
+gulp.task('import-i18n', function (done) {
   return es
     .merge(
       languages.map((language) => {
         return gulp
           .src([`./crowdin-i18n/cactbot-highlight/${language.folderName}/*.xlf`])
           .pipe(nls.prepareJsonFiles())
-          .pipe(gulp.dest(path.join("./i18n", language.folderName, "dist")));
+          .pipe(gulp.dest(path.join('./i18n', language.folderName, 'dist')))
       }),
     )
-    .pipe(es.wait(() => done()));
-});
+    .pipe(es.wait(() => done()))
+})
 
 const addI18nTask = function () {
   return gulp
-    .src(["package.nls.json"])
-    .pipe(nls.createAdditionalLanguageFiles(languages, "i18n", "dist"))
-    .pipe(gulp.dest("."));
-};
+    .src(['package.nls.json'])
+    .pipe(nls.createAdditionalLanguageFiles(languages, 'i18n', 'dist'))
+    .pipe(gulp.dest('.'))
+}
 
 const compileWrapper = (minify) =>
   function compile() {
     return gulp
-      .src("./src/extension.ts")
+      .src('./src/extension.ts')
       .pipe(
         esbuild({
           sourcemap: true,
           minify,
-          external: ["vscode"],
+          external: ['vscode'],
           bundle: true,
-          platform: "node",
-          outfile: "extension.js",
-          tsconfig: "tsconfig.json",
+          platform: 'node',
+          outfile: 'extension.js',
+          tsconfig: 'tsconfig.json',
         }),
       )
       .pipe(nls.rewriteLocalizeCalls())
-      .pipe(nls.createAdditionalLanguageFiles(languages, "i18n", "dist"))
-      .pipe(gulp.dest("./dist"));
-  };
+      .pipe(nls.createAdditionalLanguageFiles(languages, 'i18n', 'dist'))
+      .pipe(gulp.dest('./dist'))
+  }
 
 const vscePackageTask = () => {
   return vsce.createVSIX({
     useYarn: true,
-  });
-};
+  })
+}
 
-gulp.task("clean", cleanTask);
+gulp.task('clean', cleanTask)
 
-gulp.task("build", gulp.series(convertYaml, compileWrapper(false), addI18nTask));
+gulp.task('build', gulp.series(convertYaml, compileWrapper(false), addI18nTask))
 
-gulp.task("package", gulp.series(cleanTask, convertYaml, compileWrapper(true), addI18nTask, vscePackageTask));
+gulp.task('package', gulp.series(cleanTask, convertYaml, compileWrapper(true), addI18nTask, vscePackageTask))

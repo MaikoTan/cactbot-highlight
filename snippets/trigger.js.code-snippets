@@ -1,100 +1,156 @@
 {
   // #region Raidboss module snippets
-  "alarmText": {
+  "raidboss-trigger-set-init": {
+    "description": "cactbot raidboss trigger set init",
+    "scope": "typescript,javascript",
+    "prefix": "ca-r-init",
+    "body": [
+      "import ZoneId from '../../../../../resources/zone_id';",
+      "import { RaidbossData } from '../../../../../types/data';",
+      "import { TriggerSet } from '../../../../../types/trigger';",
+      "",
+      "export type Data = RaidbossData;",
+      "",
+      "const triggerSet: TriggerSet<Params> = {",
+      // Transfrom file name as `PascalCase` which is the most possible zone name
+      "\tzoneId: ZoneId.${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}},",
+      "\ttimelineFile: '${2:${TM_FILENAME_BASE}}.txt',",
+      "\ttimelineTriggers: [],",
+      "\ttriggers: [$0],",
+      "\ttimelineReplace: [],",
+      "};",
+      "",
+      "export default triggerSet;"
+    ]
+  },
+  "raidboss-timeline-trigger": {
+    "description": "cactbot raidboss timeline trigger",
+    "scope": "typescript,javascript",
+    "prefix": "ca-r-timeline-trigger",
+    "body": [
+      "{",
+      // Transform file name as separated capitalized words
+      // such as `Tower Of Babil`
+      "\tid: '${1:${TM_FILENAME_BASE/(.)([^_]*)_?/${1:/upcase}$2 /g}}',",
+      "\tregex: /${2:Regex}/,",
+      "\tbeforeSeconds: ${3:5},",
+      "\t$0",
+      "},"
+    ]
+  },
+  "raidboss-trigger": {
+    "description": "cactbot raidboss trigger",
+    "scope": "typescript,javascript",
+    "prefix": "ca-r-trigger",
+    "body": [
+      "{",
+      // Transform file name as separated capitalized words
+      // such as `Tower Of Babil`
+      "\tid: '${1:${TM_FILENAME_BASE/(.)([^_]*)_?/${1:/upcase}$2 /g}}',",
+      "\ttype: '${2|StartsUsing,Ability,GainsEffect,LosesEffect,HeadMarker|}',",
+      "\tnetRegex: NetRegexes.${2/(.*)/${1:/camelcase}/}({ $3 }),",
+      "\t$0",
+      "},"
+    ]
+  },
+  "raidboss-timeline-replace": {
+    "description": "cactbot raidboss timeline replace",
+    "scope": "typescript,javascript",
+    "prefix": "ca-r-timeline-replace",
+    "body": [
+      "{",
+      // Note: There may be a `locale: en` in `timelineReplace`
+      // for abbreviation of timeline English text
+      // see: https://github.com/quisquous/cactbot/pull/2402
+      "\t'locale': '${1|de,fr,ja,cn,ko,en|}',",
+      "\t'replaceSync': {$0},",
+      "\t'replaceText': {},",
+      "},"
+    ]
+  },
+  "raidboss-timeline-replace-all": {
+    "description": "cactbot raidboss timeline all language",
+    "scope": "typescript,javascript",
+    "prefix": "ca-r-timeline-replace-all",
+    "body": [
+      "{",
+      "\t'locale': 'en',",
+      "\t'replaceSync': {$0},",
+      "\t'replaceText': {},",
+      "},",
+      "{",
+      "\t'locale': 'de',",
+      "\t'missingTranslations': true,",
+      "\t'replaceSync': {},",
+      "\t'replaceText': {},",
+      "},",
+      "{",
+      "\t'locale': 'fr',",
+      "\t'missingTranslations': true,",
+      "\t'replaceSync': {},",
+      "\t'replaceText': {},",
+      "},",
+      "{",
+      "\t'locale': 'ja',",
+      "\t'missingTranslations': true,",
+      "\t'replaceSync': {},",
+      "\t'replaceText': {},",
+      "},",
+      "{",
+      "\t'locale': 'cn',",
+      "\t'missingTranslations': true,",
+      "\t'replaceSync': {},",
+      "\t'replaceText': {},",
+      "},",
+      "{",
+      "\t'locale': 'ko',",
+      "\t'missingTranslations': true,",
+      "\t'replaceSync': {},",
+      "\t'replaceText': {},",
+      "},"
+    ]
+  },
+  "raidboss-alarmText": {
     "description": "cactbot raidboss alarmText",
     "scope": "typescript,javascript",
-    "prefix": "alarmText",
-    "body": "alarmText: (data, _, output) => output.${0:text}(),",
+    "prefix": "ca-r-alarmText",
+    "body": "alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
   },
-  "alarmTextFunc": {
+  "raidboss-alarmText-function": {
     "description": "cactbot raidboss alarmText with function",
     "scope": "typescript,javascript",
-    "prefix": "alarmText",
-    "body": [
-      "alarmText: (data, _, output) => {",
-      "\t$0",
-      "},",
-    ],
+    "prefix": "ca-r-alarmText",
+    "body": ["alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
   },
-  "alertText": {
+  "raidboss-alertText": {
     "description": "cactbot raidboss alertText",
     "scope": "typescript,javascript",
-    "prefix": "alertText",
-    "body": "alertText: (data, _, output) => output.${0:text}(),",
+    "prefix": "ca-r-alertText",
+    "body": "alertText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
   },
-  "alertTextFunc": {
+  "raidboss-alertText-function": {
     "description": "cactbot raidboss alertText with function",
     "scope": "typescript,javascript",
-    "prefix": "alertText",
-    "body": [
-      "alertText: (data, _, output) => {",
-      "\t$0",
-      "},",
-    ],
+    "prefix": "ca-r-alertText",
+    "body": ["alertText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
   },
-  "infoText": {
+  "raidboss-infoText": {
     "description": "cactbot raidboss infoText",
     "scope": "typescript,javascript",
-    "prefix": "infoText",
-    "body": "infoText: (data, _, output) => output.${0:text}(),",
+    "prefix": "ca-r-infoText",
+    "body": "infoText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
   },
-  "infoTextFunc": {
+  "raidboss-infoText-function": {
     "description": "cactbot raidboss infoText with function",
     "scope": "typescript,javascript",
-    "prefix": "infoText",
-    "body": [
-      "infoText: (data, _, output) => {",
-      "\t$0",
-      "},",
-    ],
+    "prefix": "ca-r-infoText",
+    "body": ["infoText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
   },
-  "outputStrings": {
+  "raidboss-outputStrings": {
     "description": "cactbot raidboss outputStrings",
     "scope": "typescript,javascript",
-    "prefix": "outputStrings",
-    "body": [
-      "outputStrings: {",
-      "\t${1:text}: {",
-      "\t\t$0",
-      "\t},",
-      "},",
-    ],
-  },
-  "locale key en": {
-    "description": "cactbot locale English snippet",
-    "scope": "typescript,javascript",
-    "prefix": "en",
-    "body": "en: '$0',",
-  },
-  "locale key de": {
-    "description": "cactbot locale Deutsch snippet",
-    "scope": "typescript,javascript",
-    "prefix": "de",
-    "body": "de: '$0',",
-  },
-  "locale key fr": {
-    "description": "cactbot locale français snippet",
-    "scope": "typescript,javascript",
-    "prefix": "fr",
-    "body": "fr: '$0',",
-  },
-  "locale key ja": {
-    "description": "cactbot locale 日本語 snippet",
-    "scope": "typescript,javascript",
-    "prefix": "ja",
-    "body": "ja: '$0',",
-  },
-  "locale key cn": {
-    "description": "cactbot locale 中文 snippet",
-    "scope": "typescript,javascript",
-    "prefix": "cn",
-    "body": "cn: '$0',",
-  },
-  "locale key ko": {
-    "description": "cactbot locale 한국어 snippet",
-    "scope": "typescript,javascript",
-    "prefix": "ko",
-    "body": "ko: '$0',",
-  },
+    "prefix": "ca-r-outputStrings",
+    "body": ["outputStrings: {", "\t${1:text}: {", "\t\t${2|en,de,fr,ja,cn,ko|}: '$0',", "\t},", "},"]
+  }
   // #endregion
 }
