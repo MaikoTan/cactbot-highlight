@@ -157,6 +157,7 @@
     "vsce": "^2.11.0",
     "vscode-nls-dev": "^4.0.1",
     "vscode-test": "^1.6.1",
+    "vscode-uri": "^3.0.6",
     "webpack": "^5.72.0",
     "webpack-merge": "^5.8.0"
   },
