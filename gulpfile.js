@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const path = require('path')
+
 const es = require('event-stream')
 const gulp = require('gulp')
+const babel = require('gulp-babel')
+const esbuild = require('gulp-esbuild')
 const filter = require('gulp-filter')
 const jsYaml = require('js-yaml')
-const path = require('path')
 const vsce = require('vsce')
 const nls = require('vscode-nls-dev')
-const esbuild = require('gulp-esbuild')
-const babel = require('gulp-babel')
+const webpack = require('webpack-stream')
 
 const languages = [
   { folderName: 'ja', id: 'ja' },
@@ -110,9 +112,50 @@ const addI18nTask = function () {
 
 const compileWrapper = (minify) =>
   function compile() {
-    return gulp
-      .src('./src/extension.ts')
-      .pipe(
+    const src = gulp.src('./src/extension.ts')
+    return es.merge(
+      src.pipe(
+        webpack({
+          mode: minify ? 'production' : 'development',
+          target: 'webworker',
+          devtool: 'nosources-source-map',
+          output: {
+            filename: 'extension.browser.js',
+            libraryTarget: 'commonjs',
+            devtoolModuleFilenameTemplate: '../../[resource-path]',
+          },
+          resolve: {
+            mainFields: ['browser', 'module', 'main'],
+            extensions: ['.ts', '.js'],
+            alias: {
+              'cactbot': path.resolve(__dirname, '3rdparty', 'cactbot'),
+            },
+          },
+          module: {
+            rules: [
+              {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: [
+                  {
+                    loader: 'babel-loader',
+                    options: {
+                      presets: ['@babel/preset-typescript'],
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          externals: {
+            vscode: 'commonjs vscode',
+          },
+          performance: {
+            hints: false,
+          },
+        }),
+      ),
+      src.pipe(
         esbuild({
           sourcemap: true,
           minify,
@@ -122,7 +165,8 @@ const compileWrapper = (minify) =>
           outfile: 'extension.js',
           tsconfig: 'tsconfig.json',
         }),
-      )
+      ),
+    )
       .pipe(nls.rewriteLocalizeCalls())
       .pipe(nls.createAdditionalLanguageFiles(languages, 'i18n', 'dist'))
       .pipe(gulp.dest('./dist'))

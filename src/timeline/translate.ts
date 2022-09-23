@@ -1,6 +1,5 @@
 import { availablePlugins, registerPlugin, transform } from '@babel/standalone'
 import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from '@babel/types'
-import * as ts from 'typescript'
 import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
 import * as nls from 'vscode-nls/browser'
 import { URI } from 'vscode-uri'
@@ -19,19 +18,12 @@ const localize = nls.loadMessageBundle()
 export const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
   const ret: TimelineReplacement[] = []
 
-  let fileContent = (await workspace.fs.readFile(URI.file(triggerPath))).toString()
+  const fileContent = (await workspace.fs.readFile(URI.file(triggerPath))).toString()
 
-  // transpile typescript first, then feed to babel.
-  if (triggerPath.endsWith('.ts')) {
-    fileContent = ts.transpile(fileContent, {
-      target: ts.ScriptTarget.ES2020,
-      esModuleInterop: true,
-    })
-  }
   if (!availablePlugins.extractReplacements) {
     registerPlugin('extractReplacements', extractReplacementsPluginWrapper(ret))
   }
-  const babelRet = await transform(fileContent, { plugins: ['extractReplacements'] })
+  const babelRet = await transform(fileContent, { plugins: ['@babel/plugin-transform-typescript', 'extractReplacements'] })
   if (!babelRet) {
     throw new Error(localize('error.babel.transpile', 'Error when reading trigger file: {0}', triggerPath))
   }

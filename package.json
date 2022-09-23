@@ -16,7 +16,7 @@
   "icon": "images/cactbot-logo-320x320.png",
   "license": "MIT",
   "main": "./dist/extension.js",
-  "browser": "./dist/extension.js",
+  "browser": "./dist/extension.browser.js",
   "scripts": {
     "build": "gulp build",
     "lint": "eslint src --ext ts",
@@ -138,6 +138,7 @@
     "@types/vscode": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
+    "babel-loader": "^8.2.5",
     "del": "^7.0.0",
     "eslint": "^8.23.1",
     "eslint-import-resolver-typescript": "^3.5.1",
@@ -159,12 +160,13 @@
     "vscode-test": "^1.6.1",
     "vscode-uri": "^3.0.6",
     "webpack": "^5.72.0",
-    "webpack-merge": "^5.8.0"
+    "webpack-stream": "^7.0.0"
   },
   "dependencies": {
     "@babel/core": "^7.19.1",
     "@babel/generator": "^7.19.0",
     "@babel/plugin-transform-typescript": "^7.19.1",
+    "@babel/standalone": "^7.19.2",
     "@babel/types": "^7.19.0",
     "typescript": "^4.8.3",
     "vscode-nls": "^5.2.0"
