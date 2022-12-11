@@ -148,7 +148,7 @@
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.3.0",
-    "gulp-esbuild": "^0.10.5",
+    "gulp-esbuild": "^0.10.7",
     "gulp-filter": "^7.0.0",
     "js-yaml": "^4.1.0",
     "markdown-magic": "^2.6.1",
