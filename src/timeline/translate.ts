@@ -1,5 +1,4 @@
-import { existsSync, readFile } from 'fs'
-import { promisify } from 'util'
+import { access, constants, readFile } from 'fs/promises'
 
 import { transformAsync, traverse } from '@babel/core'
 import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from '@babel/types'
@@ -20,7 +19,7 @@ const localize = nls.loadMessageBundle()
 export const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
   const ret: TimelineReplacement[] = []
 
-  let fileContent = await promisify(readFile)(triggerPath, 'utf8')
+  let fileContent = await readFile(triggerPath, 'utf8')
 
   // transpile typescript first, then feed to babel.
   if (triggerPath.endsWith('.ts')) {
@@ -38,57 +37,58 @@ export const extractReplacements = async (triggerPath: string): Promise<Timeline
     // eslint-disable-next-line @typescript-eslint/naming-convention
     ObjectProperty(path) {
       const node = path.node
-      if (isIdentifier(node.key) && node.key.name === 'timelineReplace' && isArrayExpression(node.value)) {
-        node.value.elements.forEach((element) => {
-          if (!isObjectExpression(element)) {
+      if (!isIdentifier(node.key) || node.key.name !== 'timelineReplace' || !isArrayExpression(node.value)) {
+        return
+      }
+      node.value.elements.forEach((element) => {
+        if (!isObjectExpression(element)) {
+          return
+        }
+        const timelineReplace: Required<TimelineReplacement> = {
+          locale: 'en',
+          missingTranslations: false,
+          replaceSync: {},
+          replaceText: {},
+        }
+        element.properties.forEach((locales) => {
+          if (!isObjectProperty(locales)) {
             return
           }
-          const timelineReplace: Required<TimelineReplacement> = {
-            locale: 'en',
-            missingTranslations: false,
-            replaceSync: {},
-            replaceText: {},
+          const name = isStringLiteral(locales.key)
+            ? locales.key.value
+            : isIdentifier(locales.key)
+            ? locales.key.name
+            : null
+          if (name === 'locale' && isStringLiteral(locales.value)) {
+            timelineReplace.locale = locales.value.value as keyof LocaleText
           }
-          element.properties.forEach((locales) => {
-            if (!isObjectProperty(locales)) {
-              return
-            }
-            const name = isStringLiteral(locales.key)
-              ? locales.key.value
-              : isIdentifier(locales.key)
-              ? locales.key.name
-              : null
-            if (name === 'locale' && isStringLiteral(locales.value)) {
-              timelineReplace.locale = locales.value.value as keyof LocaleText
-            }
-            if (name === 'replaceSync' && isObjectExpression(locales.value)) {
-              locales.value.properties.forEach((prop) => {
-                if (!isObjectProperty(prop)) {
-                  return
-                }
-                const { key, value } = prop
-                if (!isStringLiteral(key) || !isStringLiteral(value)) {
-                  return
-                }
-                timelineReplace.replaceSync[key.value] = value.value
-              })
-            }
-            if (name === 'replaceText' && isObjectExpression(locales.value)) {
-              locales.value.properties.forEach((prop) => {
-                if (!isObjectProperty(prop)) {
-                  return
-                }
-                const { key, value } = prop
-                if (!isStringLiteral(key) || !isStringLiteral(value)) {
-                  return
-                }
-                timelineReplace.replaceText[key.value] = value.value
-              })
-            }
-          })
-          ret.push(timelineReplace)
+          if (name === 'replaceSync' && isObjectExpression(locales.value)) {
+            locales.value.properties.forEach((prop) => {
+              if (!isObjectProperty(prop)) {
+                return
+              }
+              const { key, value } = prop
+              if (!isStringLiteral(key) || !isStringLiteral(value)) {
+                return
+              }
+              timelineReplace.replaceSync[key.value] = value.value
+            })
+          }
+          if (name === 'replaceText' && isObjectExpression(locales.value)) {
+            locales.value.properties.forEach((prop) => {
+              if (!isObjectProperty(prop)) {
+                return
+              }
+              const { key, value } = prop
+              if (!isStringLiteral(key) || !isStringLiteral(value)) {
+                return
+              }
+              timelineReplace.replaceText[key.value] = value.value
+            })
+          }
         })
-      }
+        ret.push(timelineReplace)
+      })
     },
   })
 
@@ -100,20 +100,20 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
 
   onDidChange = this.onDidChangeEmitter.event
 
-  getTriggerFilePath(timelineFilePath: string): string | undefined {
+  async getTriggerFilePath(timelineFilePath: string): Promise<string | undefined> {
     let triggerFilePath = timelineFilePath.replace(/\.txt$/, '.js')
-    if (existsSync(triggerFilePath)) {
+    if (await exist(triggerFilePath)) {
       return triggerFilePath
     }
     triggerFilePath = triggerFilePath.replace(/\.js$/, '.ts')
-    if (existsSync(triggerFilePath)) {
+    if (await exist(triggerFilePath)) {
       return triggerFilePath
     }
   }
 
   async provideTextDocumentContent(uri: Uri): Promise<string> {
     const timelineFilePath = uri.path
-    const triggerFilePath = this.getTriggerFilePath(timelineFilePath)
+    const triggerFilePath = await this.getTriggerFilePath(timelineFilePath)
     if (!triggerFilePath) {
       throw new Error(localize('error.trigger.notfound', 'Cannot find trigger file.'))
     }
@@ -124,7 +124,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
       const timelineReplaceList = await extractReplacements(triggerFilePath)
       return this.translate({
         locale: locale as keyof LocaleText,
-        timelineFile: String(await promisify(readFile)(timelineFilePath)),
+        timelineFile: String(await readFile(timelineFilePath)),
         timelineReplaceList,
         commonReplace: commonReplacement,
       })
@@ -352,4 +352,16 @@ export const translateTimeline = async (): Promise<void> => {
       translatedTimelineProvider.onDidChangeEmitter.fire(uri)
     }
   })
+}
+
+/**
+ * Check if a file or directory exists.
+ */
+export async function exist(path: string): Promise<boolean> {
+  try {
+    await access(path, constants.F_OK)
+    return true
+  } catch {
+    return false
+  }
 }
