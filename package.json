@@ -137,7 +137,7 @@
     "@types/node": "16.18.11",
     "@types/vscode": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.49.0",
+    "@typescript-eslint/parser": "^5.51.0",
     "del": "^7.0.0",
     "eslint": "^8.27.0",
     "eslint-import-resolver-typescript": "^3.5.2",
