@@ -141,7 +141,7 @@
     "del": "^7.0.0",
     "eslint": "^8.27.0",
     "eslint-import-resolver-typescript": "^3.5.3",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "event-stream": "^4.0.1",
     "glob": "^8.1.0",
