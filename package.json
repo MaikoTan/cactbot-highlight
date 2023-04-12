@@ -129,7 +129,7 @@
     "@types/babel__core": "^7.1.19",
     "@types/event-stream": "^4.0.0",
     "@types/glob": "^8.0.1",
-    "@types/gulp": "^4.0.9",
+    "@types/gulp": "^4.0.10",
     "@types/gulp-babel": "^6.1.30",
     "@types/gulp-filter": "^3.0.34",
     "@types/js-yaml": "^4.0.5",
