@@ -131,7 +131,7 @@
     "@types/glob": "^8.0.1",
     "@types/gulp": "^4.0.10",
     "@types/gulp-babel": "^6.1.30",
-    "@types/gulp-filter": "^3.0.34",
+    "@types/gulp-filter": "^3.0.35",
     "@types/js-yaml": "^4.0.5",
     "@types/mocha": "^10.0.0",
     "@types/node": "18.15.11",
