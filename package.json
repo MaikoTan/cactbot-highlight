@@ -126,7 +126,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.0",
     "@crowdin/cli": "^3.10.0",
-    "@types/babel__core": "^7.1.19",
+    "@types/babel__core": "^7.20.0",
     "@types/event-stream": "^4.0.0",
     "@types/glob": "^8.0.1",
     "@types/gulp": "^4.0.10",
@@ -160,7 +160,7 @@
     "vscode-test": "^1.6.1"
   },
   "dependencies": {
-    "@babel/core": "^7.19.6",
+    "@babel/core": "^7.21.8",
     "@babel/generator": "^7.21.4",
     "@babel/plugin-transform-typescript": "^7.21.3",
     "@babel/types": "^7.21.3",
