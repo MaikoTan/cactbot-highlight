@@ -1460,10 +1460,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/event-stream@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@types/event-stream/-/event-stream-4.0.0.tgz#f48cf2bf6b6e42f7491a3ee355cce3ee1bba5c58"
-  integrity sha512-pH/x8o5fdDsJNVpjNNT3X8F2k2vbL0O9P1grFQwUsmWz49zXUFWWUIRKmzbNzzWiuv4px3UyLb34RjTJYs685A==
+"@types/event-stream@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/event-stream/-/event-stream-4.0.1.tgz#e1bf3804b156fc450cb42f69b8eaad0d6b99942a"
+  integrity sha512-Dcq0jLDAWoZnINmJ8vu6pgk7+fJEFx/Qf2WLkFIV92dDqisnIJuK5eqoFYpNDS+wzplrNiW5i7tKw7/mePMHZQ==
   dependencies:
     "@types/node" "*"
 

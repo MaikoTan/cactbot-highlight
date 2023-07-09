@@ -127,7 +127,7 @@
     "@babel/preset-typescript": "^7.21.0",
     "@crowdin/cli": "^3.10.0",
     "@types/babel__core": "^7.1.19",
-    "@types/event-stream": "^4.0.0",
+    "@types/event-stream": "^4.0.1",
     "@types/glob": "^8.0.1",
     "@types/gulp": "^4.0.10",
     "@types/gulp-babel": "^6.1.30",
