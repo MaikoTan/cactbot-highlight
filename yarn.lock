@@ -1082,10 +1082,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@crowdin/cli@^3.10.0":
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/@crowdin/cli/-/cli-3.10.0.tgz#14f9071860f2fa1ebc918624fbe57bf9677e8f8f"
-  integrity sha512-ez2nZ84jLe/WppZ5ggfZtC9rDUyCbsYengsmKVKeUYfx30lccuyAeQltAdxcwU4v3f58hTNAty0VvCx9zLPl0Q==
+"@crowdin/cli@^3.13.0":
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/cli/-/cli-3.13.0.tgz#47c9223a017885e480f95d723791870dc28d3e05"
+  integrity sha512-4YY1XSJyFdIADMX3U11WtkhL9wVWU/KCBEB6N360ybZVOWKE6G2/ERmWmYs8N1kXO6eoM2UUOp4qb8LmJ9UGTg==
   dependencies:
     command-exists-promise "^2.0.2"
     node-fetch "2.6.7"
