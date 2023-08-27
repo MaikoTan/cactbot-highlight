@@ -161,7 +161,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.19.6",
-    "@babel/generator": "^7.21.4",
+    "@babel/generator": "^7.22.10",
     "@babel/plugin-transform-typescript": "^7.22.11",
     "@babel/types": "^7.21.3",
     "typescript": "^4.9.5",
