@@ -35,19 +35,14 @@
     "crowdin:push": "crowdin upload sources"
   },
   "engines": {
-    "vscode": "^1.60.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Programming Languages",
     "Snippets",
     "Other"
   ],
-  "activationEvents": [
-    "onLanguage:cactbot-timeline",
-    "onCommand:cactbot.timeline.incDecTime",
-    "onCommand:cactbot.timeline.setTime",
-    "onCommand:cactbot.timeline.translate"
-  ],
+  "activationEvents": [],
   "contributes": {
     "configuration": {
       "title": "Cactbot Highlight",
