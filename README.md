@@ -27,9 +27,8 @@ A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 #### Syntax Highlight
 
-![timeline-highlight](images/timeline-highlight.png)
-
-> Ultima Weapon Ultimate timeline with Monakai color theme
+If you didn't see the syntax highlight in your timeline files,
+please check the [FAQ](FAQ.md#why-isnt-my-timeline-files-not-highlighted).
 
 #### Time Adjustment
 
