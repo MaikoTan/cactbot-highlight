@@ -28,7 +28,7 @@ A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot
 #### Syntax Highlight
 
 If you didn't see the syntax highlight in your timeline files,
-please check the [FAQ](FAQ.md#why-isnt-my-timeline-files-not-highlighted).
+please check the [FAQ](https://github.com/MaikoTan/cactbot-highlight/blob/master/FAQ.md#why-isnt-my-timeline-files-not-highlighted).
 
 #### Time Adjustment
 
@@ -170,7 +170,7 @@ sections with all languages</td>
 
 ## FAQ
 
-You can find the FAQ in [FAQ.md](FAQ.md).
+You can find the FAQ in [FAQ.md](https://github.com/MaikoTan/cactbot-highlight/blob/master/FAQ.md).
 
 ## Localisation
 
