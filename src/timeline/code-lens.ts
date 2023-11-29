@@ -2,6 +2,9 @@ import { exec } from 'child_process'
 import { promisify } from 'util'
 
 import * as vscode from 'vscode'
+import * as nls from 'vscode-nls'
+
+const localize = nls.loadMessageBundle()
 
 export class TimelineCodeLensProvider implements vscode.CodeLensProvider {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -27,7 +30,7 @@ export class TimelineCodeLensProvider implements vscode.CodeLensProvider {
           new vscode.CodeLens(range, {
             command: 'cactbot.timeline.runGenerateScript',
             title: 'run make_timeline',
-            tooltip: 'Run `make_timeline` command in terminal',
+            tooltip: localize('codeLens.makeTimeline.run', 'Run `make_timeline` command'),
             arguments: args,
           }),
         )
@@ -35,7 +38,7 @@ export class TimelineCodeLensProvider implements vscode.CodeLensProvider {
           new vscode.CodeLens(range, {
             command: 'cactbot.timeline.runGenerateScriptWithoutExecution',
             title: 'send make_timeline',
-            tooltip: 'Send `make_timeline` command to terminal without execution',
+            tooltip: localize('codeLens.makeTimeline.send', 'Send `make_timeline` command to terminal without execution'),
             arguments: args,
           }),
         )
@@ -81,7 +84,7 @@ export async function runMakeTimeline(args: IArguments[], run = true): Promise<v
       vscode.window.showErrorMessage((e as Error).message)
       // show error in output panel
       const output = vscode.window.createOutputChannel('Cactbot Timeline')
-      output.appendLine('Errors occurred while running make_timeline:')
+      output.appendLine(localize('codeLens.makeTimeline.error', 'Errors occurred while running make_timeline:'))
       output.appendLine((e as Error).message)
       output.appendLine('')
     }
