@@ -54,15 +54,14 @@ Click the `Translate Current Timeline` button on the top-right corner to transla
 <thead>
 <tr>
 <th>Snippet</th>
-<th>Description</th>
 <th>Example</th>
 </thead>
 <tbody>
 <tr>
 <td>
 <code>ca-r-init</code>
-</td>
-<td>initiate a complete trigger set</td>
+<br>
+initiate a complete trigger set</td>
 <td>
 
 ```ts
@@ -88,8 +87,8 @@ export default triggerSet
 <tr>
 <td>
 <code>ca-r-timeline-trigger</code>
-</td>
-<td>initiate a timeline trigger</td>
+<br>
+initiate a timeline trigger</td>
 <td>
 
 ```ts
@@ -105,8 +104,8 @@ export default triggerSet
 <tr>
 <td>
 <code>ca-r-trigger</code>
-</td>
-<td>initiate a trigger</td>
+<br>
+initiate a trigger</td>
 <td>
 
 ```ts
@@ -122,8 +121,8 @@ export default triggerSet
 <tr>
 <td>
 <code>ca-r-timeline-replace</code>
-</td>
-<td>initiate a timeline replace section</td>
+<br>
+initiate a timeline replace section</td>
 <td>
 
 ```ts
@@ -139,8 +138,9 @@ export default triggerSet
 <tr>
 <td>
 <code>ca-r-timeline-replace-all</code>
-</td>
-<td>initiate timeline replace sections with all languages</td>
+<br>
+initiate timeline replace <br>
+sections with all languages</td>
 <td>
 
 ```ts
