@@ -103,7 +103,11 @@
       },
       {
         "command": "cactbot.timeline.translate",
-        "title": "%command.cactbot.timeline.translate%"
+        "title": "%command.cactbot.timeline.translate%",
+        "icon": {
+          "dark": "./assets/translate-dark.svg",
+          "light": "./assets/translate-light.svg"
+        }
       },
       {
         "command": "cactbot.timeline.runGenerateScript",
@@ -115,6 +119,13 @@
       }
     ],
     "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == cactbot-timeline",
+          "command": "cactbot.timeline.translate",
+          "group": "navigation"
+        }
+      ],
       "editor/context": [
         {
           "when": "resourceLangId == cactbot-timeline",
