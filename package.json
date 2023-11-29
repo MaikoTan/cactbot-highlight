@@ -22,7 +22,7 @@
     "watch": "tsc --watch",
     "format": "prettier --write .",
     "clean": "gulp clean",
-    "toc": "md-magic --path \"README.md\"",
+    "toc": "md-magic --path \"*.md\"",
     "pretest": "yarn run build && yarn run lint",
     "tsc": "tsc --noEmit",
     "test": "node ./out/test/runTest.js",

@@ -15,13 +15,7 @@ A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot
     - [Translation Validation](#translation-validation)
   - [Raidboss Triggers](#raidboss-triggers)
     - [Code Snippets](#code-snippets)
-- [Install](#install)
-  - [Enable Highlighting Feature Manually](#enable-highlighting-feature-manually)
-    - [For a Single File](#for-a-single-file)
-    - [For the Whole Workspace](#for-the-whole-workspace)
-  - [Available Settings](#available-settings)
-    - [GUI](#gui)
-    - [`settings.json` File](#settingsjson-file)
+- [FAQ](#faq)
 - [Localisation](#localisation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -45,13 +39,12 @@ A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ![translate-timeline.gif](images/translate-timeline.gif)
 
-To use this feature, you should make sure your file actived
+To use this feature, you should make sure your active file
 is a valid timeline file or trigger file that there are a valid
 timeline file which has the same name in the same directory,
 also make sure you are in the cactbot repository.
 
-Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> (Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>) to open the Command Palette,
-then type and select `Translate Current Timeline` to translate the active file.
+Click the `Translate Current Timeline` button on the top-right corner to translate the active file.
 
 ### [Raidboss](https://github.com/quisquous/cactbot/#raidboss-module) Triggers
 
@@ -176,58 +169,9 @@ export default triggerSet
 </tbody>
 </table>
 
-## Install
+## FAQ
 
-If you got troubles when install from Visual Studio Market,
-you can download the VSIX file of `Cactbot Highlight` from [VSCode Extension Market](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
-and [install it manually](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix).
-
-### Enable Highlighting Feature Manually
-
-If you're using this extension in the cactbot repo that you clone from [quisquous' branch](https://github.com/quisquous/cactbot),
-this feature is already **enabled by default**, because there is already a default settings in `.vscode` directory.
-
-But if you're using this extension out of a repo, you _might_ need to enable it manually.
-
-> The extension name of Cactbot's timeline file is a `txt` file,
-> which is recognized as "Plain Text" defaultly in VSCode,
-> thus we should add an extra setting to enable the highlighting.
-
-#### For a Single File
-
-Click `Plain Text` button at right bottom,
-select `cactbot-timeline` in the prompt window.
-
-#### For the Whole Workspace
-
-Create or edit `.vscode/settings.json`.
-
-Add or modify this below to the file.
-
-```json
-{
-  "files.associations": {
-    "**/data/**/*.txt": "cactbot-timeline"
-  }
-}
-```
-
-### Available Settings
-
-#### GUI
-
-Under `Settings -> Extensions -> Cactbot Highlight`,
-you can configure this extension by GUI.
-
-#### `settings.json` File
-
-```jsonc
-// Set a default language for timelines translating.
-// If you don't want to be asked which language do you want to translate to
-// every time, you can set this property to your prefer language.
-// value can be one of: [ "de", "fr", "ja", "cn", "ko" ]
-"cactbot.timeline.defaultLocale": "ja",
-```
+You can find the FAQ in [FAQ.md](FAQ.md).
 
 ## Localisation
 
