@@ -7,6 +7,7 @@ import babel from 'gulp-babel'
 import esbuild from 'gulp-esbuild'
 import filter from 'gulp-filter'
 import jsYaml from 'js-yaml'
+import { dynamicImport } from 'tsimportlib'
 import File from 'vinyl'
 import { createVSIX } from 'vsce'
 import * as nls from 'vscode-nls-dev'
@@ -19,7 +20,7 @@ const languages = [
 ]
 
 const cleanTask = async function () {
-  return (await import('del')).deleteAsync([
+  return (await dynamicImport('del', module)).deleteAsync([
     'dist/**',
     'package.nls.*.json',
     'cactbot-highlight*.vsix',
