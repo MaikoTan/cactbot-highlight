@@ -5,15 +5,17 @@ All notable changes to the "cactbot-highlight" extension will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.5.0] - 2023-11-29
 
 ### Added
 
+- Add `make_timeline` button in CodeLens for timeline files. ([04dadc2](https://github.com/MaikoTan/cactbot-highlight/commit/04dadc2fb9834db873e9efcb8ea175260b67404a))
+- Add button for timeline translation on top right of editor. ([5e1cf51](https://github.com/MaikoTan/cactbot-highlight/commit/5e1cf512d0397e948b01dd45386ab41ad1ac9eea))
 - Update code snippets ([#247](https://github.com/MaikoTan/cactbot-highlight/pull/247))
 
 ### Fixed
 
-- update cactbot to commit [5abbfdc](https://github.com/quisquous/cactbot/compare/a441ac5355a7e02baa51ae6afa710784469f47c7...5abbfdce0973b542d770feb149b56beae15acbc5)
+- update cactbot to commit [b4e5b8c](https://github.com/quisquous/cactbot/compare/a441ac5355a7e02baa51ae6afa710784469f47c7...b4e5b8c10426ef6c9d55d5426ea6d26718270264).
 
 ## [0.4.12] - 2022-05-09
 
