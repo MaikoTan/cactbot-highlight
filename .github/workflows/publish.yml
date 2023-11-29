@@ -61,3 +61,8 @@ jobs:
       - name: Publish to VS Market
         run: |
           vsce publish -p ${{ secrets.AZURE_TOKEN }}
+
+      - name: Publish to Open VSX Registry
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          pat: ${{ secrets.OPEN_VSX_TOKEN }}
