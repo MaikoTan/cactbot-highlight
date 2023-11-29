@@ -1,6 +1,9 @@
 {
   "config.cactbot.defaultLocale.description": "Set a default language for timelines translating. If you don't want to be asked which language do you want to translate to every time, you can set this property to your prefer language.",
+  "config.cactbot.makeTimelineCommandTemplate.description": "Set a command template for `make_timeline` command. You can use `$FILE` to specify the log file path, `$ARGUMENTS` to specify the arguments parsed from timelines",
   "command.cactbot.timeline.incDecTime": "Increase/Decrease Time of Selection",
   "command.cactbot.timeline.setTime": "Set Time of Selection",
-  "command.cactbot.timeline.translate": "Translate Current Timeline"
+  "command.cactbot.timeline.translate": "Translate Current Timeline",
+  "command.cactbot.timeline.runGenerateScript": "Run `make_timeline`",
+  "command.cactbot.timeline.runGenerateScriptWithoutExecution": "Send `make_timeline` Without Execution"
 }

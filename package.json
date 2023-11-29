@@ -63,6 +63,11 @@
             null
           ],
           "description": "%config.cactbot.defaultLocale.description%"
+        },
+        "cactbot.timeline.makeTimelineCommandTemplate": {
+          "type": "string",
+          "default": "npx ts-node \"./util/logtools/make_timeline.ts\" -f \"$FILE\" $ARGUMENTS",
+          "description": "%config.cactbot.makeTimelineCommandTemplate.description%"
         }
       }
     },
@@ -99,6 +104,14 @@
       {
         "command": "cactbot.timeline.translate",
         "title": "%command.cactbot.timeline.translate%"
+      },
+      {
+        "command": "cactbot.timeline.runGenerateScript",
+        "title": "%command.cactbot.timeline.runGenerateScript%"
+      },
+      {
+        "command": "cactbot.timeline.runGenerateScriptWithoutExecution",
+        "title": "%command.cactbot.timeline.runGenerateScriptWithoutExecution%"
       }
     ],
     "menus": {
