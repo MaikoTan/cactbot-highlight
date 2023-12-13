@@ -141,7 +141,7 @@
     }
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
+    "@babel/cli": "^7.23.4",
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-typescript": "^7.23.2",
     "@crowdin/cli": "^3.13.0",
