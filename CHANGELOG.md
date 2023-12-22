@@ -5,23 +5,39 @@ All notable changes to the "cactbot-highlight" extension will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Add new keyword `forcejump` and `label`. ([#400](https://github.com/MaikoTan/cactbot-highlight/pull/400))
+
+### Changed
+
+- Migrate cactbot to use [`OverlayPlugin/cactbot`] repository. ([#402](https://github.com/MaikoTan/cactbot-highlight/pull/402))
+
+## [0.5.1] - 2023-11-29
+
+### Other
+
+- Update most documentations. ([`38705d3`](https://github.com/MaikoTan/cactbot-highlight/commit/38705d3658f8b981ac1d9bcbd5d6ef3e77b28762) [`02354c1`](https://github.com/MaikoTan/cactbot-highlight/commit/02354c1fdd8ae5570c039a16a02456e96e1ec0b5) [`41b19d0`](https://github.com/MaikoTan/cactbot-highlight/commit/41b19d088b5d6cda3b7e44dadf7ee2071fb30086) [`b3be2bd`](https://github.com/MaikoTan/cactbot-highlight/commit/b3be2bdb5976f2448a41d4f10d561fa7379eaaa3) [`59249e8`](https://github.com/MaikoTan/cactbot-highlight/commit/59249e8b9163877668a5ed101856245d820ad850) [`46c40d7`](https://github.com/MaikoTan/cactbot-highlight/commit/46c40d7aae20248f34f1b4d83608649dfe9a78e5))
+
 ## [0.5.0] - 2023-11-29
 
 ### Added
 
-- Add `make_timeline` button in CodeLens for timeline files. ([04dadc2](https://github.com/MaikoTan/cactbot-highlight/commit/04dadc2fb9834db873e9efcb8ea175260b67404a))
-- Add button for timeline translation on top right of editor. ([5e1cf51](https://github.com/MaikoTan/cactbot-highlight/commit/5e1cf512d0397e948b01dd45386ab41ad1ac9eea))
+- Add `make_timeline` button in CodeLens for timeline files. ([`04dadc2`](https://github.com/MaikoTan/cactbot-highlight/commit/04dadc2fb9834db873e9efcb8ea175260b67404a))
+- Add button for timeline translation on top right of editor. ([`5e1cf51`](https://github.com/MaikoTan/cactbot-highlight/commit/5e1cf512d0397e948b01dd45386ab41ad1ac9eea))
 - Update code snippets ([#247](https://github.com/MaikoTan/cactbot-highlight/pull/247))
 
 ### Fixed
 
-- update cactbot to commit [b4e5b8c](https://github.com/quisquous/cactbot/compare/a441ac5355a7e02baa51ae6afa710784469f47c7...b4e5b8c10426ef6c9d55d5426ea6d26718270264).
+- update cactbot to commit [`b4e5b8c`](https://github.com/quisquous/cactbot/compare/a441ac5355a7e02baa51ae6afa710784469f47c7...b4e5b8c10426ef6c9d55d5426ea6d26718270264).
 
 ## [0.4.12] - 2022-05-09
 
 ## Fixed
 
-- Update cactbot to commit [a441ac5](https://github.com/quisquous/cactbot/commit/a441ac5355a7e02baa51ae6afa710784469f47c7)
+- Update cactbot to commit [`a441ac5`](https://github.com/quisquous/cactbot/commit/a441ac5355a7e02baa51ae6afa710784469f47c7)
 
 ## [0.4.11] - 2021-11-05
 
@@ -281,3 +297,43 @@ maybe helpful when migrating cactbot to TypeScript.
 - Basic highlighting for cactbot timeline files
 
 - Some useful snippets
+
+[0.0.1]: https://github.com/MaikoTan/cactbot-highlight/tree/0.0.1
+[0.0.2]: https://github.com/MaikoTan/cactbot-highlight/compare/0.0.1...0.0.2
+[0.0.3]: https://github.com/MaikoTan/cactbot-highlight/compare/0.0.2...0.0.3
+[0.0.4]: https://github.com/MaikoTan/cactbot-highlight/compare/0.0.3...0.0.4
+[0.0.5]: https://github.com/MaikoTan/cactbot-highlight/compare/0.0.4...0.0.5
+[0.1.0]: https://github.com/MaikoTan/cactbot-highlight/compare/0.0.5...0.1.0
+[0.1.1]: https://github.com/MaikoTan/cactbot-highlight/compare/0.1.0...0.1.1
+[0.1.2]: https://github.com/MaikoTan/cactbot-highlight/compare/0.1.1...0.1.2
+[0.1.3]: https://github.com/MaikoTan/cactbot-highlight/compare/0.1.2...0.1.3
+[0.1.4]: https://github.com/MaikoTan/cactbot-highlight/compare/0.1.3...0.1.4
+[0.1.5]: https://github.com/MaikoTan/cactbot-highlight/compare/0.1.4...0.1.5
+[0.2.0]: https://github.com/MaikoTan/cactbot-highlight/compare/0.1.5...0.2.0
+[0.2.1]: https://github.com/MaikoTan/cactbot-highlight/compare/0.2.0...0.2.1
+[0.2.2]: https://github.com/MaikoTan/cactbot-highlight/compare/0.2.1...0.2.2
+[0.3.0]: https://github.com/MaikoTan/cactbot-highlight/compare/0.2.2...0.3.0
+[0.3.1]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.0...0.3.1
+[0.3.2]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.1...0.3.2
+[0.3.3]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.2...0.3.3
+[0.3.4]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.3...0.3.4
+[0.3.5]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.4...0.3.5
+[0.3.6]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.5...0.3.6
+[0.3.7]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.6...0.3.7
+[0.3.8]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.7...0.3.8
+[0.4.0]: https://github.com/MaikoTan/cactbot-highlight/compare/0.3.8...0.4.0
+[0.4.1]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.0...0.4.1
+[0.4.2]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.1...0.4.2
+[0.4.3]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.2...0.4.3
+[0.4.4]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.3...0.4.4
+[0.4.5]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.4...0.4.5
+[0.4.6]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.5...0.4.6
+[0.4.7]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.6...0.4.7
+[0.4.8]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.7...0.4.8
+[0.4.9]: https://github.com/MaikoTan/cactbot-highlight/compare/0.4.8...v0.4.9
+[0.4.10]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.4.9...v0.4.10
+[0.4.11]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.4.10...v0.4.11
+[0.4.12]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.4.11...v0.4.12
+[0.5.0]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.4.12...v0.5.0
+[0.5.1]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.0...v0.5.1
+[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.1...master
