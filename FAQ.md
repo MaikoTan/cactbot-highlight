@@ -16,7 +16,7 @@ If you are using an OSS version of VSCode, you can also install it from [Open VS
 ## Why isn't my timeline files not highlighted?
 
 If you're using this extension in the cactbot repo that you clone from
-[quisquous' branch](https://github.com/quisquous/cactbot),
+[OverlayPlugin's branch](https://github.com/OverlayPlugin/cactbot),
 this feature is already **enabled by default**, because there is already
 a default settings in `.vscode` directory.
 

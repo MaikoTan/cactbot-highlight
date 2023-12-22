@@ -1,6 +1,6 @@
 # Contribute to cactbot-highlight
 
-Before contributing to this project, you might need to learn glossary from [cactbot](https://github.com/quisquous/cactbot/).
+Before contributing to this project, you might need to learn glossary from [cactbot](https://github.com/OverlayPlugin/cactbot/).
 
 ## Developing
 
