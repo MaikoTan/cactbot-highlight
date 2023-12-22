@@ -5,7 +5,7 @@
 [![Visual Studio Market](https://img.shields.io/visual-studio-marketplace/v/MaikoTan.cactbot-highlight?color=green&label=Visual%20Studio%20Market)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
 [![Downloads](https://img.shields.io/visual-studio-marketplace/d/MaikoTan.cactbot-highlight?color=green)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
 
-A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot/) modules.
+A VSCode extension for developing [cactbot](https://github.com/OverlayPlugin/cactbot/) modules.
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=4) -->
 - [Features](#features)
@@ -23,7 +23,7 @@ A VSCode extension for developing [cactbot](https://github.com/quisquous/cactbot
 
 ## Features
 
-### [Raidboss](https://github.com/quisquous/cactbot/#raidboss-module) Timeline
+### [Raidboss](https://github.com/OverlayPlugin/cactbot#raidboss-overlay) Timeline
 
 #### Syntax Highlight
 
@@ -45,7 +45,7 @@ also make sure you are in the cactbot repository.
 
 Click the `Translate Current Timeline` button on the top-right corner to translate the active file.
 
-### [Raidboss](https://github.com/quisquous/cactbot/#raidboss-module) Triggers
+### [Raidboss](https://github.com/OverlayPlugin/cactbot#raidboss-overlay) Triggers
 
 #### Code Snippets
 
