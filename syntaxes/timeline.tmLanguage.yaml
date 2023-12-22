@@ -26,9 +26,11 @@ repository:
             alarmtext|
             alerttext|
             infotext|
+            label|
             sync|
             window|
             jump|
+            forcejump|
             duration
           )
           \b
