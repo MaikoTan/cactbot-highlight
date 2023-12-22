@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.2] - 2023-12-22
+
 ### Added
 
 - Add new keyword `forcejump` and `label`. ([#400](https://github.com/MaikoTan/cactbot-highlight/pull/400))
@@ -336,4 +338,5 @@ maybe helpful when migrating cactbot to TypeScript.
 [0.4.12]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.4.11...v0.4.12
 [0.5.0]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.4.12...v0.5.0
 [0.5.1]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.0...v0.5.1
-[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.1...master
+[0.5.2]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.1...v0.5.2
+[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.2...master
