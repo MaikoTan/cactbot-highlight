@@ -1,10 +1,17 @@
 {
   "editor.tabSize": 2,
   "files.exclude": {
-    "out": false // set this to true to hide the "out" folder with the compiled JS files
+    "dist": false // set this to true to hide the "dist" folder with the compiled JS files
   },
   "search.exclude": {
-    "out": true // set this to false to include "out" folder in search results
+    "dist": true // set this to false to include "dist" folder in search results
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    // Nest most dotfiles under package.json
+    "package.json": "package.json,package-lock.json,yarn.lock,pnpm-lock.yaml,.yarnrc,.pnp.js,.pnp.loader.mjs,.npmrc,.npmignore,.gitignore,.gitattributes,.gitmodules,.eslintrc*,.eslintignore,.stylelintrc,.prettierrc,.prettierignore,.editorconfig,.vscodeignore,.env",
+    "package.nls.json": "package.nls.*.json",
+    "README.md": "CHANGELOG.md,CONTRIBUTING.md,LICENSE,FAQ.md"
   },
   // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
   "typescript.tsc.autoDetect": "off",
