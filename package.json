@@ -84,7 +84,11 @@
       {
         "language": "cactbot-timeline",
         "scopeName": "source.cactbot.timeline",
-        "path": "./syntaxes/timeline.tmLanguage.json"
+        "path": "./syntaxes/timeline.tmLanguage.json",
+        "embeddedLanguages": {
+          "source.js": "javascript",
+          "meta.embedded.block.javascript": "javascript"
+        }
       }
     ],
     "snippets": [

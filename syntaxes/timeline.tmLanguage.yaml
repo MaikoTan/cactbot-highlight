@@ -56,10 +56,16 @@ repository:
       # 0.0 "--Reset--" sync / 21:........:40000010:/ window 10000 jump 0 duration 5
       #  ^       ^                     ^                       ^        ^          ^
       # #time #strings           #sync / regex             #window   #jump     #duration
+      # Cactbot introduce a new syntax for timeline file in
+      # https://github.com/quisquous/cactbot/issues/3547
+      # 0.0 "--Reset--" Action { id: "123", name: "Prime Eden" } window 10000 jump 0 duration 5
+      #  ^       ^                     ^                                  ^        ^          ^
+      # #time #strings          #netsync / net regex                   #window   #jump     #duration
       - include: '#number'
       - include: '#strings'
       - include: '#comma'
       - include: '#regex'
+      - include: '#netsync'
 
   regex:
     name: constant.regexp.timeline
@@ -70,6 +76,17 @@ repository:
       # escaped character in sync regex
       - name: constant.character.escape.regexp.timeline
         match: '\\.'
+
+  netsync:
+    name: definition.netsync.timeline
+    begin: '\b(\w+)\s*(?={)'
+    end: '(?<=})'
+    beginCaptures:
+      '1':
+        name: entity.name.function.timeline
+    contentName: meta.embedded.block.javascript
+    patterns:
+      - include: 'source.js'
 
   number:
     patterns:
