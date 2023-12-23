@@ -183,8 +183,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
             [
               syncMatched.groups?.keyword,
               '/',
-              // replace / to \/
-              replacedSyncKey.replace(/\//g, '\\/'),
+              replacedSyncKey,
               '/',
             ].join(''),
           )
@@ -200,8 +199,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
             [
               textMatched.groups?.time,
               '"',
-              // replace " to \"
-              replacedTextKey.replace(/"/g, '\\"'),
+              replacedTextKey,
               '"',
             ].join(''),
           )
