@@ -1,7 +1,5 @@
 import { access, constants, readFile } from 'fs/promises'
 
-import { transformAsync, traverse } from '@babel/core'
-import { isArrayExpression, isIdentifier, isObjectExpression, isObjectProperty, isStringLiteral } from '@babel/types'
 import * as ts from 'typescript'
 import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
 import * as nls from 'vscode-nls'
@@ -16,81 +14,69 @@ type CommonReplacement = typeof commonReplacement
 
 const localize = nls.loadMessageBundle()
 
-export const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
+const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
   const ret: TimelineReplacement[] = []
 
-  let fileContent = await readFile(triggerPath, 'utf8')
+  const fileContent = await readFile(triggerPath, 'utf8')
 
-  // transpile typescript first, then feed to babel.
-  if (triggerPath.endsWith('.ts')) {
-    fileContent = ts.transpile(fileContent, {
-      target: ts.ScriptTarget.ES2020,
-      esModuleInterop: true,
-    })
-  }
-  const babelRet = await transformAsync(fileContent, { ast: true })
-  if (!babelRet) {
-    throw new Error(localize('error.babel.transpile', 'Error when reading trigger file: {0}', triggerPath))
-  }
-
-  traverse(babelRet.ast, {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    ObjectProperty(path) {
-      const node = path.node
-      if (!isIdentifier(node.key) || node.key.name !== 'timelineReplace' || !isArrayExpression(node.value)) {
-        return
-      }
-      node.value.elements.forEach((element) => {
-        if (!isObjectExpression(element)) {
-          return
-        }
-        const timelineReplace: Required<TimelineReplacement> = {
-          locale: 'en',
-          missingTranslations: false,
-          replaceSync: {},
-          replaceText: {},
-        }
-        element.properties.forEach((locales) => {
-          if (!isObjectProperty(locales)) {
-            return
-          }
-          const name = isStringLiteral(locales.key)
-            ? locales.key.value
-            : isIdentifier(locales.key)
-            ? locales.key.name
-            : null
-          if (name === 'locale' && isStringLiteral(locales.value)) {
-            timelineReplace.locale = locales.value.value as keyof LocaleText
-          }
-          if (name === 'replaceSync' && isObjectExpression(locales.value)) {
-            locales.value.properties.forEach((prop) => {
-              if (!isObjectProperty(prop)) {
-                return
-              }
-              const { key, value } = prop
-              if (!isStringLiteral(key) || !isStringLiteral(value)) {
-                return
-              }
-              timelineReplace.replaceSync[key.value] = value.value
-            })
-          }
-          if (name === 'replaceText' && isObjectExpression(locales.value)) {
-            locales.value.properties.forEach((prop) => {
-              if (!isObjectProperty(prop)) {
-                return
-              }
-              const { key, value } = prop
-              if (!isStringLiteral(key) || !isStringLiteral(value)) {
-                return
-              }
-              timelineReplace.replaceText[key.value] = value.value
-            })
-          }
+  ts.transform(ts.createSourceFile(triggerPath, fileContent, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS), [(ctx: ts.TransformationContext) => (rootNode) => {
+    function visit(node: ts.Node): ts.Node {
+      if (ts.isObjectLiteralExpression(node)) {
+        const properties = node.properties
+        const timelineReplaceNode = properties.find((property) => {
+          return ts.isPropertyAssignment(property) && property.name.getText() === 'timelineReplace'
         })
-        ret.push(timelineReplace)
-      })
-    },
-  })
+        if (timelineReplaceNode && ts.isPropertyAssignment(timelineReplaceNode)) {
+          const timelineReplace = timelineReplaceNode.initializer
+          if (ts.isArrayLiteralExpression(timelineReplace)) {
+            const timelineReplaceList: TimelineReplacement[] = []
+            for (const element of timelineReplace.elements) {
+              if (ts.isObjectLiteralExpression(element)) {
+                const localeNode = element.properties.find((property) => {
+                  return ts.isPropertyAssignment(property) && property.name.getText() === 'locale'
+                })
+                const replaceSyncNode = element.properties.find((property) => {
+                  return ts.isPropertyAssignment(property) && property.name.getText() === 'replaceSync'
+                }) as ts.PropertyAssignment | undefined
+                const replaceTextNode = element.properties.find((property) => {
+                  return ts.isPropertyAssignment(property) && property.name.getText() === 'replaceText'
+                }) as ts.PropertyAssignment | undefined
+                if (localeNode && ts.isPropertyAssignment(localeNode) && ts.isStringLiteral(localeNode.initializer)) {
+                  const locale = localeNode.initializer.text as keyof LocaleText
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-inner-declarations
+                  function resolveSync(node: ts.Node | undefined): TimelineReplacement['replaceSync'] | undefined {
+                    if (!node) {
+                      return
+                    }
+                    if (!ts.isObjectLiteralExpression(node)) {
+                      return
+                    }
+                    const syncs = node.properties.map((property) => {
+                      if (ts.isPropertyAssignment(property) && ts.isStringLiteral(property.name) && ts.isStringLiteral(property.initializer)) {
+                        return [property.name.text, property.initializer.text]
+                      }
+                    }).filter((sync): sync is [string, string] => !!sync)
+
+                    return Object.fromEntries(syncs)
+                  }
+                  timelineReplaceList.push({
+                    locale,
+                    replaceSync: resolveSync(replaceSyncNode?.initializer),
+                    replaceText: resolveSync(replaceTextNode?.initializer),
+                  })
+                }
+              }
+            }
+            ret.push(...timelineReplaceList)
+          }
+        }
+      }
+
+      return ts.visitEachChild(node, visit, ctx)
+    }
+
+    return ts.visitNode(rootNode, visit)
+  }])
 
   return ret
 }
