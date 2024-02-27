@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.1] - 2024-02-27
+
+### Added
+
+- Support new cactbot timeline net sync syntax. ([#416](https://github.com/MaikoTan/cactbot-highlight/pull/416))
+- Update cactbot to commit [`6d127b8`](https://github.com/OverlayPlugin/cactbot/commit/6d127b8b976f9cffe360700f7fecf73f1418c984). ([`c34a3d2`](https://github.com/MaikoTan/cactbot-highlight/commit/c34a3d29dbb4cc9d9fed79578ddf5266f690cbfa))
+
+### Fixed
+
+- Unexpected escaped quotes. ([#408](https://github.com/MaikoTan/cactbot-highlight/pull/408))
+
+### Changed
+
+- Migrate to TypeScript transformer for timeline translation from slow-y babel. ([#409](https://github.com/MaikoTan/cactbot-highlight/pull/409))
+
 ## [0.6.0] - 2023-12-23
 
 ### Added
@@ -346,4 +361,5 @@ maybe helpful when migrating cactbot to TypeScript.
 [0.5.1]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.0...v0.5.1
 [0.5.2]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.1...v0.5.2
 [0.6.0]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.2...v0.6.0
-[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.0...master
+[0.6.1]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.0...v0.6.1
+[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.1...master
