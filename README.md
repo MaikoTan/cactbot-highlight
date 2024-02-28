@@ -4,6 +4,8 @@
 
 [![Visual Studio Market](https://img.shields.io/visual-studio-marketplace/v/MaikoTan.cactbot-highlight?color=green&label=Visual%20Studio%20Market)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
 [![Downloads](https://img.shields.io/visual-studio-marketplace/d/MaikoTan.cactbot-highlight?color=green)](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
+[![Open VSX Version](https://img.shields.io/open-vsx/v/MaikoTan/cactbot-highlight?label=Open%20VSX&color=green)](https://open-vsx.org/extension/MaikoTan/cactbot-highlight)
+[![Open VSX Downloads](https://img.shields.io/open-vsx/dt/MaikoTan/cactbot-highlight)](https://open-vsx.org/extension/MaikoTan/cactbot-highlight)
 
 A VSCode extension for developing [cactbot](https://github.com/OverlayPlugin/cactbot/) modules.
 
@@ -178,6 +180,7 @@ This extension supports multi-language.
 
 Translators are listed below. Thanks for your contribution!
 
+- English (US) - [@MaikoTan](https://github/MaikoTan)
 - Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
 - Traditional Chinese - [@MaikoTan](https://github.com/MaikoTan)
 - Japanese - [@MaikoTan](https://github.com/MaikoTan)
