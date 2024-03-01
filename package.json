@@ -188,7 +188,7 @@
     "vscode-test": "^1.6.1"
   },
   "dependencies": {
-    "typescript": "^4.9.5",
+    "typescript": "^5.3.3",
     "vscode-nls": "^5.2.0"
   },
   "prettier": {
