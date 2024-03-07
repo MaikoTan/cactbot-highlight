@@ -151,7 +151,7 @@
     "@babel/plugin-transform-typescript": "^7.22.11",
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-typescript": "^7.23.2",
-    "@babel/types": "^7.21.3",
+    "@babel/types": "^7.24.0",
     "@crowdin/cli": "^3.13.0",
     "@types/babel__core": "^7.20.5",
     "@types/event-stream": "^4.0.5",
