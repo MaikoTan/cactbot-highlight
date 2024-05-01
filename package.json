@@ -174,7 +174,7 @@
     "glob": "^10.3.12",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
-    "gulp-cli": "^2.3.0",
+    "gulp-cli": "^3.0.0",
     "gulp-esbuild": "^0.11.2",
     "gulp-filter": "^7.0.0",
     "js-yaml": "^4.1.0",
