@@ -176,7 +176,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^3.0.0",
     "gulp-esbuild": "^0.11.2",
-    "gulp-filter": "^7.0.0",
+    "gulp-filter": "^9.0.1",
     "js-yaml": "^4.1.0",
     "markdown-magic": "^2.6.1",
     "mocha": "^10.4.0",
