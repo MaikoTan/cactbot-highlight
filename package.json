@@ -35,7 +35,7 @@
     "crowdin:push": "crowdin upload sources"
   },
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.82.0"
   },
   "categories": [
     "Programming Languages",
@@ -199,5 +199,6 @@
     "tabWidth": 2,
     "quoteProps": "as-needed",
     "semi": false
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
