@@ -25,7 +25,7 @@
     "toc": "md-magic --path \"*.md\"",
     "pretest": "yarn run build && yarn run tsc -p tsconfig.test.json",
     "tsc:noEmit": "tsc --noEmit",
-    "test": "node ./out/test/runTest.js",
+    "test": "node ./out/runTest.js",
     "package": "gulp package",
     "prepack": "yarn port-i18n && yarn crowdin:pull && yarn import-i18n",
     "********* MANAGE I18N FILES **********": "",
