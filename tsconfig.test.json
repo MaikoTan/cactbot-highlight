@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2021",
+    "outDir": "out/test",
+    "rootDir": "src/test",
+    "esModuleInterop": true,
+  },
+  "include": ["src/test/**/*"]
+}

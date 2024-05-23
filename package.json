@@ -23,8 +23,8 @@
     "format": "prettier --write .",
     "clean": "gulp clean",
     "toc": "md-magic --path \"*.md\"",
-    "pretest": "yarn run build && yarn run lint",
-    "tsc": "tsc --noEmit",
+    "pretest": "yarn run build && yarn run tsc -p tsconfig.test.json",
+    "tsc:noEmit": "tsc --noEmit",
     "test": "node ./out/test/runTest.js",
     "package": "gulp package",
     "prepack": "yarn port-i18n && yarn crowdin:pull && yarn import-i18n",
@@ -165,6 +165,7 @@
     "@types/vscode": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.52.0",
+    "@vscode/test-electron": "^2.3.10",
     "del": "^7.0.0",
     "eslint": "^8.55.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -184,8 +185,7 @@
     "ts-node": "^10.9.1",
     "tsimportlib": "^0.0.5",
     "vsce": "^2.15.0",
-    "vscode-nls-dev": "^4.0.3",
-    "vscode-test": "^1.6.1"
+    "vscode-nls-dev": "^4.0.3"
   },
   "dependencies": {
     "typescript": "^5.4.2",
