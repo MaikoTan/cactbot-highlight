@@ -17,6 +17,7 @@ const languages = [
   { folderName: 'zh-CN', id: 'zh-cn' },
   { folderName: 'zh-TW', id: 'zh-tw' },
   { folderName: 'fr', id: 'fr' },
+  { folderName: 'ko', id: 'ko' },
 ]
 
 const cleanTask = async function () {
