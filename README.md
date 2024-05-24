@@ -185,11 +185,14 @@ This extension supports multi-language.
 
 Translators are listed below. Thanks for your contribution!
 
+[![Crowdin](https://badges.crowdin.net/cactbot-highlight/localized.svg)](https://crowdin.com/project/cactbot-highlight)
+
 - English (US) - [@MaikoTan](https://github/MaikoTan)
-- Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite)
+- Simplified Chinese - [@ShadyWhite](https://github.com/ShadyWhite) [@DeepseaXX](https://github.com/DeepseaXX)
 - Traditional Chinese - [@MaikoTan](https://github.com/MaikoTan)
-- Japanese - [@MaikoTan](https://github.com/MaikoTan)
-- French - [@MaikoTan](https://github.com/MaikoTan)
+- Japanese - [@MaikoTan](https://github.com/MaikoTan) [@DeepseaXX](https://github.com/DeepseaXX)
+- French - [@MaikoTan](https://github.com/MaikoTan) [@wuasar42](https://crowdin.com/profile/wuasar42)
+- Korean - [@Bing-su](https://github.com/Bing-su)
 
 If you want to add a new language, or contribute to the existing ones,
 please visit [our project on Crowdin](https://crowdin.com/project/cactbot-highlight).
