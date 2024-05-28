@@ -5,5 +5,7 @@
   "command.cactbot.timeline.setTime": "Set Time of Selection",
   "command.cactbot.timeline.translate": "Translate Current Timeline",
   "command.cactbot.timeline.runGenerateScript": "Run `make_timeline`",
-  "command.cactbot.timeline.runGenerateScriptWithoutExecution": "Send `make_timeline` Without Execution"
+  "command.cactbot.timeline.runGenerateScriptWithoutExecution": "Send `make_timeline` Without Execution",
+  "viewContainer.title": "Cactbot Highlight",
+  "view.trigger.localisables.title": "localisable Strings"
 }

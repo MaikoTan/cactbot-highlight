@@ -142,6 +142,24 @@
           "group": "7_modification"
         }
       ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "icon": "images/cactbot-logo-320x320.png",
+          "id": "cactbot-highlight",
+          "title": "%viewContainer.title%"
+        }
+      ]
+    },
+    "views": {
+      "cactbot-highlight": [
+        {
+          "id": "cactbot-trigger-localisables",
+          "name": "%view.trigger.localisables.title%",
+          "icon": "images/cactbot-logo-320x320.png"
+        }
+      ]
     }
   },
   "devDependencies": {

@@ -7,6 +7,7 @@ import {
   translatedTimelineProvider,
   translateTimeline,
   TimelineCodeLensProvider,
+  TriggerFile,
 } from './timeline'
 
 export function activate(context: ExtensionContext): void {
@@ -27,6 +28,8 @@ export function activate(context: ExtensionContext): void {
     commands.registerCommand('cactbot.timeline.runGenerateScriptWithoutExecution', (...args) => {
       runMakeTimeline(args, false)
     }),
+
+    new TriggerFile(),
   )
 }
 
