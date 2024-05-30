@@ -2,9 +2,8 @@ import { exec } from 'child_process'
 import { promisify } from 'util'
 
 import * as vscode from 'vscode'
-import * as nls from 'vscode-nls'
 
-const localize = nls.loadMessageBundle()
+import { localize } from '../utils'
 
 export class TimelineCodeLensProvider implements vscode.CodeLensProvider {
   // eslint-disable-next-line @typescript-eslint/naming-convention

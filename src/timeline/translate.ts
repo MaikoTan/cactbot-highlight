@@ -2,9 +2,10 @@ import { access, constants, readFile } from 'fs/promises'
 
 import * as ts from 'typescript'
 import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
-import * as nls from 'vscode-nls'
 
 import { commonReplacement } from 'cactbot/ui/raidboss/common_replacement'
+
+import { localize } from '../utils'
 
 import type { Lang } from 'cactbot/resources/languages'
 import type { LocaleText } from 'cactbot/types/trigger'
@@ -12,15 +13,13 @@ import type { TimelineReplacement } from 'cactbot/ui/raidboss/timeline_parser'
 
 type CommonReplacement = typeof commonReplacement
 
-const localize = nls.loadMessageBundle()
-
 const extractReplacements = async (triggerPath: string): Promise<TimelineReplacement[]> => {
   const ret: TimelineReplacement[] = []
 
   const fileContent = await readFile(triggerPath, 'utf8')
 
   ts.transform(ts.createSourceFile(triggerPath, fileContent, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS), [
-    (ctx: ts.TransformationContext) => (rootNode) => {
+    (ctx: ts.TransformationContext) => (rootNode: ts.Node) => {
       function visit(node: ts.Node): ts.Node {
         if (ts.isObjectLiteralExpression(node)) {
           const properties = node.properties
