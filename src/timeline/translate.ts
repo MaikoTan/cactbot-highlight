@@ -1,15 +1,19 @@
+/* eslint-disable import/no-named-as-default-member */
 import { access, constants, readFile } from 'fs/promises'
 
-import * as ts from 'typescript'
+import ts from 'typescript'
 import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
+import * as nls from 'vscode-nls'
 
 import { commonReplacement } from 'cactbot/ui/raidboss/common_replacement'
 
-import { localize } from '../utils'
+import { output } from '../utils'
 
 import type { Lang } from 'cactbot/resources/languages'
 import type { LocaleText } from 'cactbot/types/trigger'
 import type { TimelineReplacement } from 'cactbot/ui/raidboss/timeline_parser'
+
+const localize = nls.loadMessageBundle()
 
 type CommonReplacement = typeof commonReplacement
 
@@ -104,7 +108,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     }
   }
 
-  async provideTextDocumentContent(uri: Uri): Promise<string> {
+  async provideTextDocumentContent(uri: Uri) {
     const timelineFilePath = uri.path
     const triggerFilePath = await this.getTriggerFilePath(timelineFilePath)
     if (!triggerFilePath) {
@@ -123,14 +127,26 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
       })
     } catch (e) {
       const err = e as Error
-      return localize(
-        'error.timeline.translate.stack',
-        'Error when translating file "{0}":\n{1}\n{2}\n{3}',
-        uri.path,
-        err.name,
-        err.message,
-        err.stack,
+      const ans = await window.showErrorMessage(
+        localize(
+          'error.timeline.translate.dialog',
+          'Error when translating file "{0}": {1}\nShow more details?',
+          uri.path,
+          err.name,
+        ),
+        { modal: true },
+        localize('error.timeline.translate.dialog.buttons.yes', 'Yes'),
+        localize('error.timeline.translate.dialog.buttons.no', 'No'),
       )
+
+      output.appendLine(
+        localize('error.timeline.translate.stack', '{0}: {1}\n{2}{3}', uri.path, err.name, err.message, err.stack),
+      )
+
+      if (ans === localize('error.timeline.translate.dialog.buttons.yes', 'Yes')) {
+        // switch to output panel
+        output.show()
+      }
     }
   }
 
@@ -221,9 +237,9 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
         }
       } catch (err) {
         const error = err as Error
-        console.warn(
+        throw new Error(
           localize(
-            'error.transle.line.stack',
+            'error.translate.line.stack',
             'Error in translating line {0}:\n{1}\n{2}\n{3}',
             index,
             error.name,
@@ -285,16 +301,6 @@ export const translateTimeline = async (): Promise<void> => {
     return
   }
   let filename = document.fileName
-  if (!/\w*ui.raidboss.data.\d\d.*\.(ts|js|txt)/.test(filename)) {
-    await window.showErrorMessage(
-      localize(
-        'error.timeline.file.not.valid',
-        '{0} is not a valid file path, please make sure the path of your active file is "ui/raidboss/data/**/*.(js|ts)"',
-        filename,
-      ),
-    )
-    return
-  }
 
   // TODO: very hacky way
   // maybe it should be the `timelineFile` or `timeline` key in the trigger file
