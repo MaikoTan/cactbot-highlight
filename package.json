@@ -28,10 +28,9 @@
     "tsc:noEmit": "tsc --noEmit",
     "test": "node ./out/runTest.js",
     "package": "gulp package",
-    "prepack": "yarn port-i18n && yarn crowdin:pull && yarn import-i18n",
+    "prepack": "yarn port-i18n && yarn crowdin:pull",
     "********* MANAGE I18N FILES **********": "",
-    "import-i18n": "vscode-l10n-dev import-xlf ./translations.xlf",
-    "port-i18n": "vscode-l10n-dev export --outDir ./l10n ./src && vscode-l10n-dev generate-xlf ./package.nls.json ./l10n/bundle.l10n.json --outFile crowdin/cactbot-highlight.xlf",
+    "port-i18n": "vscode-l10n-dev export --outDir ./l10n ./src",
     "crowdin:pull": "crowdin download",
     "crowdin:push": "crowdin upload sources"
   },
