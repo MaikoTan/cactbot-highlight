@@ -16,6 +16,7 @@
   "icon": "images/cactbot-logo-320x320.png",
   "license": "MIT",
   "main": "./dist/extension.js",
+  "l10n": "./l10n",
   "scripts": {
     "build": "gulp build",
     "lint": "eslint src --ext ts",
@@ -29,8 +30,8 @@
     "package": "gulp package",
     "prepack": "yarn port-i18n && yarn crowdin:pull && yarn import-i18n",
     "********* MANAGE I18N FILES **********": "",
-    "import-i18n": "gulp import-i18n",
-    "port-i18n": "gulp port-i18n",
+    "import-i18n": "vscode-l10n-dev import-xlf ./translations.xlf",
+    "port-i18n": "vscode-l10n-dev export --outDir ./l10n ./src && vscode-l10n-dev generate-xlf ./package.nls.json ./l10n/bundle.l10n.json --outFile crowdin/cactbot-highlight.xlf",
     "crowdin:pull": "crowdin download",
     "crowdin:push": "crowdin upload sources"
   },
@@ -145,22 +146,18 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
-    "@babel/plugin-transform-typescript": "^7.22.11",
-    "@babel/preset-typescript": "^7.23.2",
     "@crowdin/cli": "^3.13.0",
-    "@types/babel__core": "^7.20.5",
     "@types/event-stream": "^4.0.5",
     "@types/glob": "^8.0.1",
     "@types/gulp": "^4.0.10",
     "@types/gulp-babel": "^6.1.31",
-    "@types/gulp-filter": "^3.0.36",
     "@types/js-yaml": "^4.0.5",
     "@types/mocha": "^10.0.1",
     "@types/node": "18.15.11",
-    "@types/vscode": "^1.60.0",
+    "@types/vscode": "^1.82.0",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/l10n-dev": "^0.0.35",
     "@vscode/test-electron": "^2.3.10",
     "del": "^7.0.0",
     "eslint": "<9",
@@ -170,22 +167,18 @@
     "event-stream": "^4.0.1",
     "glob": "^10.3.12",
     "gulp": "^5.0.0",
-    "gulp-babel": "^8.0.0",
     "gulp-cli": "^3.0.0",
     "gulp-esbuild": "^0.11.2",
-    "gulp-filter": "^7.0.0",
     "js-yaml": "^4.1.0",
     "markdown-magic": "^2.6.1",
     "mocha": "^10.4.0",
     "prettier": "^3.0.0",
     "ts-node": "^10.9.1",
     "tsimportlib": "^0.0.5",
-    "vsce": "^2.15.0",
-    "vscode-nls-dev": "^4.0.3"
+    "vsce": "^2.15.0"
   },
   "dependencies": {
-    "typescript": "^5.4.2",
-    "vscode-nls": "^5.2.0"
+    "typescript": "^5.4.2"
   },
   "prettier": {
     "printWidth": 120,

@@ -2,8 +2,7 @@
 import { access, constants, readFile } from 'fs/promises'
 
 import ts from 'typescript'
-import { EventEmitter, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
-import * as nls from 'vscode-nls'
+import { EventEmitter, l10n, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
 
 import { commonReplacement } from 'cactbot/ui/raidboss/common_replacement'
 
@@ -12,8 +11,6 @@ import { output } from '../utils'
 import type { Lang } from 'cactbot/resources/languages'
 import type { LocaleText } from 'cactbot/types/trigger'
 import type { TimelineReplacement } from 'cactbot/ui/raidboss/timeline_parser'
-
-const localize = nls.loadMessageBundle()
 
 type CommonReplacement = typeof commonReplacement
 
@@ -112,7 +109,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     const timelineFilePath = uri.path
     const triggerFilePath = await this.getTriggerFilePath(timelineFilePath)
     if (!triggerFilePath) {
-      throw new Error(localize('error.trigger.notfound', 'Cannot find trigger file.'))
+      throw new Error(l10n.t('Cannot find trigger file.'))
     }
 
     const locale = uri.query
@@ -128,22 +125,15 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     } catch (e) {
       const err = e as Error
       const ans = await window.showErrorMessage(
-        localize(
-          'error.timeline.translate.dialog',
-          'Error when translating file "{0}": {1}\nShow more details?',
-          uri.path,
-          err.name,
-        ),
+        l10n.t('Error when translating file "{0}": {1}\nShow more details?', uri.path, err.name),
         { modal: true },
-        localize('error.timeline.translate.dialog.buttons.yes', 'Yes'),
-        localize('error.timeline.translate.dialog.buttons.no', 'No'),
+        l10n.t('Yes'),
+        l10n.t('No'),
       )
 
-      output.appendLine(
-        localize('error.timeline.translate.stack', '{0}: {1}\n{2}{3}', uri.path, err.name, err.message, err.stack),
-      )
+      output.appendLine(l10n.t('{0}: {1}\n{2}{3}', uri.path, err.name, err.message, err.stack ?? ''))
 
-      if (ans === localize('error.timeline.translate.dialog.buttons.yes', 'Yes')) {
+      if (ans === l10n.t('Yes')) {
         // switch to output panel
         output.show()
       }
@@ -238,14 +228,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
       } catch (err) {
         const error = err as Error
         throw new Error(
-          localize(
-            'error.translate.line.stack',
-            'Error in translating line {0}:\n{1}\n{2}\n{3}',
-            index,
-            error.name,
-            error.message,
-            error.stack,
-          ),
+          l10n.t('Error in translating line {0}:\n{1}\n{2}\n{3}', index, error.name, error.message, error.stack ?? ''),
         )
       }
 
@@ -347,7 +330,7 @@ export const translateTimeline = async (): Promise<void> => {
           },
         ],
         {
-          placeHolder: localize('translate.locale.prompt', 'Select a locale...'),
+          placeHolder: l10n.t('Select a locale...'),
           canPickMany: false,
         },
       )
