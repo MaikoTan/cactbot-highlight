@@ -142,4 +142,18 @@ gulp.task('clean', cleanTask)
 
 gulp.task('build', gulp.series(convertYaml, compileWrapper(false), addI18nTask))
 
+gulp.task(
+  'watch',
+  gulp.series(
+    // build all files first
+    convertYaml,
+    compileWrapper(false),
+    // then watch for file changes
+    function watch() {
+      gulp.watch('src/**/*.ts', compileWrapper(false))
+      gulp.watch('syntaxes/timeline.tmLanguage.yaml', convertYaml)
+    },
+  ),
+)
+
 gulp.task('package', gulp.series(cleanTask, convertYaml, compileWrapper(true), addI18nTask, vscePackageTask))
