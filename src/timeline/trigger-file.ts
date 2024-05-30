@@ -14,8 +14,17 @@ class TriggerFileTreeDataItem extends vscode.TreeItem {
     public readonly label: string,
     public lineNumber: number,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+    private readonly locale?: keyof LocaleObject<unknown>,
   ) {
     super(label, collapsibleState)
+
+    this.tooltip = `${this.label}`
+    if (locale) {
+      this.iconPath = {
+        light: __dirname + `/../assets/locale-${this.locale ?? 'en'}-light.svg`,
+        dark: __dirname + `/../assets/locale-${this.locale ?? 'en'}-dark.svg`,
+      }
+    }
   }
 }
 
@@ -131,13 +140,14 @@ class TriggerFileTreeDataProvider implements vscode.TreeDataProvider<TriggerFile
                 value,
                 lineNumber,
                 vscode.TreeItemCollapsibleState.None,
+                name as keyof LocaleObject<unknown>,
               )
             }
 
             // Construct the en object
             const en = enProperty.initializer.getText()
             const lineNumber = enProperty.getStart()
-            localeObject.en = new TriggerFileTreeDataItem(en, lineNumber, vscode.TreeItemCollapsibleState.None)
+            localeObject.en = new TriggerFileTreeDataItem(en, lineNumber, vscode.TreeItemCollapsibleState.None, 'en')
 
             this._localeTextItems[key] = localeObject as LocaleObject<TriggerFileTreeDataItem>
           }
