@@ -88,12 +88,6 @@ class TriggerFileTreeDataProvider implements vscode.TreeDataProvider<TriggerFile
       (ctx: ts.TransformationContext) => (rootNode: ts.Node) => {
         const visit = (node: ts.Node): ts.Node => {
           if (ts.isObjectLiteralExpression(node)) {
-            const parent = node.parent
-            let key = localize('trigger.identifier.unknown', 'Unknown')
-
-            if (ts.isVariableDeclaration(parent) || ts.isPropertyAssignment(parent)) {
-              key = parent.name.getText()
-            }
             const properties = node.properties
             if (properties.length === 0) {
               return node
@@ -105,6 +99,18 @@ class TriggerFileTreeDataProvider implements vscode.TreeDataProvider<TriggerFile
             if (!enProperty) {
               // If the object is not a locale object, visit its children
               return ts.visitEachChild(node, visit, ctx)
+            }
+
+            const parent = node.parent
+            let key = localize('trigger.identifier.unknown', 'Unknown')
+            // Try to get the key or identifier of the object
+            //
+            // VariableDeclaration:
+            // const key = { en: 'value', ... }
+            // PropertyAssignment:
+            // { key: { en: 'value', ... } }
+            if (ts.isVariableDeclaration(parent) || ts.isPropertyAssignment(parent)) {
+              key = parent.name.getText()
             }
 
             // Get all the locale properties
