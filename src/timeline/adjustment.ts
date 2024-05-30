@@ -1,9 +1,6 @@
 import { Range, Selection, TextEditor, window } from 'vscode'
-import * as nls from 'vscode-nls'
 
-import { adjustTime } from '../utils'
-
-const localize = nls.loadMessageBundle()
+import { adjustTime, localize } from '../utils'
 
 /** indicate the whole lines is selected */
 const selectWholeLines = (selection: Selection, editor: TextEditor): Range => {
