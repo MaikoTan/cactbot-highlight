@@ -19,7 +19,7 @@
   "scripts": {
     "build": "gulp build",
     "lint": "eslint src --ext ts",
-    "watch": "tsc --watch",
+    "watch": "gulp watch",
     "format": "prettier --write .",
     "clean": "gulp clean",
     "toc": "md-magic --path \"*.md\"",
