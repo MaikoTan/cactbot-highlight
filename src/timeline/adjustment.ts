@@ -1,9 +1,6 @@
-import { Range, Selection, TextEditor, window } from 'vscode'
-import * as nls from 'vscode-nls'
+import { Range, Selection, TextEditor, l10n, window } from 'vscode'
 
 import { adjustTime } from '../utils'
-
-const localize = nls.loadMessageBundle()
 
 /** indicate the whole lines is selected */
 const selectWholeLines = (selection: Selection, editor: TextEditor): Range => {
@@ -22,15 +19,12 @@ export const incDecTime = async (): Promise<void> => {
 
   // show an input box
   const inputValue = await window.showInputBox({
-    prompt: localize('incDecTime.prompt', 'Input a number (can be negative)'),
+    prompt: l10n.t('Input a number (can be negative)'),
     validateInput: (value) => {
       if (/(-)?\d+(\.\d)?/.test(value)) {
         return null
       }
-      return localize(
-        'incDecTime.inputValidNumber1DigitOnly',
-        'Please input valid number (only 1 decimal place is allowed)',
-      )
+      return l10n.t('Please input valid number (only 1 decimal place is allowed)')
     },
   })
 
@@ -59,12 +53,12 @@ export const setTime = async (): Promise<void> => {
 
   // show an input box
   const inputValue = await window.showInputBox({
-    prompt: localize('setTime.prompt', 'Input a number (can be negative)'),
+    prompt: l10n.t('Input a number (can be negative)'),
     validateInput: (value) => {
       if (/\d+(\.\d)?/.test(value)) {
         return null
       }
-      return localize('setTime.inputValidNumber', 'Please input valid number')
+      return l10n.t('Please input valid number')
     },
   })
 
