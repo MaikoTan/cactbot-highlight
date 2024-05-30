@@ -1,4 +1,13 @@
+/* eslint-disable import/no-named-as-default-member */
+import ts from 'typescript'
 import * as vscode from 'vscode'
+import * as nls from 'vscode-nls'
+
+import { output } from '../utils'
+
+import type { LocaleObject } from 'cactbot/types/trigger'
+
+const localize = nls.loadMessageBundle()
 
 class TriggerFileTreeDataItem extends vscode.TreeItem {
   constructor(
@@ -11,51 +20,128 @@ class TriggerFileTreeDataItem extends vscode.TreeItem {
 }
 
 class TriggerFileTreeDataProvider implements vscode.TreeDataProvider<TriggerFileTreeDataItem> {
-  private _localisableRegex = /['"]?en['"]?\s*:\s*['"](?<name>.*?)['"]/
-  private _localisedRegex = /['"]?(?<lang>de|fr|ja|cn|ko)['"]?\s*:\s*['"](?<name>.*?)['"](?=,?\s*\n)/g
+  private _activeDocument: vscode.TextDocument | undefined
+  private _localeTextItems: Record<string, LocaleObject<TriggerFileTreeDataItem>> = {}
 
   private _onDidChangeTreeData: vscode.EventEmitter<TriggerFileTreeDataItem | undefined | void> =
     new vscode.EventEmitter<TriggerFileTreeDataItem | undefined | void>()
   readonly onDidChangeTreeData: vscode.Event<TriggerFileTreeDataItem | undefined | void> =
     this._onDidChangeTreeData.event
 
+  constructor() {
+    this._activeDocument = vscode.window.activeTextEditor?.document
+    vscode.window.onDidChangeActiveTextEditor(() => this._refresh())
+    vscode.workspace.onDidChangeTextDocument(() => this._refresh())
+  }
+
+  private async _refresh(): Promise<void> {
+    this._activeDocument = vscode.window.activeTextEditor?.document
+    if (!this._activeDocument) {
+      this._localeTextItems = {}
+    } else {
+      try {
+        await this._parseTriggerFile()
+      } catch (e) {
+        if (e instanceof Error) {
+          output.appendLine(localize('{0}: {1}\n{2}', e.name, e.message, e.stack))
+        }
+        /* noop */
+      }
+    }
+    this._onDidChangeTreeData.fire()
+  }
+
   getTreeItem(element: TriggerFileTreeDataItem): vscode.TreeItem {
     return element
   }
 
   async getChildren(element?: TriggerFileTreeDataItem): Promise<TriggerFileTreeDataItem[]> {
-    if (
-      !vscode.window.activeTextEditor?.document ||
-      !vscode.window.activeTextEditor.document.fileName.endsWith('.ts')
-    ) {
-      return []
+    if (this._activeDocument && Object.keys(this._localeTextItems).length === 0) {
+      await this._refresh()
     }
-
-    const activeDocument = vscode.window.activeTextEditor.document
-    const dataItems: TriggerFileTreeDataItem[] = []
 
     if (element) {
-      const text = activeDocument.getText(new vscode.Range(element.lineNumber, 0, element.lineNumber + 5, 0))
-      const match = text.matchAll(this._localisedRegex)
-      if (match) {
-        for (const m of match) {
-          dataItems.push(new TriggerFileTreeDataItem(m.groups?.name ?? '', 0, vscode.TreeItemCollapsibleState.None))
-        }
+      const key = element.label
+      const localeText = this._localeTextItems[key]
+      if (localeText) {
+        return Object.values(localeText)
       }
-    } else {
-      const text = activeDocument.getText()
-      const lines = text.split('\n')
 
-      for (const idx in lines) {
-        const line = lines[idx]
-        const match = line.match(this._localisableRegex)
-        if (match && match.groups?.name) {
-          dataItems.push(new TriggerFileTreeDataItem(match.groups.name, Number(idx), vscode.TreeItemCollapsibleState.Collapsed))
-        }
-      }
+      return []
+    } else {
+      return Object.keys(this._localeTextItems).map((key) => {
+        const en = this._localeTextItems[key].en
+        return new TriggerFileTreeDataItem(key, en?.lineNumber ?? 0, vscode.TreeItemCollapsibleState.Collapsed)
+      })
+    }
+  }
+
+  async _parseTriggerFile(): Promise<void> {
+    if (!this._activeDocument?.fileName?.endsWith('.ts')) {
+      return
     }
 
-    return dataItems
+    const activeDocument = this._activeDocument
+    const text = activeDocument.getText()
+
+    ts.transform(ts.createSourceFile(activeDocument.uri.fsPath, text, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS), [
+      (ctx: ts.TransformationContext) => (rootNode: ts.Node) => {
+        const visit = (node: ts.Node): ts.Node => {
+          if (ts.isObjectLiteralExpression(node)) {
+            const parent = node.parent
+            let key = localize('trigger.identifier.unknown', 'Unknown')
+
+            if (ts.isVariableDeclaration(parent) || ts.isPropertyAssignment(parent)) {
+              key = parent.name.getText()
+            }
+            const properties = node.properties
+            if (properties.length === 0) {
+              return node
+            }
+            // Check if the object is a locale object (has a 'en' property)
+            const enProperty = properties.find(
+              (prop) => ts.isPropertyAssignment(prop) && prop.name.getText() === 'en',
+            ) as ts.PropertyAssignment | undefined
+            if (!enProperty) {
+              // If the object is not a locale object, visit its children
+              return ts.visitEachChild(node, visit, ctx)
+            }
+
+            // Get all the locale properties
+            const localeProperties = properties.filter(
+              (prop) => ts.isPropertyAssignment(prop) && prop.name.getText() !== 'en',
+            ) as ts.PropertyAssignment[]
+
+            // Construct the locale object
+            const localeObject: Partial<LocaleObject<TriggerFileTreeDataItem>> = {}
+            for (const prop of localeProperties) {
+              if (typeof prop.name === 'undefined' || typeof prop.initializer === 'undefined') {
+                continue
+              }
+              const name = prop.name.getText()
+              const value = prop.initializer.getText()
+              const lineNumber = prop.getStart()
+              localeObject[name as keyof LocaleObject<unknown>] = new TriggerFileTreeDataItem(
+                value,
+                lineNumber,
+                vscode.TreeItemCollapsibleState.None,
+              )
+            }
+
+            // Construct the en object
+            const en = enProperty.initializer.getText()
+            const lineNumber = enProperty.getStart()
+            localeObject.en = new TriggerFileTreeDataItem(en, lineNumber, vscode.TreeItemCollapsibleState.None)
+
+            this._localeTextItems[key] = localeObject as LocaleObject<TriggerFileTreeDataItem>
+          }
+
+          return ts.visitEachChild(node, visit, ctx)
+        }
+
+        return ts.visitNode(rootNode, visit)
+      },
+    ])
   }
 }
 
