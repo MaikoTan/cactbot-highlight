@@ -1,3 +1,4 @@
 [submodule "3rdparty/cactbot"]
 	path = 3rdparty/cactbot
 	url = https://github.com/OverlayPlugin/cactbot.git
+	shallow = true
