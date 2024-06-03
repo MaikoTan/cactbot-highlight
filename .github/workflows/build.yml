@@ -48,6 +48,20 @@ jobs:
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: [build]
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+
       - name: Push Translatable Strings onto Crowdin
         run: |
           yarn port-i18n
