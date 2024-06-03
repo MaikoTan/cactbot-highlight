@@ -22,7 +22,7 @@
     "lint": "eslint src --ext ts",
     "watch": "yarn run build --watch",
     "format": "prettier --write .",
-    "clean": "rimraf 'dist/' 'package.nls.*.json' 'l10n/*.json' 'cactbot-highlight*.vsix'",
+    "clean": "rimraf --glob 'dist/' 'package.nls.*.json' 'l10n/*.json' 'cactbot-highlight*.vsix'",
     "convert": "js-yaml syntaxes/timeline.tmLanguage.yaml > syntaxes/timeline.tmLanguage.json",
     "toc": "md-magic --path \"*.md\"",
     "pretest": "yarn run build --sourcemap && yarn run tsc -p tsconfig.test.json",
