@@ -14,29 +14,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* i18n: add korean translations by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/442 (Thanks @Bing-su)
+- i18n: add korean translations by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/442 (Thanks @Bing-su)
 
 ## Others
 
-* chore: add open-vsx link and download in readme by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/418
-* build(deps): bump es5-ext from 0.10.53 to 0.10.64 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/419
-* build(deps-dev): bump @babel/preset-env from 7.23.9 to 7.24.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/424
-* build(deps): bump typescript from 4.9.5 to 5.4.2 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/425
-* build(deps-dev): bump @babel/core from 7.23.9 to 7.24.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/420
-* build(deps-dev): bump glob from 10.3.10 to 10.3.12 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/429
-* build(deps-dev): bump @babel/generator from 7.23.6 to 7.24.1 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/428
-* build(deps-dev): bump mocha from 10.3.0 to 10.4.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/426
-* build(deps-dev): bump @babel/core from 7.24.0 to 7.24.4 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/430
-* build(deps-dev): bump @babel/generator from 7.24.4 to 7.24.5 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/431
-* build(deps-dev): bump gulp-cli from 2.3.0 to 3.0.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/433
-* build(deps-dev): bump gulp from 4.0.2 to 5.0.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/434
-* chore: update vscode to 1.82 and node to 18 by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/435
-* test: enable test suites by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/436
-* chore: update cactbot to 6f13c527767f60c52623c29db355b87bb18f666e by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/437
-* chore: move test files out of src folder by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/438
-* ci: update actions versions by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/440
-* ci: add test workflow in ci by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/439
-* chore: add badges in readme by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/441
+- chore: add open-vsx link and download in readme by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/418
+- build(deps): bump es5-ext from 0.10.53 to 0.10.64 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/419
+- build(deps-dev): bump @babel/preset-env from 7.23.9 to 7.24.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/424
+- build(deps): bump typescript from 4.9.5 to 5.4.2 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/425
+- build(deps-dev): bump @babel/core from 7.23.9 to 7.24.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/420
+- build(deps-dev): bump glob from 10.3.10 to 10.3.12 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/429
+- build(deps-dev): bump @babel/generator from 7.23.6 to 7.24.1 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/428
+- build(deps-dev): bump mocha from 10.3.0 to 10.4.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/426
+- build(deps-dev): bump @babel/core from 7.24.0 to 7.24.4 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/430
+- build(deps-dev): bump @babel/generator from 7.24.4 to 7.24.5 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/431
+- build(deps-dev): bump gulp-cli from 2.3.0 to 3.0.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/433
+- build(deps-dev): bump gulp from 4.0.2 to 5.0.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/434
+- chore: update vscode to 1.82 and node to 18 by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/435
+- test: enable test suites by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/436
+- chore: update cactbot to 6f13c527767f60c52623c29db355b87bb18f666e by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/437
+- chore: move test files out of src folder by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/438
+- ci: update actions versions by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/440
+- ci: add test workflow in ci by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/439
+- chore: add badges in readme by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/441
 
 ## [0.6.1] - 2024-02-27
 
