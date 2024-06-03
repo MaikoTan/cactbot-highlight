@@ -66,3 +66,5 @@ jobs:
         run: |
           yarn port-i18n
           yarn crowdin:push
+        env:
+          CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
