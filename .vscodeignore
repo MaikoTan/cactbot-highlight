@@ -8,9 +8,6 @@
 # Github
 .github/**
 
-# Build
-gulpfile.js
-
 # Test
 test/**
 out/test/**
