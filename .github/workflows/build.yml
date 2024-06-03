@@ -44,8 +44,8 @@ jobs:
 
   i18n:
     runs-on: ubuntu-latest
-    # only run on pushes to main branch
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # only run on pushes to master branch
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: [build]
     steps:
       - name: Push Translatable Strings onto Crowdin
