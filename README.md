@@ -7,7 +7,6 @@
 [![Open VSX Version](https://img.shields.io/open-vsx/v/MaikoTan/cactbot-highlight?label=Open%20VSX&color=green)](https://open-vsx.org/extension/MaikoTan/cactbot-highlight)
 [![Open VSX Downloads](https://img.shields.io/open-vsx/dt/MaikoTan/cactbot-highlight)](https://open-vsx.org/extension/MaikoTan/cactbot-highlight)
 
-
 [![Build](https://github.com/MaikoTan/cactbot-highlight/actions/workflows/build.yml/badge.svg)](https://github.com/MaikoTan/cactbot-highlight/actions/workflows/build.yml)
 [![Lint](https://github.com/MaikoTan/cactbot-highlight/actions/workflows/eslint.yml/badge.svg)](https://github.com/MaikoTan/cactbot-highlight/actions/workflows/eslint.yml)
 [![Test](https://github.com/MaikoTan/cactbot-highlight/actions/workflows/test.yml/badge.svg)](https://github.com/MaikoTan/cactbot-highlight/actions/workflows/test.yml)
@@ -15,6 +14,7 @@
 A VSCode extension for developing [cactbot](https://github.com/OverlayPlugin/cactbot/) modules.
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=4) -->
+
 - [Features](#features)
   - [Raidboss Timeline](#raidboss-timeline)
     - [Syntax Highlight](#syntax-highlight)

@@ -123,8 +123,5 @@ files: [
       #
       # "scheme" : "",
     },
-    {
-      source: '/package.nls.json',
-      translation: '/package.nls.%two_letters_code%.json',
-    }
+    { source: '/package.nls.json', translation: '/package.nls.%two_letters_code%.json' },
   ]

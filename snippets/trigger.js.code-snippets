@@ -20,8 +20,8 @@
       "\ttimelineReplace: [],",
       "};",
       "",
-      "export default triggerSet;"
-    ]
+      "export default triggerSet;",
+    ],
   },
   "raidboss-timeline-trigger": {
     "description": "cactbot raidboss timeline trigger",
@@ -35,8 +35,8 @@
       "\tregex: /${2:Regex}/,",
       "\tbeforeSeconds: ${3:5},",
       "\t$0",
-      "},"
-    ]
+      "},",
+    ],
   },
   "raidboss-trigger": {
     "description": "cactbot raidboss trigger",
@@ -50,8 +50,8 @@
       "\ttype: '${2|StartsUsing,Ability,GainsEffect,LosesEffect,HeadMarker|}',",
       "\tnetRegex: NetRegexes.${2/(.*)/${1:/camelcase}/}({ $3 }),",
       "\t$0",
-      "},"
-    ]
+      "},",
+    ],
   },
   "raidboss-timeline-replace": {
     "description": "cactbot raidboss timeline replace",
@@ -65,8 +65,8 @@
       "\t'locale': '${1|de,fr,ja,cn,ko,en|}',",
       "\t'replaceSync': {$0},",
       "\t'replaceText': {},",
-      "},"
-    ]
+      "},",
+    ],
   },
   "raidboss-timeline-replace-all": {
     "description": "cactbot raidboss timeline all language",
@@ -107,50 +107,50 @@
       "\t'missingTranslations': true,",
       "\t'replaceSync': {},",
       "\t'replaceText': {},",
-      "},"
-    ]
+      "},",
+    ],
   },
   "raidboss-alarmText": {
     "description": "cactbot raidboss alarmText",
     "scope": "typescript,javascript",
     "prefix": "ca-r-alarmText",
-    "body": "alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
+    "body": "alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),",
   },
   "raidboss-alarmText-function": {
     "description": "cactbot raidboss alarmText with function",
     "scope": "typescript,javascript",
     "prefix": "ca-r-alarmText",
-    "body": ["alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
+    "body": ["alarmText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"],
   },
   "raidboss-alertText": {
     "description": "cactbot raidboss alertText",
     "scope": "typescript,javascript",
     "prefix": "ca-r-alertText",
-    "body": "alertText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
+    "body": "alertText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),",
   },
   "raidboss-alertText-function": {
     "description": "cactbot raidboss alertText with function",
     "scope": "typescript,javascript",
     "prefix": "ca-r-alertText",
-    "body": ["alertText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
+    "body": ["alertText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"],
   },
   "raidboss-infoText": {
     "description": "cactbot raidboss infoText",
     "scope": "typescript,javascript",
     "prefix": "ca-r-infoText",
-    "body": "infoText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),"
+    "body": "infoText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => output.${0:text}!(),",
   },
   "raidboss-infoText-function": {
     "description": "cactbot raidboss infoText with function",
     "scope": "typescript,javascript",
     "prefix": "ca-r-infoText",
-    "body": ["infoText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"]
+    "body": ["infoText: (${1|data,_,_data|}, ${2|matches,_,_matches|}, ${3|output,_,_output|}) => {", "\t$0", "},"],
   },
   "raidboss-outputStrings": {
     "description": "cactbot raidboss outputStrings",
     "scope": "typescript,javascript",
     "prefix": "ca-r-outputStrings",
-    "body": ["outputStrings: {", "\t${1:text}: {", "\t\t${2|en,de,fr,ja,cn,ko|}: '$0',", "\t},", "},"]
-  }
+    "body": ["outputStrings: {", "\t${1:text}: {", "\t\t${2|en,de,fr,ja,cn,ko|}: '$0',", "\t},", "},"],
+  },
   // #endregion
 }

@@ -1,6 +1,7 @@
 # Frequently Asked Questions
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=2) -->
+
 - [I cannot install this extension from VSCode Marketplace. / I am not the fan of Microsoft.](#i-cannot-install-this-extension-from-vscode-marketplace--i-am-not-the-fan-of-microsoft)
 - [Why isn't my timeline files not highlighted?](#why-isnt-my-timeline-files-not-highlighted)
 <!-- AUTO-GENERATED-CONTENT:END -->
