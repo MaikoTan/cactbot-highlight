@@ -177,6 +177,7 @@
     "vsce": "^2.15.0"
   },
   "dependencies": {
+    "cactbot": "^0.31.5",
     "typescript": "^5.4.2"
   },
   "prettier": {

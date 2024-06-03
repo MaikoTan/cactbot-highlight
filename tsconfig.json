@@ -15,10 +15,8 @@
     // "noUnusedParameters": true,  /* Report errors on unused parameters. */
     "allowJs": true,
     "esModuleInterop": true,
-    "paths": {
-      "cactbot/*": ["./3rdparty/cactbot/*"]
-    }
+    "skipLibCheck": true,
   },
-  "include": ["src", "./node_modules/vscode/vscode.d.ts", "./node_modules/vscode/lib/*"],
+  "include": ["src"],
   "exclude": ["node_modules", ".vscode-test"]
 }
