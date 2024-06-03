@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as path from 'path'
 import Mocha from 'mocha'
-import { glob } from 'glob'
+import { glob } from 'fast-glob'
 
 export async function run(): Promise<void> {
   // Create the mocha test
