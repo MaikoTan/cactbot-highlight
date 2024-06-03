@@ -1,10 +1,9 @@
 /* eslint-disable import/no-named-as-default-member */
 import { access, constants, readFile } from 'fs/promises'
 
+import { commonReplacement } from 'cactbot/ui/raidboss/common_replacement'
 import ts from 'typescript'
 import { EventEmitter, l10n, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
-
-import { commonReplacement } from 'cactbot/ui/raidboss/common_replacement'
 
 import { output } from '../utils'
 
