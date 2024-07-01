@@ -916,10 +916,10 @@ builtin-modules@^3.3.0:
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-3.3.0.tgz#cae62812b89801e9656336e46223e030386be7b6"
   integrity sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==
 
-cactbot@^0.31.5:
-  version "0.31.5"
-  resolved "https://registry.yarnpkg.com/cactbot/-/cactbot-0.31.5.tgz#00e94bf8a1f4aee86a696e70ef0848acd0ac24d2"
-  integrity sha512-MXGDbWtEAfP6r4vNJKCZ5UxPXcpl6MbbpAMPJ25Vs8uSok7BTcG40fOMxTL5jPwwc9Uno5K6YxYzuTbzFLRgOg==
+cactbot@^0.32.0:
+  version "0.32.0"
+  resolved "https://registry.yarnpkg.com/cactbot/-/cactbot-0.32.0.tgz#0e003b8a1482b131e588ee4eb2e20313795ab486"
+  integrity sha512-1KS7ipWH1siVJE7v1jJxArdvRDeK2G2Euiz4U4WE01Vieno/MiBvzGijC2tN/1txmidfTMguR8mDr8qoIswYzQ==
 
 call-bind@^1.0.2, call-bind@^1.0.5, call-bind@^1.0.6, call-bind@^1.0.7:
   version "1.0.7"
