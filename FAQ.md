@@ -6,7 +6,7 @@
 - [Why isn't my timeline files not highlighted?](#why-isnt-my-timeline-files-not-highlighted)
 <!-- AUTO-GENERATED-CONTENT:END -->
 
-## I cannot install this extension from VSCode Marketplace. / I am not the fan of Microsoft.
+## I cannot install this extension from VSCode Marketplace / I am not the fan of Microsoft
 
 If you got troubles when install from Visual Studio Market,
 you can download the VSIX file of `Cactbot Highlight` from [VSCode Extension Market](https://marketplace.visualstudio.com/items?itemName=MaikoTan.cactbot-highlight)
