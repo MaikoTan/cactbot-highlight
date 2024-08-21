@@ -14,60 +14,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- i18n: add korean translations by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/442 (Thanks @Bing-su)
+- i18n: add korean translations by @MaikoTan in [#442](https://github.com/MaikoTan/cactbot-highlight/pull/442) (Thanks @Bing-su)
 
 ## Others
 
-- chore: add open-vsx link and download in readme by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/418
-- build(deps): bump es5-ext from 0.10.53 to 0.10.64 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/419
-- build(deps-dev): bump @babel/preset-env from 7.23.9 to 7.24.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/424
-- build(deps): bump typescript from 4.9.5 to 5.4.2 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/425
-- build(deps-dev): bump @babel/core from 7.23.9 to 7.24.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/420
-- build(deps-dev): bump glob from 10.3.10 to 10.3.12 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/429
-- build(deps-dev): bump @babel/generator from 7.23.6 to 7.24.1 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/428
-- build(deps-dev): bump mocha from 10.3.0 to 10.4.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/426
-- build(deps-dev): bump @babel/core from 7.24.0 to 7.24.4 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/430
-- build(deps-dev): bump @babel/generator from 7.24.4 to 7.24.5 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/431
-- build(deps-dev): bump gulp-cli from 2.3.0 to 3.0.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/433
-- build(deps-dev): bump gulp from 4.0.2 to 5.0.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/434
-- chore: update vscode to 1.82 and node to 18 by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/435
-- test: enable test suites by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/436
-- chore: update cactbot to 6f13c527767f60c52623c29db355b87bb18f666e by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/437
-- chore: move test files out of src folder by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/438
-- ci: update actions versions by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/440
-- ci: add test workflow in ci by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/439
-- chore: add badges in readme by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/441
+- chore: add open-vsx link and download in readme by @MaikoTan in [#418](https://github.com/MaikoTan/cactbot-highlight/pull/418)
+- build(deps): bump es5-ext from 0.10.53 to 0.10.64 by @dependabot in [#419](https://github.com/MaikoTan/cactbot-highlight/pull/419)
+- build(deps-dev): bump @babel/preset-env from 7.23.9 to 7.24.0 by @dependabot in [#424](https://github.com/MaikoTan/cactbot-highlight/pull/424)
+- build(deps): bump typescript from 4.9.5 to 5.4.2 by @dependabot in [#425](https://github.com/MaikoTan/cactbot-highlight/pull/425)
+- build(deps-dev): bump @babel/core from 7.23.9 to 7.24.0 by @dependabot in [#420](https://github.com/MaikoTan/cactbot-highlight/pull/420)
+- build(deps-dev): bump glob from 10.3.10 to 10.3.12 by @dependabot in [#429](https://github.com/MaikoTan/cactbot-highlight/pull/429)
+- build(deps-dev): bump @babel/generator from 7.23.6 to 7.24.1 by @dependabot in [#428](https://github.com/MaikoTan/cactbot-highlight/pull/428)
+- build(deps-dev): bump mocha from 10.3.0 to 10.4.0 by @dependabot in [#426](https://github.com/MaikoTan/cactbot-highlight/pull/426)
+- build(deps-dev): bump @babel/core from 7.24.0 to 7.24.4 by @dependabot in [#430](https://github.com/MaikoTan/cactbot-highlight/pull/430)
+- build(deps-dev): bump @babel/generator from 7.24.4 to 7.24.5 by @dependabot in [#431](https://github.com/MaikoTan/cactbot-highlight/pull/431)
+- build(deps-dev): bump gulp-cli from 2.3.0 to 3.0.0 by @dependabot in [#433](https://github.com/MaikoTan/cactbot-highlight/pull/433)
+- build(deps-dev): bump gulp from 4.0.2 to 5.0.0 by @dependabot in [#434](https://github.com/MaikoTan/cactbot-highlight/pull/434)
+- chore: update vscode to 1.82 and node to 18 by @MaikoTan in [#435](https://github.com/MaikoTan/cactbot-highlight/pull/435)
+- test: enable test suites by @MaikoTan in [#436](https://github.com/MaikoTan/cactbot-highlight/pull/436)
+- chore: update cactbot to 6f13c527767f60c52623c29db355b87bb18f666e by @MaikoTan in [#437](https://github.com/MaikoTan/cactbot-highlight/pull/437)
+- chore: move test files out of src folder by @MaikoTan in [#438](https://github.com/MaikoTan/cactbot-highlight/pull/438)
+- ci: update actions versions by @MaikoTan in [#440](https://github.com/MaikoTan/cactbot-highlight/pull/440)
+- ci: add test workflow in ci by @MaikoTan in [#439](https://github.com/MaikoTan/cactbot-highlight/pull/439)
+- chore: add badges in readme by @MaikoTan in [#441](https://github.com/MaikoTan/cactbot-highlight/pull/441)
 
 ## [0.6.1] - 2024-02-27
 
 ### Added
 
-- Support new cactbot timeline net sync syntax. ([#416](https://github.com/MaikoTan/cactbot-highlight/pull/416))
+- Support new cactbot timeline net sync syntax. ([#416]([#416](https://github.com/MaikoTan/cactbot-highlight/pull/416)))
 - Update cactbot to commit [`6d127b8`](https://github.com/OverlayPlugin/cactbot/commit/6d127b8b976f9cffe360700f7fecf73f1418c984). ([`c34a3d2`](https://github.com/MaikoTan/cactbot-highlight/commit/c34a3d29dbb4cc9d9fed79578ddf5266f690cbfa))
 
 ### Fixed
 
-- Unexpected escaped quotes. ([#408](https://github.com/MaikoTan/cactbot-highlight/pull/408))
+- Unexpected escaped quotes. ([#408]([#408](https://github.com/MaikoTan/cactbot-highlight/pull/408)))
 
 ### Changed
 
-- Migrate to TypeScript transformer for timeline translation from slow-y babel. ([#409](https://github.com/MaikoTan/cactbot-highlight/pull/409))
+- Migrate to TypeScript transformer for timeline translation from slow-y babel. ([#409]([#409](https://github.com/MaikoTan/cactbot-highlight/pull/409)))
 
 ## [0.6.0] - 2023-12-23
 
 ### Added
 
-- New network log sync syntax highlight. ([#406](https://github.com/MaikoTan/cactbot-highlight/pull/406))
+- New network log sync syntax highlight. ([#406]([#406](https://github.com/MaikoTan/cactbot-highlight/pull/406)))
 
 ## [0.5.2] - 2023-12-22
 
 ### Added
 
-- Add new keyword `forcejump` and `label`. ([#400](https://github.com/MaikoTan/cactbot-highlight/pull/400))
+- Add new keyword `forcejump` and `label`. ([#400]([#400](https://github.com/MaikoTan/cactbot-highlight/pull/400)))
 
 ### Changed
 
-- Migrate cactbot to use [`OverlayPlugin/cactbot`] repository. ([#402](https://github.com/MaikoTan/cactbot-highlight/pull/402))
+- Migrate cactbot to use [`OverlayPlugin/cactbot`] repository. ([#402]([#402](https://github.com/MaikoTan/cactbot-highlight/pull/402)))
 
 ## [0.5.1] - 2023-11-29
 
@@ -81,7 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `make_timeline` button in CodeLens for timeline files. ([`04dadc2`](https://github.com/MaikoTan/cactbot-highlight/commit/04dadc2fb9834db873e9efcb8ea175260b67404a))
 - Add button for timeline translation on top right of editor. ([`5e1cf51`](https://github.com/MaikoTan/cactbot-highlight/commit/5e1cf512d0397e948b01dd45386ab41ad1ac9eea))
-- Update code snippets ([#247](https://github.com/MaikoTan/cactbot-highlight/pull/247))
+- Update code snippets ([#247]([#247](https://github.com/MaikoTan/cactbot-highlight/pull/247)))
 
 ### Fixed
 
