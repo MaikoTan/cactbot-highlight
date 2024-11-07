@@ -2801,10 +2801,10 @@ markdown-it@^14.0.0:
     punycode.js "^2.3.1"
     uc.micro "^2.1.0"
 
-markdown-magic@^3.0.10:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/markdown-magic/-/markdown-magic-3.0.10.tgz#63df058153ee0069a0b0eceba039e84fe06ed638"
-  integrity sha512-CgZgraqeInFuffG2Vruba4xNQ7jxzqFBbwPw599fhbFOP24A32euY+pdZuF3eMkqoAPJg3Ry6RISGMUZTkNCYg==
+markdown-magic@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/markdown-magic/-/markdown-magic-3.3.0.tgz#8047f1e45ff9d43f7a7fcf2ee9ffa88b26451c1a"
+  integrity sha512-zG+pip/THd8vBKefUdVvshLlD6XeNwNXc/Ws8lGBGt0/xLAc9MGsJaUTnpaqe1grhw9WbD4SdrgVf9n5VSlqjg==
   dependencies:
     "@davidwells/md-utils" "^0.0.40"
     "@technote-space/doctoc" "2.4.7"
@@ -2815,6 +2815,7 @@ markdown-magic@^3.0.10:
     is-valid-path "^0.1.1"
     micro-mdx-parser "^1.1.0"
     mri "^1.2.0"
+    node-fetch "^2.7.0"
     oparser "^3.0.13"
     smart-glob "^1.0.2"
     sync-request "^6.1.0"
@@ -3209,7 +3210,7 @@ node-addon-api@^3.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.2.1.tgz#81325e0a2117789c0128dab65e7e38f07ceba161"
   integrity sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==
 
-node-fetch@2.7.0:
+node-fetch@2.7.0, node-fetch@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
