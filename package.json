@@ -174,7 +174,7 @@
   },
   "dependencies": {
     "cactbot": "^0.32.5",
-    "typescript": "^5.4.2"
+    "typescript": "^5.7.2"
   },
   "prettier": {
     "printWidth": 120,
