@@ -184,6 +184,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
 
         const matchLogTypeByName = ['AddedCombatant', 'RemovedCombatant']
         const matchLogTypeSource = [
+          'InCombat',
           'StartsUsing',
           'Ability',
           'NetworkAOEAbility',
