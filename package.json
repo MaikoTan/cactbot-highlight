@@ -28,7 +28,7 @@
     "pretest": "yarn run build --sourcemap && yarn run tsc -p tsconfig.test.json",
     "tsc:noEmit": "tsc --noEmit",
     "test": "node ./out/runTest.js",
-    "package": "vsce package --yarn",
+    "package": "yarn run build && vsce package --yarn",
     "prepack": "yarn port-i18n && yarn crowdin:pull && yarn build --minify",
     "********* MANAGE I18N FILES **********": "",
     "port-i18n": "vscode-l10n-dev export --outDir ./l10n ./src",
