@@ -32,15 +32,18 @@ const extractReplacements = async (triggerPath: string): Promise<TimelineReplace
               const timelineReplaceList: TimelineReplacement[] = []
               for (const element of timelineReplace.elements) {
                 if (ts.isObjectLiteralExpression(element)) {
+                  // FIXME: A very naive way to extract keys from the object, note
+                  // that keys can be quoted or not quoted.
                   const localeNode = element.properties.find((property) => {
-                    return ts.isPropertyAssignment(property) && property.name.getText() === 'locale'
+                    return ts.isPropertyAssignment(property) && /^['"]?locale['"]?$/.test(property.name.getText())
                   })
                   const replaceSyncNode = element.properties.find((property) => {
-                    return ts.isPropertyAssignment(property) && property.name.getText() === 'replaceSync'
+                    return ts.isPropertyAssignment(property) && /^['"]?replaceSync['"]?$/.test(property.name.getText())
                   }) as ts.PropertyAssignment | undefined
                   const replaceTextNode = element.properties.find((property) => {
-                    return ts.isPropertyAssignment(property) && property.name.getText() === 'replaceText'
+                    return ts.isPropertyAssignment(property) && /^['"']?replaceText['"]?$/.test(property.name.getText())
                   }) as ts.PropertyAssignment | undefined
+
                   if (localeNode && ts.isPropertyAssignment(localeNode) && ts.isStringLiteral(localeNode.initializer)) {
                     const locale = localeNode.initializer.text as keyof LocaleText
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-inner-declarations
@@ -55,7 +58,7 @@ const extractReplacements = async (triggerPath: string): Promise<TimelineReplace
                         .map((property) => {
                           if (
                             ts.isPropertyAssignment(property) &&
-                            ts.isStringLiteral(property.name) &&
+                            (ts.isStringLiteral(property.name) || ts.isIdentifier(property.name)) &&
                             ts.isStringLiteral(property.initializer)
                           ) {
                             return [property.name.text, property.initializer.text]
@@ -147,7 +150,21 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
   }): string {
     const { locale, timelineFile, timelineReplaceList, commonReplace } = o
 
-    const replace = ((timelineReplaceList: TimelineReplacement[], locale: string): TimelineReplacement | undefined => {
+    const matchLogTypeByName = ['AddedCombatant', 'RemovedCombatant']
+    const matchLogTypeSource = [
+      'InCombat',
+      'StartsUsing',
+      'Ability',
+      'NetworkAOEAbility',
+      'NetworkCancelAbility',
+      'NetworkDoT',
+      'WasDefeated',
+      'SystemLogMessage',
+    ]
+    const matchLogType = [...matchLogTypeByName, ...matchLogTypeSource, 'GameLog']
+    const syncMatchRegex = new RegExp(`(?<keyword>${matchLogType.join('|')})\\s*\\{(?<fields>.*)\\}`)
+
+    const replace = ((timelineReplaceList: TimelineReplacement[], locale: string): TimelineReplacement => {
       let replace
       for (const element of timelineReplaceList) {
         if (element.locale === locale) {
@@ -155,12 +172,12 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
           break
         }
       }
+      if (!replace) {
+        console.error(l10n.t('Cannot find replacement for locale "{0}".', locale))
+        replace = { locale, replaceSync: {}, replaceText: {} } as TimelineReplacement
+      }
       return replace
     })(timelineReplaceList, locale)
-
-    if (!replace) {
-      return timelineFile
-    }
 
     const replacedTimeline = timelineFile.split(/\r?\n/).map((timeline: string, index: number) => {
       const line = timeline.trim()
@@ -182,19 +199,8 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
           )
         }
 
-        const matchLogTypeByName = ['AddedCombatant', 'RemovedCombatant']
-        const matchLogTypeSource = [
-          'InCombat',
-          'StartsUsing',
-          'Ability',
-          'NetworkAOEAbility',
-          'NetworkCancelAbility',
-          'NetworkDoT',
-          'WasDefeated',
-        ]
-        const matchLogType = [...matchLogTypeByName, ...matchLogTypeSource, 'GameLog']
         // match net sync like `Action { id: "xxxx" }`
-        const netSyncMatched = new RegExp(`(?<keyword>${matchLogType.join('|')})\\s*\\{(?<fields>.*)\\}`).exec(line)
+        const netSyncMatched = syncMatchRegex.exec(line)
         if (netSyncMatched) {
           const fields = netSyncMatched.groups?.fields
           if (fields) {
@@ -216,7 +222,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
         }
 
         // match "xxxx.x label \"xxxx\""
-        const textMatched = /^(?<time>\d+(\.\d)?\s*)(?<label>label\s*)?"(?<text>.*)(?<!\\)"/.exec(line)
+        const textMatched = /^(?<time>\d+(\.\d)?\s*)(?<label>label\s*)?"(?<text>.*?)(?<!\\)"/.exec(line)
         if (textMatched && replace.replaceText) {
           let replacedTextKey = this.replaceKey(textMatched.groups?.text as string, replace.replaceText, false)
           replacedTextKey = this.replaceCommonKey(replacedTextKey, commonReplace, 'text', locale)
