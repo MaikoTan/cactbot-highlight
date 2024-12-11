@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.3] - 2024-12-11
+
+## Fixed
+
+* fix: timeline translate feature broken in some timeline by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/493
+
+## Changed
+
+* refactor: move localize call outside by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/444
+* refactor: make more strings localisable by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/446
+* refactor: replace old vscode-nls to new l10n api by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/448
+
+## Others
+
+* chore: update and clean dependencies by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/443
+* chore: fix watch command with gulp by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/445
+* chore: enable shallow checkout for cactbot by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/449
+* chore: migrate submodule cactbot to download from npm by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/455
+* ci: publish i18n content in a separate job by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/457
+* lint: format files with prettier by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/456
+* ci: disable fail-fast for matrix by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/459
+* build: migrate gulp + esbuild to rollup by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/458
+* ci: fix i18n push workflow condition by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/460
+* chore: switch glob to fast-glob by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/461
+* ci: fix i18n push workflow by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/462
+* ci: add crowdin api token environment variables by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/463
+* build(deps-dev): bump @crowdin/cli from 3.19.4 to 4.0.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/454
+* build(deps-dev): bump @vscode/test-electron from 2.3.10 to 2.4.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/451
+* chore: fix base path in crowdin configuration by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/464
+* build(deps-dev): bump markdown-magic from 2.6.1 to 3.0.10 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/452
+* build(deps): bump cactbot from 0.31.5 to 0.32.5 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/472
+* build(deps-dev): bump @rollup/plugin-commonjs from 25.0.8 to 26.0.1 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/468
+* build(deps-dev): bump @typescript-eslint/parser from 7.11.0 to 7.18.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/470
+* build(deps-dev): bump prettier from 3.2.5 to 3.3.3 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/471
+* build(deps): bump braces from 3.0.2 to 3.0.3 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/465
+* style: fix markdown lint errors by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/473
+* build(deps-dev): bump @vscode/test-electron from 2.4.0 to 2.4.1 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/475
+* build(deps-dev): bump markdown-magic from 3.0.10 to 3.3.0 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/476
+* build(deps-dev): bump rollup from 4.18.0 to 4.24.3 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/485
+* build(deps-dev): bump eslint-import-resolver-typescript from 3.6.1 to 3.6.3 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/477
+* build(deps-dev): bump eslint-plugin-prettier from 5.1.3 to 5.2.1 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/478
+* build(deps): bump micromatch from 4.0.5 to 4.0.8 by @dependabot in https://github.com/MaikoTan/cactbot-highlight/pull/479
+* ci: fix wrong condition of fail fast introduced in #459 by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/486
+
 ## [0.6.2] - 2024-05-24
 
 > [!NOTE]
@@ -394,4 +438,5 @@ maybe helpful when migrating cactbot to TypeScript.
 [0.6.0]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.5.2...v0.6.0
 [0.6.1]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.0...v0.6.1
 [0.6.2]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.1...v0.6.2
-[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.2...master
+[0.6.3]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.2...v0.6.3
+[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.3...master
