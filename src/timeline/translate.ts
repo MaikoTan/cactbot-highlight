@@ -8,8 +8,7 @@ import { EventEmitter, l10n, languages, TextDocumentContentProvider, Uri, window
 import { output } from '../utils'
 
 import type { Lang } from 'cactbot/resources/languages'
-import type { LocaleText } from 'cactbot/types/trigger'
-import type { TimelineReplacement } from 'cactbot/ui/raidboss/timeline_parser'
+import type { LocaleText, TimelineReplacement } from 'cactbot/types/trigger'
 
 type CommonReplacement = typeof commonReplacement
 
@@ -46,7 +45,6 @@ const extractReplacements = async (triggerPath: string): Promise<TimelineReplace
 
                   if (localeNode && ts.isPropertyAssignment(localeNode) && ts.isStringLiteral(localeNode.initializer)) {
                     const locale = localeNode.initializer.text as keyof LocaleText
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-inner-declarations
                     function resolveSync(node: ts.Node | undefined): TimelineReplacement['replaceSync'] | undefined {
                       if (!node) {
                         return

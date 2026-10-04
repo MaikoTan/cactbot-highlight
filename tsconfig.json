@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "module": "ESNext",
-    "moduleResolution": "node",
-    "target": "es2019",
+    "moduleResolution": "bundler",
+    "target": "es2022",
     "outDir": "dist",
-    "lib": ["es2019"],
+    "lib": ["es2022"],
     "sourceMap": true,
     "rootDir": ".",
     "strict": true /* enable all strict type-checking options */,
@@ -15,7 +14,8 @@
     // "noUnusedParameters": true,  /* Report errors on unused parameters. */
     "allowJs": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"]
   },
   "include": ["src"],
   "exclude": ["node_modules", ".vscode-test"]
