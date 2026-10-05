@@ -3,7 +3,7 @@ import { access, constants, readFile } from 'fs/promises'
 
 import { commonReplacement } from 'cactbot/ui/raidboss/common_replacement'
 import ts from 'typescript'
-import { EventEmitter, l10n, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
+import { Disposable, EventEmitter, l10n, languages, TextDocumentContentProvider, Uri, window, workspace } from 'vscode'
 
 import { output } from '../utils'
 
@@ -89,10 +89,22 @@ const extractReplacements = async (triggerPath: string): Promise<TimelineReplace
   return ret
 }
 
-export class TranslatedTimelineProvider implements TextDocumentContentProvider {
+export class TranslatedTimelineProvider implements TextDocumentContentProvider, Disposable {
   onDidChangeEmitter = new EventEmitter<Uri>()
 
   onDidChange = this.onDidChangeEmitter.event
+
+  private listenerDisposable: Disposable | undefined = undefined
+  private currentUri: Uri | undefined = undefined
+  private currentTimelineFilePathWithoutExt: string | undefined = undefined
+
+  dispose(): void {
+    this.listenerDisposable?.dispose()
+    this.listenerDisposable = undefined
+    this.currentUri = undefined
+    this.currentTimelineFilePathWithoutExt = undefined
+    this.onDidChangeEmitter.dispose()
+  }
 
   async getTriggerFilePath(timelineFilePath: string): Promise<string | undefined> {
     let triggerFilePath = timelineFilePath.replace(/\.txt$/, '.js')
@@ -105,8 +117,29 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     }
   }
 
+  /**
+   * Watch the trigger file backing `uri` and refresh the virtual document when
+   * it changes. Any previously registered watcher is disposed first so that
+   * repeated invocations do not accumulate listeners.
+   */
+  private watchTriggerFile(uri: Uri, timelineFilePath: string): void {
+    this.listenerDisposable?.dispose()
+    this.listenerDisposable = undefined
+    this.currentUri = uri
+    this.currentTimelineFilePathWithoutExt = timelineFilePath.replace(/\.(js|ts|txt)$/, '')
+
+    this.listenerDisposable = workspace.onDidChangeTextDocument((e) => {
+      const changedFilePathWithoutExt = e.document.fileName.replace(/\.(js|ts|txt)$/, '')
+      if (changedFilePathWithoutExt === this.currentTimelineFilePathWithoutExt) {
+        this.onDidChangeEmitter.fire(this.currentUri as Uri)
+      }
+    })
+  }
+
   async provideTextDocumentContent(uri: Uri) {
     const timelineFilePath = uri.path
+    this.watchTriggerFile(uri, timelineFilePath)
+
     const triggerFilePath = await this.getTriggerFilePath(timelineFilePath)
     if (!triggerFilePath) {
       throw new Error(l10n.t('Cannot find trigger file.'))
@@ -350,14 +383,9 @@ export const translateTimeline = async (): Promise<void> => {
   await window.showTextDocument(translatedDocument, { preview: true })
   await languages.setTextDocumentLanguage(translatedDocument, 'cactbot-timeline')
 
-  // FIXME: this should dispose after file close?
-  // TODO: not only monitor the current document,
-  // but also the related files.
-  workspace.onDidChangeTextDocument((e) => {
-    if (e.document.fileName.replace(/\.(js|ts|txt)$/, '') === document.fileName.replace(/\.(js|ts|txt)$/, '')) {
-      translatedTimelineProvider.onDidChangeEmitter.fire(uri)
-    }
-  })
+  // Watching the trigger file is handled by TranslatedTimelineProvider itself,
+  // which disposes any previous listener before registering a new one, so no
+  // listener is leaked here.
 }
 
 /**
