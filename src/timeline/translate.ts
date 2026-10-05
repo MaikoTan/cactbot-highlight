@@ -91,9 +91,6 @@ const extractReplacements = async (triggerPath: string): Promise<TimelineReplace
 
 export class TranslatedTimelineProvider implements TextDocumentContentProvider {
   onDidChangeEmitter = new EventEmitter<Uri>()
-  private _listenerDisposable: { dispose(): void } | null = null
-  private _currentUri: Uri | null = null
-  private _currentTimelineFilePathWithoutExt: string | null = null
 
   onDidChange = this.onDidChangeEmitter.event
 
@@ -108,66 +105,7 @@ export class TranslatedTimelineProvider implements TextDocumentContentProvider {
     }
   }
 
-  dispose() {
-    if (this._listenerDisposable) {
-      this._listenerDisposable.dispose()
-      this._listenerDisposable = null
-    }
-    this._currentUri = null
-    this._currentTimelineFilePathWithoutExt = null
-  }
-
   async provideTextDocumentContent(uri: Uri) {
-    // Store the current uri and compute the timeline file path without extension for listener comparison
-    this._currentUri = uri
-    const timelineFilePath = uri.path
-    this._currentTimelineFilePathWithoutExt = timelineFilePath.replace(/\.(js|ts|txt)$/, '')
-
-    // Register a listener to update the translation when the trigger file changes
-    // We ensure we only have one listener at a time
-    if (this._listenerDisposable) {
-      this._listenerDisposable.dispose()
-    }
-    this._listenerDisposable = workspace.onDidChangeTextDocument((e) => {
-      const changedFilePathWithoutExt = e.document.fileName.replace(/\.(js|ts|txt)$/, '')
-      if (changedFilePathWithoutExt === this._currentTimelineFilePathWithoutExt) {
-        this.onDidChangeEmitter.fire(this._currentUri)
-      }
-    })
-
-    const timelineFilePath = uri.path
-    const triggerFilePath = await this.getTriggerFilePath(timelineFilePath)
-    if (!triggerFilePath) {
-      throw new Error(l10n.t('Cannot find trigger file.'))
-    }
-
-    const locale = uri.query
-
-    try {
-      const timelineReplaceList = await extractReplacements(triggerFilePath)
-      return this.translate({
-        locale: locale as keyof LocaleText,
-        timelineFile: String(await readFile(timelineFilePath)),
-        timelineReplaceList,
-        commonReplace: commonReplacement,
-      })
-    } catch (e) {
-      const err = e as Error
-      const ans = await window.showErrorMessage(
-        l10n.t('Error when translating file "{0}": {1}\nShow more details?', uri.path, err.name),
-        { modal: true },
-        l10n.t('Yes'),
-        l10n.t('No'),
-      )
-
-      output.appendLine(l10n.t('{0}: {1}\n{2}{3}', uri.path, err.name, err.message, err.stack ?? ''))
-
-      if (ans === l10n.t('Yes')) {
-        // switch to output panel
-        output.show()
-      }
-    }
-  }
     const timelineFilePath = uri.path
     const triggerFilePath = await this.getTriggerFilePath(timelineFilePath)
     if (!triggerFilePath) {
