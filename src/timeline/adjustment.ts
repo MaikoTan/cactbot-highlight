@@ -55,7 +55,7 @@ export const setTime = async (): Promise<void> => {
   const inputValue = await window.showInputBox({
     prompt: l10n.t('Input a number (can be negative)'),
     validateInput: (value) => {
-      if (/\d+(\.\d)?/.test(value)) {
+      if (/-?\d+(\.\d)?/.test(value)) {
         return null
       }
       return l10n.t('Please input valid number')
