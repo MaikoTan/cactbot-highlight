@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.4] - 2026-10-05
+
+> [!NOTE]
+> This release is built with the upgraded toolchain (@vscode/vsce 4), which requires Node.js 22 or higher to build.
+
+## Fixed
+
+* fix: allow negative numbers in setTime() input by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/506
+* fix: dispose workspace listener to prevent memory leak in TranslatedTimelineProvider by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/507
+* fix: precompile regex in adjustTime for performance by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/508
+
+## Changed
+
+* build: upgrade toolchain to latest (vsce 4, eslint 9 flat config, TS 6) by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/494
+
+## Others
+
+* ci: fix workflows broken by deprecated GitHub Actions features by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/494
+* ci: set shell bash on the GITHUB_OUTPUT steps by @MaikoTan in https://github.com/MaikoTan/cactbot-highlight/pull/494
+
 ## [0.6.3] - 2024-12-11
 
 ## Fixed
@@ -439,4 +459,5 @@ maybe helpful when migrating cactbot to TypeScript.
 [0.6.1]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.0...v0.6.1
 [0.6.2]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.1...v0.6.2
 [0.6.3]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.2...v0.6.3
-[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.3...master
+[0.6.4]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.3...v0.6.4
+[Unreleased]: https://github.com/MaikoTan/cactbot-highlight/compare/v0.6.4...master
