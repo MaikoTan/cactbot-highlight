@@ -17,6 +17,9 @@ export function activate(context: ExtensionContext): void {
     // register translate timeline
     workspace.registerTextDocumentContentProvider('cactbot-timeline', translatedTimelineProvider),
 
+    // ensure the provider's text document watcher is released on deactivate
+    translatedTimelineProvider,
+
     commands.registerCommand('cactbot.timeline.translate', () => translateTimeline()),
 
     languages.registerCodeLensProvider('cactbot-timeline', new TimelineCodeLensProvider()),
